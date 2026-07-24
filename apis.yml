@@ -1,0 +1,119 @@
+aid: moneyhub
+url: https://raw.githubusercontent.com/api-evangelist/moneyhub/refs/heads/main/apis.yml
+name: Moneyhub
+kind: company
+description: >-
+  Moneyhub is a UK open banking and open finance platform, headquartered in
+  London with offices in Bristol and Ljubljana, that lets banks, pension
+  providers, wealth managers, insurers and fintechs embed account aggregation,
+  transaction data enrichment, financial insight and account-to-account payment
+  initiation into their own products. Regulated by the FCA as an Account
+  Information Service Provider (AISP), Payment Initiation Service Provider (PISP)
+  and Credit Information Services Provider (CISP), Moneyhub ships a genuinely
+  API-first surface: a RESTful, Swagger/OpenAPI-documented Data & Intelligence
+  API for AIS aggregation, enrichment and affordability, and an Open Banking
+  Payments API that initiates instant Faster Payments over the UK's Open Banking
+  rails as a cheaper alternative to cards and direct debits. Authentication and
+  payment consent run entirely through an OpenID Connect / OAuth2 identity layer
+  at identity.moneyhub.co.uk, with client-credentials, authorization-code and
+  jwt-bearer grants and fine-grained scopes for data and payment initiation.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Payments
+- United Kingdom
+- Open Banking
+- Open Finance
+- Account-to-Account
+- Payment Initiation
+- Data Aggregation
+- AISP
+- PISP
+- Fintech
+created: '2026-07-24'
+modified: '2026-07-24'
+specificationVersion: '0.19'
+apis:
+- aid: moneyhub:moneyhub-data-api
+  name: Moneyhub Data & Intelligence API
+  description: >-
+    The Moneyhub Data API (v2.0) is a RESTful, JSON, bearer-token API for Open
+    Banking account aggregation and financial intelligence: connect accounts,
+    read balances, holdings, standing orders, statements and enriched
+    transactions, and run categorisation, affordability, spending analysis,
+    savings goals and standard financial statements. Published as a Swagger 2.0
+    definition served from the live API host.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Data Aggregation
+  - Open Banking
+  - Enrichment
+  - Affordability
+  - AISP
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-data-api-swagger.json
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+- aid: moneyhub:moneyhub-open-banking-payments-api
+  name: Moneyhub Open Banking Payments API
+  description: >-
+    Moneyhub's Open Banking Payments API initiates account-to-account payments
+    (Payment Initiation Service) over the UK Faster Payments rails as a cheaper,
+    near-instant alternative to cards, direct debits and standing orders.
+    Payments, standing orders, recurring and reverse payments are authorised
+    through Moneyhub's OpenID Connect / OAuth2 identity layer using dedicated
+    payment scopes (mh:payment, mh:standing_order, mh:recurring_payment,
+    mh:reverse_payment); the flow is documented but no standalone downloadable
+    OpenAPI is published for the payment-initiation surface.
+  humanURL: https://www.moneyhub.com/apis/open-banking-payments
+  baseURL: https://identity.moneyhub.co.uk/oidc
+  tags:
+  - Payments
+  - Payment Initiation
+  - Account-to-Account
+  - Faster Payments
+  - PISP
+  properties:
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/open-banking-payments
+  - type: Documentation
+    url: https://www.moneyhub.com/payments-open-payment-api
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: Authentication
+    url: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+common:
+- type: Website
+  url: https://www.moneyhub.com/
+- type: DeveloperPortal
+  url: https://docs.moneyhubenterprise.com/
+- type: Documentation
+  url: https://docs.moneyhubenterprise.com/docs/introduction
+- type: APIReference
+  url: https://moneyhub.github.io/api-docs/
+- type: GettingStarted
+  url: https://docs.moneyhubenterprise.com/docs/getting-started
+- type: Authentication
+  url: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+- type: GitHubOrganization
+  url: https://github.com/moneyhub
+- type: LinkedIn
+  url: https://www.linkedin.com/company/moneyhub
+- type: Blog
+  url: https://www.moneyhub.com/blog
+- type: SignUp
+  url: https://www.moneyhub.com/contact
+- type: TermsOfService
+  url: https://moneyhub.com/policies/global-terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.moneyhub.com/privacy-policy/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,105 @@
+aid: moneyhub
+name: Moneyhub
+review:
+  question: Does Moneyhub publish a real public developer portal with a downloadable OpenAPI, and what is its API and auth posture?
+  answer: true
+  date: '2026-07-24'
+  reviewer: API Evangelist
+findings:
+  summary: |
+    Moneyhub is an API-first UK open banking / open finance provider (London HQ,
+    plus Bristol and Ljubljana), FCA-regulated as AISP, PISP and CISP. It runs a
+    real, multi-surface developer presence: a ReadMe-hosted enterprise docs
+    portal (docs.moneyhubenterprise.com), a Slate-style API reference on GitHub
+    Pages (moneyhub.github.io/api-docs), and a live OpenID Connect / OAuth2
+    identity layer (identity.moneyhub.co.uk/oidc). One machine-readable spec was
+    harvested verbatim: the Moneyhub Data API as Swagger 2.0 (openapi 2.0,
+    title "Moneyhub Data API" v2.0.0, host api.moneyhub.co.uk, basePath /v2.0,
+    50 paths) served directly at https://api.moneyhub.co.uk/swagger.json. The
+    Data API covers AIS aggregation, enriched transactions, categorisation,
+    affordability, spending/savings goals and standard financial statements, and
+    is bearer-token secured. The Open Banking Payments (PISP) surface is real and
+    documented but is driven through the OIDC authorization flow with dedicated
+    payment scopes rather than a standalone downloadable OpenAPI, so it is listed
+    as a documented API without a harvested spec (no fabrication).
+  homeMarket: United Kingdom
+  developerPortal:
+    - url: https://docs.moneyhubenterprise.com/
+      status: 429
+      note: ReadMe-hosted enterprise developer portal; live but rate-limited (HTTP 429) during review. Sub-pages docs/introduction, docs/getting-started and /reference returned 200 earlier in the session.
+    - url: https://moneyhub.github.io/api-docs/
+      status: 200
+      note: Slate-style human-readable API reference (Data + Payments) on GitHub Pages.
+  downloadableSpecs:
+    count: 1
+    specs:
+      - file: openapi/moneyhub-data-api-swagger.json
+        title: Moneyhub Data API
+        version: 2.0.0
+        format: Swagger 2.0
+        sourceURL: https://api.moneyhub.co.uk/swagger.json
+        httpStatus: 200
+        fetchedDate: '2026-07-24'
+        paths: 50
+        note: Fetched verbatim and parses as a valid Swagger 2.0 document. No separate Payments/Payouts/Issuing OpenAPI is published by the provider.
+  authModel:
+    scheme: OAuth2 / OpenID Connect
+    issuer: https://identity.moneyhub.co.uk/oidc
+    discovery:
+      url: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+      status: 200
+      note: Anonymous OIDC discovery document served. oauth-authorization-server variant returned 404.
+    grantTypes:
+      - authorization_code
+      - implicit
+      - refresh_token
+      - client_credentials
+      - urn:ietf:params:oauth:grant-type:jwt-bearer
+    pkce:
+      - S256
+    dataApiSecurity: Bearer token in Authorization header (securityDefinitions.Bearer, type apiKey) per the harvested Swagger.
+    paymentScopes:
+      - mh:payment
+      - mh:standing_order
+      - mh:recurring_payment
+      - mh:reverse_payment
+      - mh:pay_file_consent
+      - mh:account_verification
+    note: Payment initiation (PISP) is expressed as OIDC scopes/claims requested at the authorization endpoint, consistent with UK Open Banking FAPI-style consent.
+  webhooksEvents:
+    documented: partial
+    note: Data API exposes notification-thresholds resources and account sync operations; no standalone AsyncAPI or public webhook event catalog was confirmed during this review. Not fabricated.
+  postman:
+    found: false
+    note: No public Postman collection/workspace confirmed. Official SDKs exist instead (github.com/moneyhub/moneyhub-api-client Node, moneyhub-php-api-client PHP).
+  graphql:
+    found: false
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.moneyhub.co.uk/v2.0
+      documented: true
+    - protocol: OIDC
+      scheme: https
+      baseURL: https://identity.moneyhub.co.uk/oidc
+      documented: true
+      note: OpenID Connect / OAuth2 authorization, token, registration and end-session endpoints; carries payment initiation consent.
+sources:
+  - url: https://api.moneyhub.co.uk/swagger.json
+    type: OpenAPI
+    note: Swagger 2.0 Data API, HTTP 200, harvested verbatim to openapi/moneyhub-data-api-swagger.json.
+  - url: https://docs.moneyhubenterprise.com/docs/introduction
+    type: Documentation
+    note: Enterprise developer portal introduction (ReadMe).
+  - url: https://moneyhub.github.io/api-docs/
+    type: APIReference
+    note: Slate-style API reference on GitHub Pages, HTTP 200.
+  - url: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+    type: Authentication
+    note: OIDC discovery document, HTTP 200, anonymous.
+  - url: https://www.moneyhub.com/apis/open-banking-payments
+    type: Documentation
+    note: Open Banking Payments (PISP) product page, HTTP 200.
+  - url: https://www.moneyhub.com/about
+    type: Website
+    note: Company identity, London HQ, FCA AISP/PISP/CISP authorisations.
