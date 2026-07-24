@@ -1,0 +1,35 @@
+generated: '2026-07-24'
+method: searched
+source: https://docs.moneyhubenterprise.com/docs/widgets-overview
+note: >-
+  Moneyhub ships an extensive library of low-code embeddable UI components
+  ("widgets" / embedded components) for Open Finance and payment journeys,
+  Moneyhub-hosted or self-hosted, instantiated in the browser and driven by an
+  event bus. Distinct from the server-side Node SDK in packages/.
+families:
+- family: Personal Financial Management (PFM)
+  components:
+  - Connections / Accounts widget
+  - Spending widget
+  docs: https://docs.moneyhubenterprise.com/docs/pfm-widgets-overview
+- family: Payments
+  components:
+  - Single Payment Widget
+  - Pay Link Widget
+  docs: https://docs.moneyhubenterprise.com/docs/single-payment-widget
+- family: Lending & Collections
+  components:
+  - Affordability Widget
+  - Standard Financial Statement widget
+  docs: https://docs.moneyhubenterprise.com/docs/lending-and-collection-widgets
+delivery:
+  hosting: [moneyhub-hosted, self-hosted]
+  interface: >-
+    Instantiated per docs/widget-interface with global parameters; emits a
+    documented event list (docs/event-list) consumed by the host app.
+  events_docs: https://docs.moneyhubenterprise.com/docs/event-list
+  security_docs: https://docs.moneyhubenterprise.com/docs/widget-security
+docs:
+- https://docs.moneyhubenterprise.com/docs/widgets-overview
+- https://docs.moneyhubenterprise.com/docs/getting-started-with-widgets
+- https://docs.moneyhubenterprise.com/docs/our-widgets

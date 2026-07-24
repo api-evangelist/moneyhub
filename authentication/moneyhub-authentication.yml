@@ -1,0 +1,74 @@
+generated: '2026-07-24'
+method: searched
+source: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+docs: https://docs.moneyhubenterprise.com/docs/authentication
+note: >-
+  The Swagger 2.0 Data API declares a Bearer apiKey scheme, but Moneyhub's real
+  authorization surface is a full OpenID Connect / OAuth2 identity layer
+  (node-oidc-provider) at identity.moneyhub.co.uk/oidc, confirmed live from the
+  OIDC discovery document. Access tokens are obtained via authorization_code
+  (data consent), client_credentials (user/admin management) and jwt-bearer
+  grants, then presented as Bearer tokens to the Data API. FAPI-grade options are
+  supported: private_key_jwt and self_signed_tls_client_auth (mTLS) client
+  authentication, Pushed Authorisation Requests (PAR), and signed request objects.
+summary:
+  types:
+  - oauth2
+  - openIdConnect
+  - http
+  api_key_in:
+  - header
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+  - implicit
+  - jwt-bearer
+issuer: https://identity.moneyhub.co.uk/oidc
+endpoints:
+  authorization: https://identity.moneyhub.co.uk/oidc/auth
+  token: https://identity.moneyhub.co.uk/oidc/token
+  jwks: https://identity.moneyhub.co.uk/oidc/certs
+  registration: https://identity.moneyhub.co.uk/oidc/reg
+grant_types:
+- authorization_code
+- implicit
+- refresh_token
+- client_credentials
+- urn:ietf:params:oauth:grant-type:jwt-bearer
+client_auth_methods:
+- client_secret_basic
+- private_key_jwt
+- self_signed_tls_client_auth
+- none
+id_token_signing_algs:
+- RS256
+- PS256
+- ES256
+- HS256
+features:
+  pushed_authorisation_requests: true
+  mutual_tls: true
+  request_object_signing: true
+  refresh_tokens: true
+schemes:
+- name: OpenIDConnect
+  type: openIdConnect
+  openIdConnectUrl: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+  sources:
+  - https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://identity.moneyhub.co.uk/oidc/auth
+    tokenUrl: https://identity.moneyhub.co.uk/oidc/token
+  - flow: clientCredentials
+    tokenUrl: https://identity.moneyhub.co.uk/oidc/token
+  sources:
+  - https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+- name: Bearer
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/moneyhub-data-api-swagger.json

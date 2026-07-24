@@ -1,0 +1,57 @@
+generated: '2026-07-24'
+method: searched
+source: https://docs.moneyhubenterprise.com/docs
+note: >-
+  Cross-cutting request/response semantics for the Moneyhub Open Finance
+  platform, harvested from the docs and derived from the Swagger 2.0 Data API.
+authentication:
+  style: bearer
+  detail: >-
+    OpenID Connect / OAuth2 Bearer access tokens issued by
+    identity.moneyhub.co.uk/oidc. See authentication/moneyhub-authentication.yml
+    and scopes/moneyhub-scopes.yml.
+idempotency:
+  supported: false
+  note: >-
+    Moneyhub does not document an idempotency-key header for the Data or Payments
+    API. Payment safety is instead handled through the consent/authorisation flow
+    and payment status polling.
+rate_limiting:
+  documented: true
+  docs: https://docs.moneyhubenterprise.com/docs/rate-limit
+  limit: 1000 requests per minute per API client (Data API)
+  sync_limit: POST /sync per connection limited to once every 5 seconds
+  response_status: 429 Too Many Requests
+  headers:
+  - Retry-After
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  note: Payment initiation and connection initiation are currently not rate-limited.
+pagination:
+  style: offset
+  detail: >-
+    Collection endpoints (e.g. GET /transactions) accept limit/offset query
+    parameters and return results with paging metadata. Cursor-style paging is
+    not documented.
+versioning:
+  scheme: uri-path
+  current: v3
+  supported: [v2, v3]
+  docs: https://docs.moneyhubenterprise.com/docs/versioning
+  detail: Major version carried in the base path (/v2.0, /v3.0).
+error_envelope:
+  fields: [statusCode, statusMessage, code, error, error_description]
+  aspsp_downstream: error_description contains "ASPSP" with HTTP 502 for bank/provider failures
+  docs: https://docs.moneyhubenterprise.com/docs/error-handling
+  see: errors/moneyhub-problem-types.yml
+webhooks:
+  supported: true
+  formats: [application/json, application/jwt]
+  detail: >-
+    JWT format follows the Security Event Token (SET, RFC 8417) standard and is
+    signed for verification. See asyncapi/moneyhub-webhooks.yml.
+security_features:
+  mutual_tls: true
+  pushed_authorisation_requests: true
+  ip_allowlisting: https://docs.moneyhubenterprise.com/docs/ip-addresses-of-moneyhub-services

@@ -1,0 +1,13 @@
+generated: '2026-07-24'
+method: searched
+probe: true
+source: https://moneyhub.com/policies/security-and-trust-at-moneyhub/
+url: https://moneyhub.com/policies/security-and-trust-at-moneyhub/
+certifications:
+- ISO 27001
+evidence:
+- source: https://moneyhub.com/policies/security-and-trust-at-moneyhub/
+  keywords:
+  - iso 27001
+  - iso/iec 27001
+  - trust center

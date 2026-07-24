@@ -1,0 +1,20 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Moneyhub Data API
+  version: 1.0.0
+extends: openapi/moneyhub-data-api-swagger.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: moneyhub
+    x-apievangelist-real-auth: OpenID Connect / OAuth2 at identity.moneyhub.co.uk/oidc
+    x-apievangelist-scopes: scopes/moneyhub-scopes.yml
+    x-apievangelist-conventions: conventions/moneyhub-conventions.yml
+    x-apievangelist-errors: errors/moneyhub-problem-types.yml
+    x-apievangelist-webhooks: asyncapi/moneyhub-webhooks.yml
+    x-apievangelist-rate-limit: 1000 requests/minute per API client (429 + Retry-After)
+    x-apievangelist-note: >-
+      The bundled Bearer apiKey securityDefinition understates the auth surface;
+      tokens are issued by a full OIDC/OAuth2 identity layer (authorization_code,
+      client_credentials and jwt-bearer grants, mTLS + private_key_jwt client
+      auth, PAR).

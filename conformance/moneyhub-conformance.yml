@@ -1,0 +1,39 @@
+generated: '2026-07-24'
+method: searched
+source: https://docs.moneyhubenterprise.com/docs
+note: >-
+  Standards conformance asserted from the OIDC discovery document, the docs
+  (authentication, webhooks, mTLS, PAR) and Moneyhub's FCA regulatory status as a
+  UK Open Banking AISP/PISP/CISP. Compliance certifications (ISO 27001) are
+  captured in security/moneyhub-trust-center.yml.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: OIDC discovery advertises OAuth2 authorization/token endpoints and grant types.
+- id: openid-connect
+  conforms: true
+  evidence: OpenID Certified node-oidc-provider at identity.moneyhub.co.uk/oidc; id_token issuance.
+- id: oauth2-par
+  conforms: true
+  evidence: Pushed Authorisation Requests documented (docs/pushed-authorisation-requests-par).
+- id: fapi
+  conforms: true
+  evidence: private_key_jwt + self_signed_tls_client_auth (mTLS), signed request objects, PAR — FAPI-grade controls.
+- id: mutual-tls
+  conforms: true
+  evidence: self_signed_tls_client_auth token endpoint auth method; mTLS certificate docs.
+- id: uk-open-banking
+  conforms: true
+  evidence: FCA-regulated AISP/PISP (ref 809360); Faster Payments A2A initiation over Open Banking rails.
+- id: psd2
+  conforms: true
+  evidence: Operates as PSD2/UK Open Banking AISP and PISP.
+- id: rfc8417-set
+  conforms: true
+  evidence: JWT webhooks use the Security Event Token (SET) standard.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Error envelope is a custom {statusCode, code, error, error_description} shape, not problem+json.
+- id: scim
+  conforms: true
+  evidence: SCIM user scopes present (scim_user:read/write, scim_user:subtenants:assign).

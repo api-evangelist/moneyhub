@@ -1,0 +1,40 @@
+generated: '2026-07-24'
+method: searched
+source: https://docs.moneyhubenterprise.com/docs/test-our-api
+note: >-
+  Moneyhub ships a full sandbox built on mock financial institutions (API/Open
+  Banking and legacy screen-scraping) plus test API users. Payment behaviour is
+  driven by magic payment-reference values rather than test card numbers. Values
+  below are published in the testing docs verbatim.
+test_users:
+  docs: https://docs.moneyhubenterprise.com/docs/test-api-users
+  detail: >-
+    Test API users with sample accounts and transactions can be created; the mock
+    bank offers a "Log in as demo user" button with a pre-seeded account set.
+mock_institutions:
+- name: Moneyhub Open Banking Mock
+  bank_id: 1ffe704d39629a929c8e293880fb449a
+  type: api/open-banking
+  supports: [new connection, payments, webhooks]
+  login: "Log in as demo user"
+payment_test_references:
+- reference: INVALID REQUEST
+  effect: Payment fails on the initial request before redirect to the bank.
+- reference: INVALID SUBMISSION
+  effect: Payment fails on submission after redirect back from the bank.
+- reference: REJECTED
+  effect: Fires the paymentError webhook (payment rejected).
+- reference: INCLUDE CHARGES
+  effect: Applies payment charges to the test payment.
+- reference: <any other value>
+  effect: Payment succeeds.
+testable_webhooks:
+- newTransactions
+- paymentCompleted
+- paymentError
+- reauthReminder
+docs_pages:
+- https://docs.moneyhubenterprise.com/docs/testing
+- https://docs.moneyhubenterprise.com/docs/test-our-api
+- https://docs.moneyhubenterprise.com/docs/mock-bank-accounts
+- https://docs.moneyhubenterprise.com/docs/test-api-users

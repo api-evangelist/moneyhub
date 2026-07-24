@@ -1,0 +1,141 @@
+generated: '2026-07-24'
+method: derived
+source: openapi/moneyhub-data-api-swagger.json
+note: 'Entity-relationship graph derived from Swagger 2.0 definitions ($ref links). The Moneyhub Data
+  API models user financial data: accounts, transactions, holdings, categories, goals, affordability reports
+  and standard financial statements.'
+entity_count: 66
+relationship_count: 0
+core_entities:
+- account
+- transaction
+- holding
+- category
+- beneficiary
+- counterparty
+- affordability
+- savingsGoal
+- spendingGoal
+- standardFinancialStatement
+entities:
+- name: Transaction
+  fields: 32
+- name: QueryParams
+  fields: 28
+- name: Account
+  fields: 24
+- name: TransactionUnenriched
+  fields: 24
+- name: RegularTransactions
+  fields: 21
+- name: Statement
+  fields: 20
+- name: RentalRecords
+  fields: 19
+- name: AccountDetails
+  fields: 18
+- name: Beneficiary
+  fields: 14
+- name: GlobalCounterpartyV3
+  fields: 14
+- name: StandingOrder
+  fields: 13
+- name: RentalRecordsPost
+  fields: 13
+- name: HoldingWithMatchesAndHistory
+  fields: 11
+- name: TransactionPost
+  fields: 11
+- name: TransactionPatch
+  fields: 11
+- name: HoldingWithMatches
+  fields: 10
+- name: SavingsGoals
+  fields: 10
+- name: AccountPost
+  fields: 8
+- name: Holding
+  fields: 8
+- name: Affordability
+  fields: 7
+- name: Counterparty
+  fields: 7
+- name: RecurringTransactionEstimate
+  fields: 7
+- name: SpendingGoal
+  fields: 7
+- name: Project
+  fields: 6
+- name: SavingsGoalsPost
+  fields: 6
+- name: SavingsGoalsPatch
+  fields: 6
+- name: AffordabilityIncome
+  fields: 5
+- name: TransactionSplit
+  fields: 5
+- name: StandardFinancialStatement
+  fields: 5
+- name: StandardFinancialStatementsMetadata
+  fields: 5
+- name: Error
+  fields: 5
+- name: Amount
+  fields: 4
+- name: CategoriseTransactions
+  fields: 4
+- name: Category
+  fields: 4
+- name: ProjectPatch
+  fields: 4
+- name: TransactionFile
+  fields: 4
+- name: TransactionSplitPost
+  fields: 4
+- name: SpendingAnalysisPost
+  fields: 4
+- name: SpendingGoalPost
+  fields: 4
+- name: InternalError
+  fields: 4
+- name: AffordabilityPost
+  fields: 3
+- name: AffordabilityIncomePost
+  fields: 3
+- name: Balance
+  fields: 3
+- name: AccountPatch
+  fields: 3
+- name: CategoriseTransactionsPost
+  fields: 3
+- name: NotificationThreshold
+  fields: 3
+- name: ProjectPost
+  fields: 3
+- name: TransactionDetails
+  fields: 3
+- name: TransactionSplitPatch
+  fields: 3
+- name: StandardFinancialStatementsPost
+  fields: 3
+- name: SyncPost
+  fields: 3
+- name: Tax
+  fields: 3
+- name: Links
+  fields: 3
+- name: AccountSync
+  fields: 2
+- name: AffordabilityMetadata
+  fields: 2
+- name: AffordabilityIncomeMetadata
+  fields: 2
+- name: PerformanceScore
+  fields: 2
+- name: BalancePost
+  fields: 2
+- name: HoldingsValuation
+  fields: 2
+- name: CategoryPost
+  fields: 2
+relationships: []

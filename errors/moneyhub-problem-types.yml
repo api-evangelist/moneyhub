@@ -1,0 +1,46 @@
+generated: '2026-07-24'
+method: derived
+source: openapi/moneyhub-data-api-swagger.json
+docs: https://docs.moneyhubenterprise.com/docs/error-handling
+format: custom
+note: 'Moneyhub does not use RFC 9457 problem+json. Error envelope (from docs error-handling): {statusCode,
+  statusMessage, code, error, error_description}. Downstream bank failures carry "ASPSP" in error_description
+  with HTTP 502. Rate-limit errors return 429 with Retry-After.'
+envelope:
+  fields:
+  - statusCode
+  - statusMessage
+  - code
+  - error
+  - error_description
+  aspsp_indicator: error_description contains "ASPSP"
+problems:
+- status: 400
+  title: Bad Request
+  occurrences: 18
+  remediation: Validate request body/query parameters against the schema.
+- status: 401
+  title: Unauthorized
+  occurrences: 75
+  remediation: Provide a valid Bearer access token from the OIDC token endpoint.
+- status: 403
+  title: Forbidden
+  occurrences: 75
+  remediation: The token lacks the required scope/permission for this resource; request the scope.
+- status: 404
+  title: Not Found
+  occurrences: 50
+  remediation: The referenced resource (account, transaction, report) does not exist.
+- status: 429
+  title: Too Many Requests
+  occurrences: 1
+  remediation: Rate limit exceeded (1000 req/min). Honour the Retry-After header before retrying.
+- status: 500
+  title: Internal Server Error
+  occurrences: 1
+  remediation: Transient platform error; retry with backoff.
+- status: 502
+  title: Bad Gateway
+  occurrences: 0
+  remediation: Downstream ASPSP (bank) error. Inspect error_description for "ASPSP" and surface to user.
+  source: docs error-handling

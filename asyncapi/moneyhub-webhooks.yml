@@ -1,0 +1,48 @@
+generated: '2026-07-24'
+method: searched
+source: https://docs.moneyhubenterprise.com/docs/webhooks-introduction
+spec_type: Webhooks
+note: >-
+  Moneyhub documents a rich webhook surface for data-sync, transaction and
+  payment lifecycle events. No published AsyncAPI document was found, so this is
+  captured as a webhook catalogue (no fabrication of a spec). Payloads are
+  delivered as application/json or as signed application/jwt (Security Event
+  Token, RFC 8417) for verification, with retries.
+delivery:
+  formats: [application/json, application/jwt]
+  signing: JWT format signed per RFC 8417 (SET); kid in header identifies the key.
+  jwks: https://identity.moneyhub.co.uk/oidc/certs
+  retries: true
+  envelope_fields: [id, eventType, userId, payload]
+  docs:
+  - https://docs.moneyhubenterprise.com/docs/webhooks-introduction
+  - https://docs.moneyhubenterprise.com/docs/webhook-format
+events:
+- eventType: syncCompleted
+  description: A connection sync finished (success or error).
+- eventType: newTransactions
+  description: New transactions are available for a connection.
+- eventType: updatedTransactions
+  description: Transactions were updated (e.g. categorisation or metadata).
+- eventType: deletedTransactions
+  description: Transactions were deleted or removed.
+- eventType: restoredTransactions
+  description: Previously deleted transactions were restored.
+- eventType: newRegularTransactions
+  description: New regular (recurring) transactions detected.
+- eventType: updatedRegularTransactions
+  description: Regular transactions updated.
+- eventType: postConnectionEnrichmentComplete
+  description: Post-connection enrichment completed for a connection.
+- eventType: deletedAccount
+  description: An account was deleted or is no longer available.
+- eventType: addFirstConnection
+  description: A user added their first connection.
+- eventType: balanceThreshold
+  description: A balance threshold was reached.
+- eventType: reauthReminder
+  description: A connection consent is nearing expiry and needs re-authentication.
+- eventType: paymentCompleted
+  description: A payment was submitted/completed successfully.
+- eventType: paymentError
+  description: A payment failed or errored.

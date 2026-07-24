@@ -1,0 +1,240 @@
+generated: '2026-07-24'
+method: searched
+source: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+docs: https://docs.moneyhubenterprise.com/docs/scopes
+note: 'Scopes read live from the Moneyhub OIDC discovery document (995 scopes_supported total). 887 of
+  these are per-institution "id:<bank_id>" connection scopes (excluded here); 108 functional/permission
+  scopes are catalogued below. Individual deployments enable a subset. Scope reference: https://docs.moneyhubenterprise.com/docs/scopes'
+schemes:
+- name: OpenIDConnect
+  type: oauth2
+  source: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+  authorizationUrl: https://identity.moneyhub.co.uk/oidc/auth
+  tokenUrl: https://identity.moneyhub.co.uk/oidc/token
+  grants:
+  - authorization_code
+  - implicit
+  - refresh_token
+  - client_credentials
+  - urn:ietf:params:oauth:grant-type:jwt-bearer
+counts:
+  total_supported: 995
+  institution_id_scopes: 887
+  functional_scopes: 108
+scopes:
+- scope: openid
+  description: Required. Use the OpenID Connect interface; returns an id token.
+- scope: offline_access
+  description: Request ongoing access; issues a refresh token.
+- scope: id:all
+  description: Access to id all.
+- scope: id:api
+  description: Access to id api.
+- scope: id:legacy
+  description: Access to id legacy.
+- scope: id:test
+  description: Access to id test.
+- scope: id:zoopla
+  description: Access to id zoopla.
+- scope: id:mouseprice
+  description: Access to id mouseprice.
+- scope: id:experian
+  description: Access to id experian.
+- scope: id:autotrader
+  description: Access to id autotrader.
+- scope: transactions:read:all
+  description: Access to transactions read all.
+- scope: transactions:read:in
+  description: Access to transactions read in.
+- scope: transactions:read:out
+  description: Access to transactions read out.
+- scope: transactions_unenriched:read:all
+  description: Access to transactions unenriched read all.
+- scope: transactions_unenriched:read:in
+  description: Access to transactions unenriched read in.
+- scope: transactions_unenriched:read:out
+  description: Access to transactions unenriched read out.
+- scope: transactions:write
+  description: Access to transactions write.
+- scope: transactions:write:all
+  description: Access to transactions write all.
+- scope: accounts:read
+  description: Access to accounts read.
+- scope: accounts:write
+  description: Access to accounts write.
+- scope: accounts:write:all
+  description: Access to accounts write all.
+- scope: accounts_details:read
+  description: Access to accounts details read.
+- scope: categories:read
+  description: Access to categories read.
+- scope: categories:write
+  description: Access to categories write.
+- scope: spending_analysis:read
+  description: Access to spending analysis read.
+- scope: spending_goals:read
+  description: Access to spending goals read.
+- scope: spending_goals:write
+  description: Access to spending goals write.
+- scope: spending_goals:write:all
+  description: Access to spending goals write all.
+- scope: savings_goals:read
+  description: Access to savings goals read.
+- scope: savings_goals:write
+  description: Access to savings goals write.
+- scope: savings_goals:write:all
+  description: Access to savings goals write all.
+- scope: reauth
+  description: Access to reauth.
+- scope: refresh
+  description: Access to refresh.
+- scope: reconsent
+  description: Access to reconsent.
+- scope: reverse_payment
+  description: Access to reverse payment.
+- scope: user:create
+  description: Access to user create.
+- scope: user:delete
+  description: Access to user delete.
+- scope: connection:read
+  description: Access to connection read.
+- scope: connection:update
+  description: Access to connection update.
+- scope: connection:delete
+  description: Access to connection delete.
+- scope: user:read
+  description: Access to user read.
+- scope: user:update
+  description: Access to user update.
+- scope: payee:create
+  description: Access to payee create.
+- scope: payee:read
+  description: Access to payee read.
+- scope: pay_link:create
+  description: Access to pay link create.
+- scope: pay_link:read
+  description: Access to pay link read.
+- scope: payment:read
+  description: Access to payment read.
+- scope: payment
+  description: Access to payment.
+- scope: projects:read
+  description: Access to projects read.
+- scope: projects:write
+  description: Access to projects write.
+- scope: projects:delete
+  description: Access to projects delete.
+- scope: tax:read
+  description: Access to tax read.
+- scope: auth_requests:read
+  description: Access to auth requests read.
+- scope: auth_requests:write
+  description: Access to auth requests write.
+- scope: recurring_payment:create
+  description: Access to recurring payment create.
+- scope: recurring_payment:read
+  description: Access to recurring payment read.
+- scope: recurring_payment:funds_confirmation
+  description: Access to recurring payment funds confirmation.
+- scope: pay_file_consent:create
+  description: Access to pay file consent create.
+- scope: pay_file_consent:read
+  description: Access to pay file consent read.
+- scope: standing_orders:read
+  description: Access to standing orders read.
+- scope: standing_orders_detail:read
+  description: Access to standing orders detail read.
+- scope: standing_orders:create
+  description: Access to standing orders create.
+- scope: beneficiaries:read
+  description: Access to beneficiaries read.
+- scope: beneficiaries_detail:read
+  description: Access to beneficiaries detail read.
+- scope: regular_transactions:read
+  description: Access to regular transactions read.
+- scope: regular_transactions:write
+  description: Access to regular transactions write.
+- scope: osip:read
+  description: Access to osip read.
+- scope: pay_file:read
+  description: Access to pay file read.
+- scope: pay_file:write
+  description: Access to pay file write.
+- scope: rental_records:read
+  description: Access to rental records read.
+- scope: rental_records:write
+  description: Access to rental records write.
+- scope: affordability:read
+  description: Access to affordability read.
+- scope: affordability_restricted:read
+  description: Access to affordability restricted read.
+- scope: affordability:write
+  description: Access to affordability write.
+- scope: affordability_income:read
+  description: Access to affordability income read.
+- scope: affordability_income:write
+  description: Access to affordability income write.
+- scope: nudges:read
+  description: Access to nudges read.
+- scope: nudges:write
+  description: Access to nudges write.
+- scope: statements_basic:read
+  description: Access to statements basic read.
+- scope: statements_detail:read
+  description: Access to statements detail read.
+- scope: widget_authentication
+  description: Access to widget authentication.
+- scope: widget:launch
+  description: Access to widget launch.
+- scope: reseller:create
+  description: Access to reseller create.
+- scope: consent_history:read
+  description: Access to consent history read.
+- scope: scim_user:write
+  description: Access to scim user write.
+- scope: scim_user:read
+  description: Access to scim user read.
+- scope: scim_user:subtenants:assign
+  description: Access to scim user subtenants assign.
+- scope: standard_financial_statement:write
+  description: Access to standard financial statement write.
+- scope: standard_financial_statement:read
+  description: Access to standard financial statement read.
+- scope: standard_financial_statement_restricted:read
+  description: Access to standard financial statement restricted read.
+- scope: collections_lite:write
+  description: Access to collections lite write.
+- scope: collections_lite_restricted:read
+  description: Access to collections lite restricted read.
+- scope: decisioning_journeys_restricted:write
+  description: Access to decisioning journeys restricted write.
+- scope: savings_goals_ai:write
+  description: Access to savings goals ai write.
+- scope: categorisation
+  description: Access to categorisation.
+- scope: account_information_widget_restricted:read
+  description: Access to account information widget restricted read.
+- scope: caas:transactions:write
+  description: Access to caas transactions write.
+- scope: caas:transactions:read
+  description: Access to caas transactions read.
+- scope: caas:transactions:delete
+  description: Access to caas transactions delete.
+- scope: caas:transaction_splits:write
+  description: Access to caas transaction splits write.
+- scope: caas:transaction_splits:read
+  description: Access to caas transaction splits read.
+- scope: caas:transaction_splits:delete
+  description: Access to caas transaction splits delete.
+- scope: caas:enhanced_transactions:read
+  description: Access to caas enhanced transactions read.
+- scope: caas:regular_transactions:read
+  description: Access to caas regular transactions read.
+- scope: caas:categories:read
+  description: Access to caas categories read.
+- scope: caas:categories:write
+  description: Access to caas categories write.
+- scope: caas:categories:delete
+  description: Access to caas categories delete.
+- scope: caas:users:delete
+  description: Access to caas users delete.

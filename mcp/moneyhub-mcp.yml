@@ -1,0 +1,246 @@
+generated: '2026-07-24'
+method: derived
+status: candidate
+source: openapi/moneyhub-data-api-swagger.json
+note: No official hosted Moneyhub MCP server was found. This is a CANDIDATE tool list derived one-per-operation
+  from the Swagger 2.0 Data API. The source spec declares no operationIds, so source_operation is referenced
+  by METHOD + path. Not an endorsed server.
+server:
+  name: moneyhub
+  transport: http
+  url: null
+tool_count: 77
+tools:
+- name: list_accounts
+  description: Retrieve all accounts for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts
+- name: create_accounts
+  description: Create a single account for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /accounts
+- name: list_accounts_list
+  description: Retrieve all accounts for a user without additional data
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts-list
+- name: get_accounts
+  description: Retrieve a single account
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/{accountId}
+- name: update_accounts
+  description: Update a single account
+  source_operation: openapi/moneyhub-data-api-swagger.json#PATCH /accounts/{accountId}
+- name: delete_accounts
+  description: Delete a single account
+  source_operation: openapi/moneyhub-data-api-swagger.json#DELETE /accounts/{accountId}
+- name: list_accounts_balances
+  description: Retrieve the historical balances for an account
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/{accountId}/balances
+- name: create_accounts_balances
+  description: Add a new balance for an account
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /accounts/{accountId}/balances
+- name: list_accounts_holdings
+  description: Retrieve the holdings for an account
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/{accountId}/holdings
+- name: get_accounts_holdings
+  description: Retrieves a single holding for an account with matched ISIN codes
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/{accountId}/holdings/{holdingId}
+- name: list_accounts_holdings_with_matches
+  description: Retrieve the holdings for an account with matched ISIN codes
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/{accountId}/holdings-with-matches
+- name: list_accounts_counterparties
+  description: Retrieve the counterparties for an account
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/{accountId}/counterparties
+- name: create_accounts_recurring_transactions
+  description: Create an estimate of the recurring transactions for an account
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /accounts/{accountId}/recurring-transactions
+- name: list_accounts_notification_thresholds
+  description: Retrieve the notification thresholds for an account
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/{accountId}/notification-thresholds
+- name: create_accounts_notification_thresholds
+  description: Add a notification threshold to an account
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /accounts/{accountId}/notification-thresholds
+- name: update_accounts_notification_thresholds
+  description: Update a single notification threshold
+  source_operation: openapi/moneyhub-data-api-swagger.json#PATCH /accounts/{accountId}/notification-thresholds/{thresholdId}
+- name: delete_accounts_notification_thresholds
+  description: Delete a single notification threshold
+  source_operation: openapi/moneyhub-data-api-swagger.json#DELETE /accounts/{accountId}/notification-thresholds/{thresholdId}
+- name: list_accounts_statements
+  description: Retrieve the statements for an account
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/{accountId}/statements
+- name: list_accounts_standing_orders
+  description: Retrieve the standing orders for an account
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/{accountId}/standing-orders
+- name: list_accounts_syncs
+  description: Retrieve sync information for all of a user's accounts
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /accounts/syncs
+- name: list_affordability
+  description: List of metadata for all affordability calculations for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /affordability
+- name: create_affordability
+  description: Request affordability calculation for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /affordability
+- name: list_affordability_confidence
+  description: Get the affordability confidence calculation for a user, given the account and transaction
+    data currently available
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /affordability/confidence
+- name: get_affordability
+  description: Get an existing affordability calculation for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /affordability/{reportId}
+- name: list_affordability_income
+  description: List of metadata for all affordability income calculations for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /affordability/income
+- name: create_affordability_income
+  description: Request affordability income calculation for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /affordability/income
+- name: get_affordability_income
+  description: Get an existing affordability income calculation for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /affordability/income/{reportId}
+- name: list_beneficiaries
+  description: Retrieve all beneficiaries for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /beneficiaries
+- name: get_beneficiaries
+  description: Retrieve a single beneficiary
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /beneficiaries/{beneficiaryId}
+- name: list_global_counterparties
+  description: Retrieve global counterparties
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /global-counterparties
+- name: list_transactions
+  description: Retrieve all transactions for a user that have been enriched with our categorisation engine
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /transactions
+- name: create_transactions
+  description: Create a single transaction for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /transactions
+- name: list_transactions_unenriched
+  description: Retrieve all transactions for a user - does not include data-enriched transaction properties
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /transactions/unenriched
+- name: get_transactions
+  description: Retrieve a single transaction that has been enriched with our categorisation engine
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /transactions/{transactionId}
+- name: update_transactions
+  description: Update a single transaction
+  source_operation: openapi/moneyhub-data-api-swagger.json#PATCH /transactions/{transactionId}
+- name: delete_transactions
+  description: Delete a single transaction
+  source_operation: openapi/moneyhub-data-api-swagger.json#DELETE /transactions/{transactionId}
+- name: get_transactions_unenriched
+  description: Retrieve a single transaction - does not include data-enriched transaction properties
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /transactions/unenriched/{transactionId}
+- name: create_transactions_collection
+  description: Create multiple transactions for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /transactions-collection
+- name: list_transactions_files
+  description: Retrieve a transactions attachments
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /transactions/{transactionId}/files
+- name: create_transactions_files
+  description: Add an attachment to a transaction
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /transactions/{transactionId}/files
+- name: get_transactions_files
+  description: Retrieve a transactions attachment
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /transactions/{transactionId}/files/{fileId}
+- name: delete_transactions_files
+  description: Delete a single attachment on a transaction
+  source_operation: openapi/moneyhub-data-api-swagger.json#DELETE /transactions/{transactionId}/files/{fileId}
+- name: list_transactions_splits
+  description: Retrieve a transactions splits
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /transactions/{transactionId}/splits
+- name: create_transactions_splits
+  description: Split a transaction
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /transactions/{transactionId}/splits
+- name: delete_transactions_splits
+  description: Merge split transactions
+  source_operation: openapi/moneyhub-data-api-swagger.json#DELETE /transactions/{transactionId}/splits
+- name: update_transactions_splits
+  description: Patch a transaction split
+  source_operation: openapi/moneyhub-data-api-swagger.json#PATCH /transactions/{transactionId}/splits/{splitId}
+- name: list_categories
+  description: Retrieve all categories for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /categories
+- name: create_categories
+  description: Add a new custom category for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /categories
+- name: get_categories
+  description: Retrieve a single category
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /categories/{categoryId}
+- name: list_category_groups
+  description: Retrieve all category groups for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /category-groups
+- name: create_categorise_transactions
+  description: Categorises a given set of transactions
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /categorise-transactions
+- name: list_regular_transactions
+  description: Retrieve regular transactions
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /regular-transactions
+- name: create_regular_transactions_detect
+  description: Detect regular transactions
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /regular-transactions/{accountId}/detect
+- name: list_rental_records
+  description: Retrieve rental recognition record
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /rental-records
+- name: create_rental_records
+  description: Create a rental recognition record for user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /rental-records
+- name: delete_rental_records
+  description: Delete a rental record
+  source_operation: openapi/moneyhub-data-api-swagger.json#DELETE /rental-records/{rentalId}
+- name: create_spending_analysis
+  description: Retrieve spending analysis by categories, projects and accounts
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /spending-analysis
+- name: list_spending_goals
+  description: Retrieve all spending goals for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /spending-goals
+- name: create_spending_goals
+  description: Create a single spending goal for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /spending-goals
+- name: get_spending_goals
+  description: Retrieve a single spending goal
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /spending-goals/{goalId}
+- name: update_spending_goals
+  description: Update a single spending goal
+  source_operation: openapi/moneyhub-data-api-swagger.json#PATCH /spending-goals/{goalId}
+- name: delete_spending_goals
+  description: Delete a single spending goal
+  source_operation: openapi/moneyhub-data-api-swagger.json#DELETE /spending-goals/{goalId}
+- name: list_savings_goals
+  description: Retrieve all saving goals for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /savings-goals
+- name: create_savings_goals
+  description: Create a single savings goal for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /savings-goals
+- name: get_savings_goals
+  description: Retrieve a single savings goal
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /savings-goals/{goalId}
+- name: update_savings_goals
+  description: Update a single savings goal
+  source_operation: openapi/moneyhub-data-api-swagger.json#PATCH /savings-goals/{goalId}
+- name: delete_savings_goals
+  description: Delete a single savings goal
+  source_operation: openapi/moneyhub-data-api-swagger.json#DELETE /savings-goals/{goalId}
+- name: get_standard_financial_statements
+  description: Get an existing standard financial statement for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /standard-financial-statements/{reportId}
+- name: list_standard_financial_statements
+  description: List of metadata for all standard financial statements for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /standard-financial-statements
+- name: create_standard_financial_statements
+  description: Request standard financial statement for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /standard-financial-statements
+- name: create_sync
+  description: Sync an existing connection
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /sync/{connectionId}
+- name: list_projects
+  description: Retrieve all projects for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /projects
+- name: create_projects
+  description: Create a single project for a user
+  source_operation: openapi/moneyhub-data-api-swagger.json#POST /projects
+- name: get_projects
+  description: Retrieve a single project
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /projects/{projectId}
+- name: update_projects
+  description: Update a single project
+  source_operation: openapi/moneyhub-data-api-swagger.json#PATCH /projects/{projectId}
+- name: delete_projects
+  description: Delete a single project
+  source_operation: openapi/moneyhub-data-api-swagger.json#DELETE /projects/{projectId}
+- name: list_tax
+  description: Retrieve transactions to help answer SA105 - the Self Assessment questions for properties
+    for HMRC
+  source_operation: openapi/moneyhub-data-api-swagger.json#GET /tax

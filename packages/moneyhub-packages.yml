@@ -1,0 +1,27 @@
+generated: '2026-07-24'
+method: searched
+source: https://www.npmjs.com/package/@mft/moneyhub-api-client
+note: >-
+  Moneyhub publishes a first-party Node.js client SDK on npm under the @mft
+  (Moneyhub Financial Technology) scope, plus a multi-language examples
+  repository. No first-party Python/Java/.NET/Go SDK is published to a public
+  registry; integrators outside Node use the OIDC + REST surface directly.
+packages:
+- language: javascript
+  registry: npm
+  name: "@mft/moneyhub-api-client"
+  version: 6.99.0
+  url: https://www.npmjs.com/package/@mft/moneyhub-api-client
+  repo: https://github.com/moneyhub/moneyhub-api-client
+  install: npm install @mft/moneyhub-api-client
+  license: ISC
+  official: true
+  description: Node.js client for the Moneyhub API (OIDC auth, data, payments).
+examples:
+- name: moneyhub-api-examples
+  url: https://github.com/moneyhub/moneyhub-api-examples
+  languages: [python, javascript]
+  official: true
+  description: >-
+    Reference implementations showing how to communicate with Moneyhub's API in
+    various languages.

@@ -1,0 +1,36 @@
+generated: '2026-07-24'
+method: searched
+source: https://docs.moneyhubenterprise.com/docs/versioning
+note: >-
+  Moneyhub runs two concurrent major API versions (v2 and v3) with a documented
+  set of breaking changes at v3, and publishes a service-availability / SLO page.
+  No public status.io-style live status dashboard was found; the availability
+  page is the published uptime surface.
+versioning:
+  scheme: uri-path
+  current: v3
+  supported: [v2, v3]
+  docs: https://docs.moneyhubenterprise.com/docs/versioning
+deprecation:
+  policy: >-
+    v3 removes several v2 endpoints (POST /accounts/{accountId}/recurring-transactions,
+    GET /accounts/{accountId}/counterparties, GET /accounts-list) and changes
+    defaults (showTransactionData/showPerformanceScore false, enableAsync true,
+    affordability now asynchronous). Migration guidance is published per endpoint.
+  policy_url: https://docs.moneyhubenterprise.com/docs/versioning
+  sunset_header: false
+sla:
+  slo: "99.99%"
+  docs: https://docs.moneyhubenterprise.com/docs/system-availability-and-performance-metrics
+  detail: >-
+    General service-level objective of 99.99%, with per-service SLOs for the
+    Identity Service and API Gateway Service.
+status_page: https://docs.moneyhubenterprise.com/docs/system-availability-and-performance-metrics
+deprecated_endpoints:
+- path: POST /accounts/{accountId}/recurring-transactions
+  removed_in: v3
+  replacement: regular-transactions endpoints
+- path: GET /accounts/{accountId}/counterparties
+  removed_in: v3
+- path: GET /accounts-list
+  removed_in: v3

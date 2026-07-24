@@ -1,0 +1,23 @@
+generated: '2026-07-24'
+method: searched
+source: https://docs.moneyhubenterprise.com/docs/versioning
+note: >-
+  Moneyhub does not publish a dated release-notes feed; version change is
+  communicated through the major-version documentation. The most recent
+  structural change is the v2 -> v3 major version.
+scheme: major-version (uri-path)
+current_version: v3
+entries:
+- version: v3
+  breaking: true
+  highlights:
+  - Removed POST /accounts/{accountId}/recurring-transactions (use regular-transactions).
+  - Removed GET /accounts/{accountId}/counterparties and GET /accounts-list.
+  - Global counterparties standardised to v3 format (counterpartiesVersion removed).
+  - "GET /accounts: showTransactionData and showPerformanceScore now default to false."
+  - "POST /sync/{connectionId}: enableAsync now defaults to true."
+  - "POST /affordability now generates reports asynchronously (status pending -> complete)."
+- version: v2
+  breaking: false
+  highlights:
+  - Original stable Data API surface (host api.moneyhub.co.uk, basePath /v2.0).

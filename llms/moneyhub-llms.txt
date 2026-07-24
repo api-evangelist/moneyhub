@@ -1,0 +1,321 @@
+# API Reference - Moneyhub Documentation
+
+> Moneyhub provides a suite of APIs built on our Open Finance platform. As well as the APIs listed on this site we have additional APIs that are enabled only for certain partners, so if you are looking for something that isn't here, please reach out to us. Our APIs can be split into three core areas: Data Aggregation Data Enrichment Payments All our APIs are built on Open Standards, authentication and authorisation is with OpenID Connect. Data APIs are RESTful, JSON based and documented in Swagger / OpenAPI. Moneyhub, Moneyhub Connect and Moneyhub Enterprise are trading styles of Moneyhub Financial Technology Limited which is authorised and regulated by the Financial Conduct Authority (FCA).  Moneyhub Financial Technology is a registered AISP (Account Information Service Provider) and PISP (Payment Initiation Service Provider), reference no. 809360 at fca.org.uk/register.
+
+## Guides
+- [Moneyhub Open Finance API - Introduction](https://docs.moneyhubenterprise.com/docs/introduction.md): Introduction to the Moneyhub Open Finance API.
+- [Creating an API Client](https://docs.moneyhubenterprise.com/docs/getting-started.md): Here are some illustrated guides on how to get started with the Moneyhub Open Finance API:
+- [1. Admin Portal Sign Up](https://docs.moneyhubenterprise.com/docs/admin-portal-sign-up.md): Signing up and accessing the Moneyhub admin portal.
+- [2. Create a Client](https://docs.moneyhubenterprise.com/docs/create-a-client.md): Creating and configuring an API client for the Moneyhub API.
+- [Authorisation](https://docs.moneyhubenterprise.com/docs/one-time-use.md): Creating and completing a one-time connection for data.
+- [Authorisation](https://docs.moneyhubenterprise.com/docs/one-time-use.md): Creating and completing a one-time connection for data.
+- [User Management](https://docs.moneyhubenterprise.com/docs/ongoing-access.md): How ongoing access works and how to manage connections over time.
+- [User Management](https://docs.moneyhubenterprise.com/docs/ongoing-access.md): How ongoing access works and how to manage connections over time.
+- [Authorisation](https://docs.moneyhubenterprise.com/docs/authorisation.md): Authorisation and consent for ongoing access.
+- [4. Connect An Account](https://docs.moneyhubenterprise.com/docs/connect-an-account.md): Step-by-step guide to connecting a user's account.
+- [5. Querying Data](https://docs.moneyhubenterprise.com/docs/querying-data.md): How to query accounts, transactions, and other data after connecting.
+- [Authorisation](https://docs.moneyhubenterprise.com/docs/payments.md): Making your first payment via the API.
+- [Completing The Payment](https://docs.moneyhubenterprise.com/docs/completing-the-payment.md): Completing the payment after user authorisation.
+- [Admin Portal Access](https://docs.moneyhubenterprise.com/docs/admin-portal.md): Admin portal features and how to use them.
+- [Admin Portal Access](https://docs.moneyhubenterprise.com/docs/admin-portal.md): Admin portal features and how to use them.
+- [Admin Portal Users](https://docs.moneyhubenterprise.com/docs/api-admins.md): Managing API admins and access in the admin portal.
+- [Advanced Access Control](https://docs.moneyhubenterprise.com/docs/security.md): Security and access control in the admin portal.
+- [API Clients](https://docs.moneyhubenterprise.com/docs/api-clients.md): Registering OAuth clients via the admin portal and production settings.
+- [Creating an API Client](https://docs.moneyhubenterprise.com/docs/getting-started.md): Here are some illustrated guides on how to get started with the Moneyhub Open Finance API:
+- [Use Cases](https://docs.moneyhubenterprise.com/docs/use-cases.md): Use cases and example flows for the Moneyhub API.
+- [Single connection and one time access](https://docs.moneyhubenterprise.com/docs/use-case-1.md): Interactive guide for single connection and one time access
+- [Multiple connections  and ongoing access](https://docs.moneyhubenterprise.com/docs/use-case-2.md): Interactive guide for multiple connections and ongoing access
+- [Test our API](https://docs.moneyhubenterprise.com/docs/testing.md): Testing the API: mock institutions and test users.
+- [Test Banks](https://docs.moneyhubenterprise.com/docs/test-our-api.md): Credentials, payments, webhooks, and charges for testing.
+- [Mock Bank Accounts](https://docs.moneyhubenterprise.com/docs/mock-bank-accounts.md): Add accounts and transactions to the Moneyhub Open Banking Mock bank for testing
+- [Test API Users](https://docs.moneyhubenterprise.com/docs/test-api-users.md): This screencast shows you how to create test API users and get the test data associated with those users.
+- [Adding a test user with sample data](https://docs.moneyhubenterprise.com/docs/illustrative-guide-adding-a-test-user-with-sample-data.md): Adding a test user with sample data.
+- [Troubleshooting](https://docs.moneyhubenterprise.com/docs/troubleshooting.md): Common errors and how to resolve them.
+- [Available Bank Connections](https://docs.moneyhubenterprise.com/docs/available-connections.md): Banks and institutions available for connection via Moneyhub.
+- [Useful Links](https://docs.moneyhubenterprise.com/docs/useful-links.md): Links to specs, admin portal, and support.
+- [Sample Code](https://docs.moneyhubenterprise.com/docs/sample-code.md): Sample code and examples for common API operations.
+- [Versioning](https://docs.moneyhubenterprise.com/docs/versioning.md): ## Introduction to API Versions
+- [System Availability and Performance Metrics](https://docs.moneyhubenterprise.com/docs/system-availability-and-performance-metrics.md): Uptime, performance, and monitoring for Moneyhub services.
+- [API Security](https://docs.moneyhubenterprise.com/docs/api-security.md): Security model, certificates, and best practices for the API.
+- [How to Use Pushed Authorisation Request (PAR) Endpoint](https://docs.moneyhubenterprise.com/docs/pushed-authorisation-requests-par.md): Using PAR (Pushed Authorisation Requests) for authorisation URLs.
+- [Creating an Authorisation URL](https://docs.moneyhubenterprise.com/docs/creating-an-authorisation-url.md): The first step to the majority use cases.
+- [Using Request Parameter](https://docs.moneyhubenterprise.com/docs/using-request-parameter.md): Building the authorisation URL using the request parameter (required and optional fields).
+- [Scopes](https://docs.moneyhubenterprise.com/docs/scopes.md): We use scopes to both describe the access the user is granting and the way in which you would like the user to identify themselves.  Below is a summary of the scopes we provide, please check our discovery document available [here](https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration) to see which particular scopes are supported by a given deployment of our identity service.
+- [Claims](https://docs.moneyhubenterprise.com/docs/claims.md): OIDC claims and consent: account filtering, AIS consents, and permissions.
+- [Account Information Consent & Permissions](https://docs.moneyhubenterprise.com/docs/ais-consents.md): AIS consent expiration, default behaviour, and replacing permissions.
+- [Asynchronous Connections](https://docs.moneyhubenterprise.com/docs/asynchronous-connections.md): How asynchronous connections and background sync work.
+- [Reauth & Refresh Connection](https://docs.moneyhubenterprise.com/docs/refresh-connection.md): Refreshing a connection and re-syncing data.
+- [Benefits & Counterparties Check](https://docs.moneyhubenterprise.com/docs/counterparties-check.md): Counterparties check claim and consent.
+- [Transaction Categories Type](https://docs.moneyhubenterprise.com/docs/category-type.md): Category type claim for transaction categorisation.
+- [Authentication](https://docs.moneyhubenterprise.com/docs/authentication.md): We provide an OpenID Connect compliant interface that should work well with any OpenID Connect certified relying party software.
+- [Code examples](https://docs.moneyhubenterprise.com/docs/authentication-code-examples.md): Code examples for authenticating with the Moneyhub API.
+- [Mutual TLS Certificates](https://docs.moneyhubenterprise.com/docs/generating-mtls-certificates.md): Generating and using mTLS certificates for API authentication.
+- [Completing a Connection](https://docs.moneyhubenterprise.com/docs/completing-a-connection.md): Exchanging the authorisation code at the token endpoint to complete a connection.
+- [Client Credentials](https://docs.moneyhubenterprise.com/docs/client-credentials-token.md): Obtaining and using client credentials (access) tokens.
+- [API Businesses, Software & Certificates](https://docs.moneyhubenterprise.com/docs/api-businesses-software-certificates.md): API and software statements, certificates, and metadata for client registration.
+- [IP Addresses of Moneyhub Services](https://docs.moneyhubenterprise.com/docs/ip-addresses-of-moneyhub-services.md): Outbound and inbound IP ranges for Moneyhub services (whitelisting).
+- [Rate Limit](https://docs.moneyhubenterprise.com/docs/rate-limit.md): API rate limits and how to stay within them.
+- [API Users](https://docs.moneyhubenterprise.com/docs/api-users.md): The following REST routes are available to manage API users following the ongoing access use case
+- [Auth Requests](https://docs.moneyhubenterprise.com/docs/auth-requests.md): Auth Requests flow for TSPs and private browsing: create auth request, redirect, complete connection.
+- [Custom Consent Screens](https://docs.moneyhubenterprise.com/docs/custom-consent-screens.md): Using your own consent screen with Moneyhub (custom consent UI).
+- [Native and Mobile apps](https://docs.moneyhubenterprise.com/docs/native-and-mobile-apps.md): Auth Request API, device browser, deep links, and app-to-app authentication for mobile.
+- [Timeouts/Retries](https://docs.moneyhubenterprise.com/docs/timeoutsretries.md): This page gives guidance on what timeouts to set and caveats around retrying certain endpoints
+- [Transaction Categorisation and Enrichment Options](https://docs.moneyhubenterprise.com/docs/transaction-enrichment.md): Transaction categorisation and enrichment for Moneyhub and external connections.
+- [Categorisation as a Service](https://docs.moneyhubenterprise.com/docs/categorisation-as-a-service.md): For clients who want to categorise a specific set of transactions without creating users and AIS connections within our API, we provide the option to input transactions into our categorisation engine for category assignment.
+- [Categorising Transactions for existing Users](https://docs.moneyhubenterprise.com/docs/categorising-transactions.md): This page describes the process and links to relevant documentation for categorising a group of transactions that are not created as part of connecting to a provider
+- [Categories and Category Groups](https://docs.moneyhubenterprise.com/docs/categories-and-category-groups.md): Categories and category groups for transaction enrichment.
+- [Counterparties (Merchants)](https://docs.moneyhubenterprise.com/docs/counterparties.md): Counterparties V3 API and migration from V2.
+- [Spending and Income Analysis](https://docs.moneyhubenterprise.com/docs/spending-and-income-analysis.md)
+- [Spending and Income Goals](https://docs.moneyhubenterprise.com/docs/spending-and-income-goals.md): Spending and income analysis and goals.
+- [Tax Return](https://docs.moneyhubenterprise.com/docs/tax-return.md): Tax return and reporting features.
+- [ISIN Code Matching](https://docs.moneyhubenterprise.com/docs/isin-code-matching.md): ISIN code matching for investments and holdings.
+- [Transaction Splits via API](https://docs.moneyhubenterprise.com/docs/transaction-splits-via-api.md): Creating and managing transaction splits via the API.
+- [Historical balances](https://docs.moneyhubenterprise.com/docs/historical-balances.md): Retrieving historical balance data.
+- [Regular Transaction Series](https://docs.moneyhubenterprise.com/docs/regular-transaction-series.md): Regular transaction series and recurring transaction detection.
+- [Rental Recognition](https://docs.moneyhubenterprise.com/docs/rental-recognition.md): Rental recognition: what it is, endpoints, consent, and credit reference submission.
+- [Lending and Collections Overview](https://docs.moneyhubenterprise.com/docs/overview.md): Overview of lending and collections reports.
+- [Viewing lending and collections reports](https://docs.moneyhubenterprise.com/docs/lending-and-collections-reports.md): Viewing lending and collections reports (affordability, income verification).
+- [Payments Overview](https://docs.moneyhubenterprise.com/docs/payments-overview.md): Overview of payment options: pay by link, single immediate payments, and VRP.
+- [Account Verification](https://docs.moneyhubenterprise.com/docs/account-verification.md): How to verify account ownership and use account verification in the payment flow.
+- [Single Immediate Payments](https://docs.moneyhubenterprise.com/docs/single-immediate-payments.md): Single immediate payment flow: consent, payee, authorisation, and status.
+- [Payee Management](https://docs.moneyhubenterprise.com/docs/payee-management.md): Creating and managing payees for single immediate payments.
+- [Payments Claim](https://docs.moneyhubenterprise.com/docs/payments-claim.md): Claiming and completing a payment (claim flow).
+- [Payments Authorisation](https://docs.moneyhubenterprise.com/docs/payments-authorization.md): How payment authorisation and consent work for single immediate payments.
+- [Payments Bank Chooser](https://docs.moneyhubenterprise.com/docs/bank-chooser.md): Bank selection step in the single immediate payment journey.
+- [SIP Status](https://docs.moneyhubenterprise.com/docs/payments-status.md): Payment status values and how to poll or handle completion and errors.
+- [Provider SIP Limits](https://docs.moneyhubenterprise.com/docs/payment-limits.md): Each provider has its own limits on how much money can be transferred using online banking, which also apply to their open banking payment APIs.
+- [Payments Bank Chooser](https://docs.moneyhubenterprise.com/docs/payments-bank-chooser.md): Bank chooser for single immediate payments.
+- [Payment Refunds](https://docs.moneyhubenterprise.com/docs/reverse-payments.md): Reversing or cancelling single immediate payments.
+- [Payments Consents Flow](https://docs.moneyhubenterprise.com/docs/payments-consents-flow.md): Consent flow for single immediate payments.
+- [Recurring Payments (VRP)](https://docs.moneyhubenterprise.com/docs/recurring-payments-vrp.md): Creating Variable Recurring Payments through the payments API
+- [Standing Orders](https://docs.moneyhubenterprise.com/docs/standing-order-requests.md): Creating new standing orders through the payments API
+- [Payments Widgets](https://docs.moneyhubenterprise.com/docs/payments-widgets.md): Using widgets for payment journeys (single payment, pay link).
+- [Error Handling](https://docs.moneyhubenterprise.com/docs/error-handling.md): Distinguishing platform vs provider (ASPSP) failures and handling payment and consent errors.
+- [Embedded Components Overview](https://docs.moneyhubenterprise.com/docs/pfm-widgets-overview.md): PFM (personal financial management) widgets overview.
+- [Embedded Components Architecture](https://docs.moneyhubenterprise.com/docs/pfm-widgets-architecture.md): Architecture of PFM and embedded widgets.
+- [Getting started with embedded components](https://docs.moneyhubenterprise.com/docs/getting-started-with-widgets.md): Getting started with embedded components and widgets.
+- [Quickstart - embedded components](https://docs.moneyhubenterprise.com/docs/quickstart.md): Quickstart for instantiating and using widgets.
+- [Authorisation and User Authentication](https://docs.moneyhubenterprise.com/docs/authorisation-and-user-authentication.md): Authorisation and user authentication for embedded components.
+- [API Client Tenant Onboarding](https://docs.moneyhubenterprise.com/docs/api-client-tenant-onboarding.md): API client and tenant onboarding for widgets.
+- [Creating users and token generation](https://docs.moneyhubenterprise.com/docs/creating-users-and-token-generation.md): Creating users and generating tokens for widget sessions.
+- [Instantiate an embedded component](https://docs.moneyhubenterprise.com/docs/widget-interface.md): Widget interface: methods, parameters, and events.
+- [Events](https://docs.moneyhubenterprise.com/docs/events.md): Widget events overview.
+- [Adding event listeners](https://docs.moneyhubenterprise.com/docs/event-handling-new.md): Event handling (updated): Webview and iFrame.
+- [Key event handling](https://docs.moneyhubenterprise.com/docs/key-event-handling.md): Key events: missing token, external link, close, and suggested handling.
+- [Event list](https://docs.moneyhubenterprise.com/docs/event-list.md): Full list of widget events.
+- ["Back" navigation action](https://docs.moneyhubenterprise.com/docs/sending-back-navigation-eventaction.md): The "Back" navigation action can be sent to the embedded component to allow navigation within the component from any app
+- [Global parameters list](https://docs.moneyhubenterprise.com/docs/global-parameters-list.md): Global parameters for configuring embedded components at instantiation.
+- [Our Components](https://docs.moneyhubenterprise.com/docs/our-widgets.md): Overview of available widgets (accounts, connections, spending).
+- [Accounts](https://docs.moneyhubenterprise.com/docs/connections-widget.md): Connections widget: parameters and account list.
+- [Connections](https://docs.moneyhubenterprise.com/docs/test-moneyhubdemo.md): Testing with the Moneyhub demo environment.
+- [Widgets Overview](https://docs.moneyhubenterprise.com/docs/widgets-overview.md): What widgets are: low-code components for payments, affordability, and open finance journeys.
+- [Creating and Managing Widgets](https://docs.moneyhubenterprise.com/docs/creating-and-managing-widgets.md): Learn how to create, configure, preview, implement, and manage widgets within the Moneyhub Admin Portal. This guide provides detailed instructions for both new and existing users, covering everything from setting up common fields to embedding widgets on your website and capturing events for diagnostics.
+- [Hosting and Implementing Widgets](https://docs.moneyhubenterprise.com/docs/hosting-implementing-widgets.md): This document provides detailed instructions on how to host and implement Moneyhub widgets, either on the Moneyhub platform or on your own site. Additionally, it covers the steps required to embed and configure widgets within your application.
+- [Surfacing widgets to end users](https://docs.moneyhubenterprise.com/docs/surfacing-widgets-to-end-users.md): Moneyhub-hosted vs self-hosted widget deployment.
+- [Implementing self-hosted single journey widgets](https://docs.moneyhubenterprise.com/docs/implementing-self-hosted-single-journey-widgets.md): Implementing self-hosted single-journey widgets: config and events.
+- [Widget Security](https://docs.moneyhubenterprise.com/docs/widget-security.md): This document outlines the security mechanisms employed by Moneyhub widgets to ensure secure initialization, data access, and request handling.
+- [Single Payment Widget](https://docs.moneyhubenterprise.com/docs/single-payment-widget.md): The Single Payment Widget is a seamlessly embeddable component designed to enhance checkout experiences by supporting Open Banking payments directly from UK bank accounts. It offers a secure and efficient alternative to traditional card payment solutions and can manage payments to one or multiple recipients, ensuring a streamlined, one-time payment process.
+- [Create and Configure Single Payment Widget](https://docs.moneyhubenterprise.com/docs/create-and-configure-single-payment-widget.md): This document provides configuration instructions for the Single Payment Widget.
+- [Add Payees via Admin Portal](https://docs.moneyhubenterprise.com/docs/add-payees-admin-portal.md): Once you have created a Single Payment Widget, you can add additional payees to support multiple payment recipients. Each payee is assigned a unique `payeeID`, enabling a multi-recipient payment system (e.g., a franchise model). However, unlike the [Pay Link Widget](doc:add-payees-admin-portal), the Single Payment Widget allows only one `payeeID` to be selected per payment.
+- [Initialisation and Logging](https://docs.moneyhubenterprise.com/docs/initialisation-and-logging.md): This guide provides best practices for implementing the Single Payment Widget on your own infrastructure.
+- [Pay Link Widget](https://docs.moneyhubenterprise.com/docs/pay-link-widget.md): The Pay Link Widget is a versatile, embeddable component designed to facilitate Open Banking payments directly from UK bank accounts via dynamic links. The Pay Link Widget supports multiple payment links (URLs), each embedding specified payment details like amount, reference, and payeeId. This feature enables various payment scenarios with unique link expiry options and enhanced payment management through a single widget.
+- [Create and Configure Pay Link Widget](https://docs.moneyhubenterprise.com/docs/create-and-configure-pay-link-widget.md): This document provides configuration instructions for the Pay Link Widget.
+- [Create a Pay Link](https://docs.moneyhubenterprise.com/docs/create-pay-link.md): In this guide, we will walk you through the process of creating a pay link using the `/pay-links` endpoint of our API. The pay links for the pay link widget must be generated via our API. Below, we'll provide a detailed description of each required property and step-by-step actions for making the request.
+- [Lending and Collections Widgets](https://docs.moneyhubenterprise.com/docs/lending-and-collection-widgets.md): Lending and collections widgets: affordability and standard financial statements.
+- [Affordability Widget](https://docs.moneyhubenterprise.com/docs/affordability-widget-copy.md): Affordability widget overview and test accounts.
+- [Creating affordability widgets](https://docs.moneyhubenterprise.com/docs/creating-affordability-widgets.md): Creating and configuring affordability widgets.
+- [Moneyhub-hosted affordability widget](https://docs.moneyhubenterprise.com/docs/mh-hosted-affordability-widget.md): Moneyhub-hosted affordability widget: parameters and implementation.
+- [Self-hosting Affordability Widget](https://docs.moneyhubenterprise.com/docs/self-hosted-affordability-widget.md): Self-hosted affordability widget: parameters and implementation.
+- [Confidence connect](https://docs.moneyhubenterprise.com/docs/affordability-confidence-connect.md): Affordability confidence and connect flow.
+- [Bank Connections](https://docs.moneyhubenterprise.com/docs/bank-connections.md): Lists of available bank connections (API, screen-scraping, test, payments) and connection properties.
+- [Accounts](https://docs.moneyhubenterprise.com/docs/accounts.md): Overview of account data and balance types returned for bank connections.
+- [Accounts - Examples](https://docs.moneyhubenterprise.com/docs/bank-connection-response.md): Data returned per account type
+- [Manual Accounts - Account Details](https://docs.moneyhubenterprise.com/docs/manual-accounts-account-details.md): Requirements for the accounts details object when creating a manual account
+- [Balance Types](https://docs.moneyhubenterprise.com/docs/balance-types.md): Balance types for open banking connections (ISO20022): available, current, opening, closing, and pending.
+- [Transactions](https://docs.moneyhubenterprise.com/docs/transactions.md): Transaction data and sync behaviour for connected accounts.
+- [Statements](https://docs.moneyhubenterprise.com/docs/statements.md): How to retrieve account statements for connected accounts.
+- [Beneficiaries](https://docs.moneyhubenterprise.com/docs/beneficiaries.md): How beneficiaries work with Moneyhub connections and payments.
+- [Standing Orders](https://docs.moneyhubenterprise.com/docs/standing-order-retrieve.md): Retrieving standing order data via the API.
+- [Payments Bank Chooser](https://docs.moneyhubenterprise.com/docs/bank-chooser.md): Bank selection step in the single immediate payment journey.
+- [Connection lifecycle](https://docs.moneyhubenterprise.com/docs/connection-lifecycle.md): Adding, maintaining, expiring, and removing financial connections; re-authentication and data retention.
+- [Connections Management](https://docs.moneyhubenterprise.com/docs/connections-management.md): This page describes the ongoing management and use cases required after a connection is created
+- [90 Day Reconsent](https://docs.moneyhubenterprise.com/docs/90-day-consent-changes.md): FCA policy on 90-day reconsent: how TPPs renew consent and use the tppConsent and expiresAt fields.
+- [Connection Status](https://docs.moneyhubenterprise.com/docs/connection-status.md): Connection status values and what they mean for syncing and user action.
+- [Zoopla](https://docs.moneyhubenterprise.com/docs/zoopla.md)
+- [Autotrader](https://docs.moneyhubenterprise.com/docs/autotrader.md)
+- [PayPal](https://docs.moneyhubenterprise.com/docs/paypal.md)
+- [Sensitive information](https://docs.moneyhubenterprise.com/docs/sensitive-information.md): What sensitive data is available per product (accounts, transactions, beneficiaries, standing orders) and how to handle it.
+- [Which banks return overdraft information?](https://docs.moneyhubenterprise.com/docs/which-banks-return-overdraft-information.md)
+- [Which banks and PSPs can I retrieve account holder name from?](https://docs.moneyhubenterprise.com/docs/which-banks-and-psps-can-i-retrieve-account-holder-name-from.md)
+- [Which banks support re-consent?](https://docs.moneyhubenterprise.com/docs/which-banks-support-re-consent.md)
+- [Webhooks Overview](https://docs.moneyhubenterprise.com/docs/webhooks-introduction.md): Introduction to Moneyhub webhooks: signing, retries, and best practices.
+- [Webhook Format](https://docs.moneyhubenterprise.com/docs/webhook-format.md): Webhook payload format, headers, and verification.
+- [Sync Complete](https://docs.moneyhubenterprise.com/docs/sync-complete.md): syncCompleted event when a connection sync finishes (success or error).
+- [Post Connection Enrichment Complete](https://docs.moneyhubenterprise.com/docs/post-connection-enrichment-complete.md): Webhook when post-connection enrichment has completed for a connection.
+- [Regular Transaction webhooks](https://docs.moneyhubenterprise.com/docs/regular-transaction-webhooks.md): Describes the usage of the newRegularTransactions and updatedRegularTransactions webhooks
+- [Deleted Account](https://docs.moneyhubenterprise.com/docs/deleted-account.md): Webhook when an account is deleted or no longer available.
+- [New Transaction](https://docs.moneyhubenterprise.com/docs/new-transaction.md): Webhook when new transactions are available for a connection.
+- [Restored Transactions](https://docs.moneyhubenterprise.com/docs/restored-transactions.md): Webhook when previously deleted transactions are restored.
+- [Updated Transactions](https://docs.moneyhubenterprise.com/docs/updated-transactions.md): Webhook when transactions are updated (e.g. categorisation or metadata).
+- [Deleted Transactions](https://docs.moneyhubenterprise.com/docs/deleted-transactions.md): Webhook when transactions are deleted or removed.
+- [Payment Completed](https://docs.moneyhubenterprise.com/docs/payment-completed.md): Event payload when a payment has completed successfully.
+- [Payment Error](https://docs.moneyhubenterprise.com/docs/payment-error.md): Event payload when a payment fails or errors.
+- [Payment Pending](https://docs.moneyhubenterprise.com/docs/payment-pending.md): Event payload when a payment is pending.
+- [Affordability Report Success](https://docs.moneyhubenterprise.com/docs/affordability-report-success.md): Event payload and handling when an affordability report completes successfully.
+- [Affordability Report Failure](https://docs.moneyhubenterprise.com/docs/affordability-report-failure.md): Event payload and handling when an affordability report fails.
+- [Add first Connection](https://docs.moneyhubenterprise.com/docs/add-first-connection.md): Webhook when a user adds their first connection.
+- [Balance Threshold](https://docs.moneyhubenterprise.com/docs/balance-threshold.md): Webhook when a balance threshold is reached.
+- [Reauth Reminder](https://docs.moneyhubenterprise.com/docs/reauth-reminder.md): Webhook to prompt re-authentication before consent expires.
+- [Refresh Reminder](https://docs.moneyhubenterprise.com/docs/refresh-reminder.md): Webhook reminding that a connection refresh is needed.
+
+## API Reference
+- [Retrieve all connections](https://docs.moneyhubenterprise.com/reference/get_oidc-well-known-all-connections.md)
+- [Retrieve all api connections](https://docs.moneyhubenterprise.com/reference/get_oidc-well-known-api-connections.md)
+- [Retrieve all legacy connections](https://docs.moneyhubenterprise.com/reference/get_oidc-well-known-legacy-connections.md)
+- [Retrieve all test connections](https://docs.moneyhubenterprise.com/reference/get_oidc-well-known-test-connections.md)
+- [Retrieve all connections that allow payments](https://docs.moneyhubenterprise.com/reference/get_oidc-well-known-payments-connections.md)
+- [Retrieve all auth requests for a user](https://docs.moneyhubenterprise.com/reference/get_auth-requests.md): Requires **auth_requests:read** scope.
+- [Create an auth request](https://docs.moneyhubenterprise.com/reference/post_auth-requests.md): Requires **auth_requests:write** scope.
+- [Retrieve a single auth request](https://docs.moneyhubenterprise.com/reference/get_auth-requests-authrequestid.md): Requires **auth_requests:read** scope.
+- [Update a single auth request](https://docs.moneyhubenterprise.com/reference/patch_auth-requests-authrequestid.md): Requires **auth_requests:read** and **auth_requests:write** scopes.
+- [Retrieve a user connections](https://docs.moneyhubenterprise.com/reference/get_users-userid-connections.md): Requires **user:read** or **connection:read** scopes.
+- [Update a single connection](https://docs.moneyhubenterprise.com/reference/patch_users-userid-connections-connectionid.md): Requires **user:update** scope and for the API client to user their own consent screens i.e. not have Enforce user consent enabled. This endpoint can only currently be used to update the expiresAt field which is the date which the user has consented to.
+- [Deletes a single user connection](https://docs.moneyhubenterprise.com/reference/delete_users-userid-connections-connectionid.md): The deletion of a connection will delete all data associated with it and it will revoke the consent the user granted. Requires **user:delete** scope.
+- [Retrieve a user connection's syncs](https://docs.moneyhubenterprise.com/reference/get_users-userid-connections-connectionid-syncs.md): Requires **user:read** scope.
+- [Retrieve all syncs for a user](https://docs.moneyhubenterprise.com/reference/get_users-userid-syncs.md): Requires **user:read** scope.
+- [Retrieve a single user connection sync](https://docs.moneyhubenterprise.com/reference/get_users-userid-syncs-syncid.md): Requires **user:read** scope.
+- [Retrieve all payees created by an API client](https://docs.moneyhubenterprise.com/reference/get_payees.md): Requires **payee:read** scope. Default limit is set to 10.
+- [Create a payee](https://docs.moneyhubenterprise.com/reference/post_payees.md): Requires **payee:create** scope.
+- [Retrieve one payee created by an API client](https://docs.moneyhubenterprise.com/reference/get_payees-payeeid.md): Requires **payee:read** scope.
+- [Retrieve all pay-links created by an API client](https://docs.moneyhubenterprise.com/reference/get_pay-links.md): Requires **pay_link:read** scope. Default limit is set to 10.
+- [Create a pay-link](https://docs.moneyhubenterprise.com/reference/post_pay-links.md): Requires **pay_link:create** scope.
+- [Retrieve one pay-link created by an API client](https://docs.moneyhubenterprise.com/reference/get_pay-links-paylinkid.md): Requires **pay_link:read** scope.
+- [Upload a payment file](https://docs.moneyhubenterprise.com/reference/post_pay-file-upload-file.md): Uploads a payment file for processing. Requires **pay_file:write** scope.
+- [Retrieve a previously uploaded payment file](https://docs.moneyhubenterprise.com/reference/get_pay-file-id.md): Retrieves a previously uploaded payment file by ID. Requires **pay_file:read** scope.
+- [Upload payment file data](https://docs.moneyhubenterprise.com/reference/post_pay-file-upload-data.md): Uploads payment file data for processing. Requires **pay_file:write** scope.
+- [Execute a payment file](https://docs.moneyhubenterprise.com/reference/post_pay-file-id-execute.md): Executes a payment file by ID. Requires **pay_file:write** scope.
+- [Retrieve all file payment consents created by an API client](https://docs.moneyhubenterprise.com/reference/get_pay-file-consent.md): Requires **pay_file_consent:read** scope.
+- [Retrieve a single payment file consent](https://docs.moneyhubenterprise.com/reference/get_pay-file-consent-id.md): Requires **pay_file_consent:read** scope.
+- [Retrieve all payments created by an API client](https://docs.moneyhubenterprise.com/reference/get_payments.md): Requires **payment:read** scope.
+- [Retrieve a single payment](https://docs.moneyhubenterprise.com/reference/get_payments-paymentid.md): Requires **payment:read** scope.
+- [Retrieve all standing orders created by an API client](https://docs.moneyhubenterprise.com/reference/get_standing-orders.md): Requires **payment:read** scope.
+- [Retrieve a single standing order](https://docs.moneyhubenterprise.com/reference/get_standing-orders-standingorderrequestid.md): Requires **payment:read** scope.
+- [Retrieve all recurring payments created by an API client](https://docs.moneyhubenterprise.com/reference/get_recurring-payments.md): Requires **recurring-payment:read** scope.
+- [Retrieve a single recurring payment](https://docs.moneyhubenterprise.com/reference/get_recurring-payments-recurringpaymentid.md): Requires **recurring-payment:read** scope.
+- [Revokes a recurring payment](https://docs.moneyhubenterprise.com/reference/delete_recurring-payments-recurringpaymentid.md): Requires **recurring-payment:create** scope.
+- [Creates a payment against a recurring payment consent](https://docs.moneyhubenterprise.com/reference/post_recurring-payments-recurringpaymentid-pay.md): Requires **recurring-payment:create** scope.
+- [Check if funds are available for a recurring payment](https://docs.moneyhubenterprise.com/reference/post_recurring-payments-recurringpaymentid-funds-confirmation.md): Requires **recurring-payment:funds_confirmation** scope.
+- [Retrieve all users created by an API client](https://docs.moneyhubenterprise.com/reference/get_users.md): Requires **user:read** scope. Default limit is set to 10.
+- [Create a user](https://docs.moneyhubenterprise.com/reference/post_users.md): Requires **user:create** scope.
+- [Retrieve a single user](https://docs.moneyhubenterprise.com/reference/get_users-userid.md): Requires **user:read** scope.
+- [Deletes a single user](https://docs.moneyhubenterprise.com/reference/delete_users-userid.md): The deletion of a user will delete all data associated with it. It also revokes consent for all existing connections. Requires **user:read** and **user:delete** scope.
+- [Create a scim user. This type of user holds personally identifiable information](https://docs.moneyhubenterprise.com/reference/post_scim-users.md): Requires **scim_user:write** scope.
+- [Retrieve a scim user. This type of user holds personally identifiable information](https://docs.moneyhubenterprise.com/reference/get_scim-users-userid.md): Requires **scim_user:read** scope.
+- [Retrieve a scim user. This type of user holds personally identifiable information](https://docs.moneyhubenterprise.com/reference/post_scim-users-search.md): Requires **scim_user:read** scope.
+- [Displays the internal consent screen for a given auth request](https://docs.moneyhubenterprise.com/reference/get_consents-authrequestid.md): Requires client to be configured with an internal consent screen
+- [Construct authorisation url to authenticate the end-user](https://docs.moneyhubenterprise.com/reference/get_oidc-auth.md)
+- [Retrieve an authorisation token](https://docs.moneyhubenterprise.com/reference/post_oidc-token.md): Requires **Basic** auth header to be sent with the **client-id** & **client-secret** base64 encoded
+- [Pushed Authorization Request endpoint. Retrieve a request_uri that can be used with the oidc/auth endpoint. More info here: https://docs.moneyhubenterprise.com/docs/how-to-use-pushed-authorization-request-par-endpoint](https://docs.moneyhubenterprise.com/reference/post_oidc-request.md)
+- [Retrieve Open ID Connect configuration](https://docs.moneyhubenterprise.com/reference/get_oidc-well-known-openid-configuration.md): Returns the OpenID Connect configuration
+- [Request a reseller check for a given company](https://docs.moneyhubenterprise.com/reference/post_reseller-check.md): Requires **reseller:create** scope.
+- [Retreive the bank icon as SVG when providing a valid bank reference listed under our available connections. Can also return PNG or JPG images when .png or .jpg file extension is added.](https://docs.moneyhubenterprise.com/reference/get_bank-icons-bankref.md): Please be aware we don’t have icons for all the connections we provide, when this is the case the route returns 404 as response unless the defaultIcon parameter is used.
+- [Retrieve consent history for a user](https://docs.moneyhubenterprise.com/reference/get_consent-history.md): Retrieves the consent history for the authenticated user. Requires **consent_history:read** scope.
+- [Retrieve all accounts for a user](https://docs.moneyhubenterprise.com/reference/get_accounts.md): Requires **accounts:read** scope. Optional scope **accounts_details:read** is needed for some extra fields such as account number and sort code. Please note: field **additionalBalances** is currently in **beta**
+- [Create a single account for a user](https://docs.moneyhubenterprise.com/reference/post_accounts.md): Requires **accounts:read** and **accounts:write:all** scopes.
+- [Retrieve a single account](https://docs.moneyhubenterprise.com/reference/get_accounts-accountid.md): Requires **accounts:read** scope. Optional scope **accounts_details:read** is needed for some extra fields such as account number and sort code. Please note: field **additionalBalances** is currently in **beta**
+- [Update a single account](https://docs.moneyhubenterprise.com/reference/patch_accounts-accountid.md): Requires **accounts:read** and **accounts:write:all** scopes.
+- [Delete a single account](https://docs.moneyhubenterprise.com/reference/delete_accounts-accountid.md): This endpoint can only be used to delete accounts created using the POST /accounts endpoint. Accounts created when connecting to a financial institution can only be deleted by removing the connection they belong to. Requires **accounts:write:all** scope.
+- [Retrieve the historical balances for an account](https://docs.moneyhubenterprise.com/reference/get_accounts-accountid-balances.md): Requires **accounts:read** scope.
+- [Add a new balance for an account](https://docs.moneyhubenterprise.com/reference/post_accounts-accountid-balances.md): Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes.
+- [Retrieve sync information for all of a user's accounts](https://docs.moneyhubenterprise.com/reference/get_accounts-syncs.md): Requires **accounts:read** scope.
+- [Retrieve the holdings for an account](https://docs.moneyhubenterprise.com/reference/get_accounts-accountid-holdings.md): Requires **accounts:read** scope.
+- [Retrieves a single holding for an account with matched ISIN codes](https://docs.moneyhubenterprise.com/reference/get_accounts-accountid-holdings-holdingid.md): Requires **accounts:read** scope.
+- [Retrieve the holdings for an account with matched ISIN codes](https://docs.moneyhubenterprise.com/reference/get_accounts-accountid-holdings-with-matches.md): Requires **accounts:read** scope.
+- [Retrieve the notification thresholds for an account](https://docs.moneyhubenterprise.com/reference/get_accounts-accountid-notification-thresholds.md): Requires **accounts:read** scope.
+- [Add a notification threshold to an account](https://docs.moneyhubenterprise.com/reference/post_accounts-accountid-notification-thresholds.md): Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes.
+- [Update a single notification threshold](https://docs.moneyhubenterprise.com/reference/patch_accounts-accountid-notification-thresholds-thresholdid.md): Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes.
+- [Delete a single notification threshold](https://docs.moneyhubenterprise.com/reference/delete_accounts-accountid-notification-thresholds-thresholdid.md): Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes.
+- [Retrieve the standing orders for an account](https://docs.moneyhubenterprise.com/reference/get_accounts-accountid-standing-orders.md): Requires **accounts:read** and either of **standing_orders:read** or **standing_orders_detail:read** scopes.
+- [Retrieve the statements for an account](https://docs.moneyhubenterprise.com/reference/get_accounts-accountid-statements.md): Requires **accounts:read** and either **statements_basic:read** or **statements_detail:read** scopes.
+- [List of metadata for all affordability calculations for a user](https://docs.moneyhubenterprise.com/reference/get_affordability.md): Requires **affordability:read** scope.
+- [Request affordability calculation for a user](https://docs.moneyhubenterprise.com/reference/post_affordability.md): Requires **affordability:write** and **affordability:read** scopes.
+- [Get the affordability confidence calculation for a user, given the account and transaction data currently available](https://docs.moneyhubenterprise.com/reference/get_affordability-confidence.md): Requires **affordability:read** scope.
+- [Get an existing affordability calculation for a user](https://docs.moneyhubenterprise.com/reference/get_affordability-reportid.md): Requires **affordability:read** scope.
+- [List of metadata for all affordability income calculations for a user](https://docs.moneyhubenterprise.com/reference/get_affordability-income.md): Requires **affordability_income:read** scope.
+- [Request affordability income calculation for a user](https://docs.moneyhubenterprise.com/reference/post_affordability-income.md): Requires **affordability_income:write** and **affordability_income:read** scopes.
+- [Get an existing affordability income calculation for a user](https://docs.moneyhubenterprise.com/reference/get_affordability-income-reportid.md): Requires **affordability_income:read** scope.
+- [Retrieve all beneficiaries for a user](https://docs.moneyhubenterprise.com/reference/get_beneficiaries.md): Requires **beneficiaries:read** scope. Optional scope **beneficiaries_detail:read** is needed for some extra fields such as postal address.
+- [Retrieve a single beneficiary](https://docs.moneyhubenterprise.com/reference/get_beneficiaries-beneficiaryid.md): Requires **beneficiaries:read** scope. Optional scope **beneficiaries_detail:read** is needed for some extra fields such as postal address.
+- [Retrieve global counterparties](https://docs.moneyhubenterprise.com/reference/get_global-counterparties.md): Retrieves list of global counterparties.
+- [Retrieve all transactions for a user](https://docs.moneyhubenterprise.com/reference/get_transactions.md): Requires **transactions:read:all** scope. Transactions usually start around the account opening date however in most cases we only retrive the last 12 months before the connection was created. The Opening Date is available at the /accounts endpoint.
+- [Create a single transaction for a user](https://docs.moneyhubenterprise.com/reference/post_transactions.md): Requires **transactions:read:all** and **transactions:write:all** scopes.
+- [Retrieve a single transaction](https://docs.moneyhubenterprise.com/reference/get_transactions-transactionid.md): Requires **transactions:read:all** scope.
+- [Update a single transaction](https://docs.moneyhubenterprise.com/reference/patch_transactions-transactionid.md): Requires **transactions:read:all** and either of **transactions:write** or **transactions:write:all** scopes.
+- [Delete a single transaction](https://docs.moneyhubenterprise.com/reference/delete_transactions-transactionid.md): Requires **transactions:write:all** scope.
+- [Create multiple transactions for a user](https://docs.moneyhubenterprise.com/reference/post_transactions-collection.md): Requires **transactions:read:all** and **transactions:write:all** scopes. A maximum of 50 transactions is imposed.
+- [Retrieve a transactions attachments](https://docs.moneyhubenterprise.com/reference/get_transactions-transactionid-files.md): Requires **transactions:read:all** scope.
+- [Add an attachment to a transaction](https://docs.moneyhubenterprise.com/reference/post_transactions-transactionid-files.md): Requires **transactions:read:all** and either of **transactions:write** or **transactions:write:all** scopes.
+- [Retrieve a transactions attachment](https://docs.moneyhubenterprise.com/reference/get_transactions-transactionid-files-fileid.md): Requires **transactions:read:all** scope.
+- [Delete a single attachment on a transaction](https://docs.moneyhubenterprise.com/reference/delete_transactions-transactionid-files-fileid.md): Requires **transactions:read:all** and either of **transactions:write** or **transactions:write:all** scopes.
+- [Retrieve a transactions splits](https://docs.moneyhubenterprise.com/reference/get_transactions-transactionid-splits.md): Requires **transactions:read:all** scope.
+- [Split a transaction](https://docs.moneyhubenterprise.com/reference/post_transactions-transactionid-splits.md): Requires **transactions:write:all** scope.
+- [Merge split transactions](https://docs.moneyhubenterprise.com/reference/delete_transactions-transactionid-splits.md): Requires **transactions:write:all** scope.
+- [Patch a transaction split](https://docs.moneyhubenterprise.com/reference/patch_transactions-transactionid-splits-splitid.md): Requires **transactions:write:all** scope.
+- [Retrieve all transactions for a user - does not include data-enriched transaction properties](https://docs.moneyhubenterprise.com/reference/get_transactions-unenriched.md): Requires **transactions:read:all** or **transactions_unenriched:read:all** scope. Transactions usually start around the account opening date however in most cases we only retrive the last 12 months before the connection was created. The Opening Date is available at the /accounts endpoint.
+- [Retrieve a single transaction - does not include data-enriched transaction properties](https://docs.moneyhubenterprise.com/reference/get_transactions-unenriched-transactionid.md): Requires **transactions:read:all** or **transactions_unenriched:read:all** scopes.
+- [Retrieve all categories for a user](https://docs.moneyhubenterprise.com/reference/get_categories.md): Requires **categories:read** scope.
+- [Add a new custom category for a user](https://docs.moneyhubenterprise.com/reference/post_categories.md): Requires **categories:write** scope.
+- [Retrieve a single category](https://docs.moneyhubenterprise.com/reference/get_categories-categoryid.md): Requires **categories:read** scope.
+- [Retrieve all category groups for a user](https://docs.moneyhubenterprise.com/reference/get_category-groups.md): Requires **categories:read** scope.
+- [Categorises a given set of transactions](https://docs.moneyhubenterprise.com/reference/post_categorise-transactions.md): Requires **categorisation** scope. A maximum of 200 transactions is imposed.
+- [Retrieve regular transactions](https://docs.moneyhubenterprise.com/reference/get_regular-transactions.md): Requires **regular_transactions:read**, **accounts:read** and **transactions:read:all** scopes.
+- [Detect regular transactions](https://docs.moneyhubenterprise.com/reference/post_regular-transactions-accountid-detect.md): Requires **regular_transactions:write**, **regular_transactions:read**, **accounts:read** and **transactions:read:all** scopes.
+- [Retrieve rental recognition record](https://docs.moneyhubenterprise.com/reference/get_rental-records.md): Requires **rental_records:read** scope. Please note that a user will only have one rental recognition record. The rental record returned will be for the authenticated user.
+- [Create a rental recognition record for user](https://docs.moneyhubenterprise.com/reference/post_rental-records.md): Requires **rental_records:write** scope. Please note that a user will only have one rental recognition record. The rental record created will be for the authenticated user.
+- [Delete a rental record](https://docs.moneyhubenterprise.com/reference/delete_rental-records-rentalid.md): Requires **rental_records:write** scope.
+- [Retrieve spending analysis by categories, projects and accounts](https://docs.moneyhubenterprise.com/reference/post_spending-analysis.md): Defaults to all categories and accounts if none specified. <br />The categories field in the response has a breakdown of the total by categories for the given periods. You can expect to also receive the breakdown for income and transfer categories. <br />The 'total' field in the response calculates the total outgoing expenditure for the given periods. This calculation do not include income and transfers. <br /> Categories under the transfer group are the only ones that can appear twice showing income and expenditure separately <br />Requires **spending_analysis:read** scope.
+- [Retrieve all spending goals for a user](https://docs.moneyhubenterprise.com/reference/get_spending-goals.md): Requires **spending_goals:read** scope.
+- [Create a single spending goal for a user](https://docs.moneyhubenterprise.com/reference/post_spending-goals.md): Requires **spending_goals:read** and **spending_goals:write:all** scopes.
+- [Retrieve a single spending goal](https://docs.moneyhubenterprise.com/reference/get_spending-goals-goalid.md): Requires **spending_goals:read** scope.
+- [Update a single spending goal](https://docs.moneyhubenterprise.com/reference/patch_spending-goals-goalid.md): Requires **spending_goals:read spending_goals:write** scope.
+- [Delete a single spending goal](https://docs.moneyhubenterprise.com/reference/delete_spending-goals-goalid.md): Requires **spending_goals:write:all** scope.
+- [Retrieve all saving goals for a user](https://docs.moneyhubenterprise.com/reference/get_savings-goals.md): Requires **savings_goals:read** scope.
+- [Create a single savings goal for a user](https://docs.moneyhubenterprise.com/reference/post_savings-goals.md): Requires **savings_goals:read** and **savings_goals:write:all** scopes.
+- [Retrieve a single savings goal](https://docs.moneyhubenterprise.com/reference/get_savings-goals-goalid.md): Requires **savings_goals:read** scope.
+- [Update a single savings goal](https://docs.moneyhubenterprise.com/reference/patch_savings-goals-goalid.md): Requires **savings_goals:read** and either **savings_goals:write** or **savings_goals:write:all** scope.
+- [Delete a single savings goal](https://docs.moneyhubenterprise.com/reference/delete_savings-goals-goalid.md): Requires **savings_goals:write:all** scope.
+- [Get an existing standard financial statement for a user](https://docs.moneyhubenterprise.com/reference/get_standard-financial-statements-reportid.md): Requires **standard_financial_statement:read** scope.
+- [List of metadata for all standard financial statements for a user](https://docs.moneyhubenterprise.com/reference/get_standard-financial-statements.md): Requires **standard_financial_statement:read** scope.
+- [Request standard financial statement for a user](https://docs.moneyhubenterprise.com/reference/post_standard-financial-statements.md): Requires **standard_financial_statement:write** and **standard_financial_statement:read** scopes.
+- [Sync an existing connection](https://docs.moneyhubenterprise.com/reference/post_sync-connectionid.md): Requires **accounts:read** and either **accounts:write** or **accounts:write:all** scopes.
+- [Retrieve all projects for a user](https://docs.moneyhubenterprise.com/reference/get_projects.md): Requires **projects:read** scope.
+- [Create a single project for a user](https://docs.moneyhubenterprise.com/reference/post_projects.md): Requires **projects:write** scopes.
+- [Retrieve a single project](https://docs.moneyhubenterprise.com/reference/get_projects-projectid.md): Requires **projects:read** scope.
+- [Update a single project](https://docs.moneyhubenterprise.com/reference/patch_projects-projectid.md): Requires **projects:write** scopes.
+- [Delete a single project](https://docs.moneyhubenterprise.com/reference/delete_projects-projectid.md): This endpoint can only be used to delete projects created using the POST /projects endpoint. Projects created when connecting to a financial institution can only be deleted by removing the connection they belong to. Requires **projects:delete** scope.
+- [Retrieve transactions to help answer SA105 - the Self Assessment questions for properties for HMRC](https://docs.moneyhubenterprise.com/reference/get_tax.md): Requires **tax:read** scope.
+
+## Recipes
+- [Carbon Estimate of a Transaction.](https://docs.moneyhubenterprise.com/recipes/carbon-estimate-of-a-transaction.md)
+- [Connect to a Banking Provider using Auth Requests](https://docs.moneyhubenterprise.com/recipes/connect-to-a-banking-provider-using-auth-requests.md)
+- [Connect to a Banking Provider using Pushed Authorisation Requests](https://docs.moneyhubenterprise.com/recipes/connect-to-a-banking-provider-using-pushed-authorisation-requests.md)
+- [Create a Payment](https://docs.moneyhubenterprise.com/recipes/create-a-payment.md)
+- [Create a Rental Record](https://docs.moneyhubenterprise.com/recipes/create-a-rental-record.md)
+- [Create On-Going Access AIS Connection](https://docs.moneyhubenterprise.com/recipes/create-on-going-access-ais-connection.md)
+- [Create Single Use AIS Connection](https://docs.moneyhubenterprise.com/recipes/create-single-use-ais-connection.md)
+- [Fact Finder](https://docs.moneyhubenterprise.com/recipes/fact-finder.md)
+- [Savings Goals](https://docs.moneyhubenterprise.com/recipes/savings-goals.md)
+- [Smart Saver Sweeping with VRP](https://docs.moneyhubenterprise.com/recipes/smart-saver-sweeping-with-vrp.md)
+- [Understanding Private Key JWT](https://docs.moneyhubenterprise.com/recipes/understanding-private-key-jwt.md)
+
+## Changelog
+- [New Connections, European special](https://docs.moneyhubenterprise.com/changelog/new-connections-european-special.md)
+- [New webhooks for affordability reports](https://docs.moneyhubenterprise.com/changelog/new-webhooks-for-affordability-reports.md)
+- [Further PIS connections added](https://docs.moneyhubenterprise.com/changelog/further-pis-connections-added.md)
+- [New PIS connections](https://docs.moneyhubenterprise.com/changelog/new-pis-connections.md)
+- [Connect Earth Recipe](https://docs.moneyhubenterprise.com/changelog/connect-earth-recipe.md)
+- [Statements](https://docs.moneyhubenterprise.com/changelog/statements.md)
+- [New connection: ABN AMRO](https://docs.moneyhubenterprise.com/changelog/new-connection-abn-amro.md)
+- [Permissions replacement support](https://docs.moneyhubenterprise.com/changelog/permissions-replacement-support.md)
+- [Mock bank now supports standing orders](https://docs.moneyhubenterprise.com/changelog/mock-bank-now-supports-standing-orders.md)
+- [External Error Handling](https://docs.moneyhubenterprise.com/changelog/external-error-handling.md)

@@ -1,0 +1,33 @@
+generated: '2026-07-24'
+method: searched
+note: >-
+  Probed the /.well-known/ discovery surface across the identity, API and website
+  hosts. The OIDC discovery document at the identity host is the marquee find (a
+  full node-oidc-provider metadata document with 995 supported scopes). No
+  security.txt is published on any host.
+hosts:
+- host: https://identity.moneyhub.co.uk/oidc
+  documents:
+  - path: /oidc/.well-known/openid-configuration
+    status: 200
+    file: moneyhub-openid-configuration.json
+  - path: /oidc/.well-known/oauth-authorization-server
+    status: 404
+- host: https://api.moneyhub.co.uk
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /swagger.json
+    status: 200
+    note: Swagger 2.0 Data API spec (harvested to openapi/moneyhub-data-api-swagger.json)
+- host: https://www.moneyhub.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    note: redirects to https://moneyhub.com/.well-known/security.txt (404)
+  - path: /.well-known/openid-configuration
+    status: 301
