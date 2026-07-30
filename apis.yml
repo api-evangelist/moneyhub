@@ -90,6 +90,8 @@ apis:
   - type: Authentication
     url: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/moneyhub/overview
 - type: AgenticAccess
   url: agentic-access/moneyhub-agentic-access.yml
 - type: TrustCenter
