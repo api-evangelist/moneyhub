@@ -1,0 +1,1897 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Moneyhub Data API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all accounts for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              },
+              {
+                "name": "showTransactionData",
+                "value": "",
+                "type": "query",
+                "description": "Return transaction data for the account when available"
+              },
+              {
+                "name": "showPerformanceScore",
+                "value": "",
+                "type": "query",
+                "description": "Return performance score for the account when available"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter accounts by their connectionId"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** scope. Optional scope **accounts_details:read** is needed for some extra fields such as account number and sort code. Please note: field **additionalBalances** is currently in **beta**"
+        },
+        {
+          "info": {
+            "name": "Create a single account for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accounts"
+          },
+          "docs": "Requires **accounts:read** and **accounts:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Retrieve all accounts for a user without additional data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts-list",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              },
+              {
+                "name": "showTransactionData",
+                "value": "",
+                "type": "query",
+                "description": "Return transaction data for the account when available"
+              },
+              {
+                "name": "showPerformanceScore",
+                "value": "",
+                "type": "query",
+                "description": "Return performance score for the account when available"
+              },
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter accounts by their connectionId"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** scope. Optional scope **accounts_details:read** is needed for some extra fields such as account number and sort code. By default this endpoint does not return transaction data (when this isn't returned response times are quicker than the GET /accounts endpoint). Please note: field **additionalBalances** is currently in **beta**"
+        },
+        {
+          "info": {
+            "name": "Retrieve a single account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** scope. Optional scope **accounts_details:read** is needed for some extra fields such as account number and sort code. Please note: field **additionalBalances** is currently in **beta**"
+        },
+        {
+          "info": {
+            "name": "Update a single account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** and **accounts:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Delete a single account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/accounts/:accountId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "This endpoint can only be used to delete accounts created using the POST /accounts endpoint. Accounts created when connecting to a financial institution can only be deleted by removing the connection they belong to. Requires **accounts:write:all** scope."
+        },
+        {
+          "info": {
+            "name": "Retrieve the historical balances for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/:accountId/balances",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** scope."
+        },
+        {
+          "info": {
+            "name": "Add a new balance for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accounts/:accountId/balances",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Create an estimate of the recurring transactions for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accounts/:accountId/recurring-transactions",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "**THIS ENDPOINT IS DEPRECATED.** Estimation of recurring transactions has ben superseded by the regular transactions endpoint. Requires **accounts:read** and **transactions:read:all** scope."
+        },
+        {
+          "info": {
+            "name": "Retrieve sync information for all of a user's accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/syncs"
+          },
+          "docs": "Requires **accounts:read** scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "holdings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the holdings for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/:accountId/holdings",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** scope."
+        },
+        {
+          "info": {
+            "name": "Retrieves a single holding for an account with matched ISIN codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/:accountId/holdings/:holdingId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              },
+              {
+                "name": "holdingId",
+                "value": "",
+                "type": "path",
+                "description": "The Holding Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** scope."
+        },
+        {
+          "info": {
+            "name": "Retrieve the holdings for an account with matched ISIN codes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/:accountId/holdings-with-matches",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "counterparties",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the counterparties for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/:accountId/counterparties",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              },
+              {
+                "name": "counterpartiesVersion",
+                "value": "",
+                "type": "query",
+                "description": "Counterparties version"
+              }
+            ]
+          },
+          "docs": "**THIS ENDPOINT IS DEPRECATED.** Requires **accounts:read** and **transactions:read:all** scope."
+        },
+        {
+          "info": {
+            "name": "Retrieve global counterparties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/global-counterparties",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              },
+              {
+                "name": "counterpartiesVersion",
+                "value": "",
+                "type": "query",
+                "description": "Counterparties version"
+              }
+            ]
+          },
+          "docs": "Retrieves list of global counterparties. The counterpartiesVersion query param can be used to get different versions. For more info refer to https://docs.moneyhubenterprise.com/docs/counterparties-2"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "notification thresholds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the notification thresholds for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/:accountId/notification-thresholds",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** scope."
+        },
+        {
+          "info": {
+            "name": "Add a notification threshold to an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/accounts/:accountId/notification-thresholds",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Update a single notification threshold",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/accounts/:accountId/notification-thresholds/:thresholdId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              },
+              {
+                "name": "thresholdId",
+                "value": "",
+                "type": "path",
+                "description": "The Threshold Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Delete a single notification threshold",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/accounts/:accountId/notification-thresholds/:thresholdId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              },
+              {
+                "name": "thresholdId",
+                "value": "",
+                "type": "path",
+                "description": "The Threshold Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the statements for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/:accountId/statements",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** and either **statements_basic:read** or **statements_detail:read** scopes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "standing orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve the standing orders for an account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/accounts/:accountId/standing-orders",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** and either of **standing_orders:read** or **standing_orders_detail:read** scopes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "affordability",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List of metadata for all affordability calculations for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/affordability",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              }
+            ]
+          },
+          "docs": "Requires **affordability:read** scope."
+        },
+        {
+          "info": {
+            "name": "Request affordability calculation for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/affordability"
+          },
+          "docs": "Requires **affordability:write** and **affordability:read** scopes."
+        },
+        {
+          "info": {
+            "name": "Get the affordability confidence calculation for a user, given the account and transaction data currently available",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/affordability/confidence"
+          },
+          "docs": "Requires **affordability:read** scope."
+        },
+        {
+          "info": {
+            "name": "Get an existing affordability calculation for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/affordability/:reportId",
+            "params": [
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "The Report Id"
+              }
+            ]
+          },
+          "docs": "Requires **affordability:read** scope."
+        },
+        {
+          "info": {
+            "name": "List of metadata for all affordability income calculations for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/affordability/income",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              }
+            ]
+          },
+          "docs": "Requires **affordability_income:read** scope."
+        },
+        {
+          "info": {
+            "name": "Request affordability income calculation for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/affordability/income"
+          },
+          "docs": "Requires **affordability_income:write** and **affordability_income:read** scopes."
+        },
+        {
+          "info": {
+            "name": "Get an existing affordability income calculation for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/affordability/income/:reportId",
+            "params": [
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "The Report Id"
+              }
+            ]
+          },
+          "docs": "Requires **affordability_income:read** scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "beneficiaries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all beneficiaries for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/beneficiaries",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              },
+              {
+                "name": "isUnique",
+                "value": "",
+                "type": "query",
+                "description": "Whether the beneficiaries returned include duplicates with differing references"
+              }
+            ]
+          },
+          "docs": "Requires **beneficiaries:read** scope. Optional scope **beneficiaries_detail:read** is needed for some extra fields such as postal address."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single beneficiary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/beneficiaries/:beneficiaryId",
+            "params": [
+              {
+                "name": "beneficiaryId",
+                "value": "",
+                "type": "path",
+                "description": "The Beneficiary Id"
+              }
+            ]
+          },
+          "docs": "Requires **beneficiaries:read** scope. Optional scope **beneficiaries_detail:read** is needed for some extra fields such as postal address."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all transactions for a user that have been enriched with our categorisation engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the transaction's Ids (maximum allowed 50)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The earliest date to receive transactions from (inclusive)"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The latest date to receive transactions from (inclusive)"
+              },
+              {
+                "name": "startDateModified",
+                "value": "",
+                "type": "query",
+                "description": "The earliest date the transactions were modified (inclusive)"
+              },
+              {
+                "name": "endDateModified",
+                "value": "",
+                "type": "query",
+                "description": "The latest date the transactions were modified (inclusive)"
+              },
+              {
+                "name": "text",
+                "value": "",
+                "type": "query",
+                "description": "The text to filter transactions descriptions/notes by"
+              },
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "query",
+                "description": "The category id to filter transactions by"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "query",
+                "description": "The account id to filter transactions by"
+              },
+              {
+                "name": "accountIds",
+                "value": "",
+                "type": "query",
+                "description": "The account ids to filter transactions by"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query",
+                "description": "The project id to filter transactions by"
+              },
+              {
+                "name": "projectIds",
+                "value": "",
+                "type": "query",
+                "description": "The project ids to filter transactions by"
+              },
+              {
+                "name": "creditDebitIndicator",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions depending on whether they are credit or debit transactions"
+              },
+              {
+                "name": "hasProject",
+                "value": "",
+                "type": "query",
+                "description": "Filter on whether transaction has an attached project"
+              },
+              {
+                "name": "onlyCount",
+                "value": "",
+                "type": "query",
+                "description": "Ensures ONLY the count of transactions is returned in the meta object"
+              },
+              {
+                "name": "contains",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the beginning of words of a transaction's clean description or beginning of transaction amount"
+              },
+              {
+                "name": "hasEnhancedCategory",
+                "value": "",
+                "type": "query",
+                "description": "A property to check exists within a transaction"
+              },
+              {
+                "name": "counterpartyIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the transaction's counterparty Id"
+              },
+              {
+                "name": "counterpartyIdsV2",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the transaction's counterparty Id (Deprecated)"
+              },
+              {
+                "name": "counterpartiesVersion",
+                "value": "",
+                "type": "query",
+                "description": "Counterparties version"
+              },
+              {
+                "name": "enhancedCategories",
+                "value": "",
+                "type": "query",
+                "description": "An enhanced category to filter transactions by in the form of ${categoryField}:${categoryValue}"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** scope. Transactions usually start around the account opening date however in most cases we only retrive the last 12 months before the connection was created. The Opening Date is available at the /accounts endpoint."
+        },
+        {
+          "info": {
+            "name": "Create a single transaction for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/transactions"
+          },
+          "docs": "Requires **transactions:read:all** and **transactions:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Retrieve all transactions for a user - does not include data-enriched transaction properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions/unenriched",
+            "params": [
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Filter on the transaction's Ids (maximum allowed 50)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The earliest date to receive transactions from (inclusive)"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The latest date to receive transactions from (inclusive)"
+              },
+              {
+                "name": "startDateModified",
+                "value": "",
+                "type": "query",
+                "description": "The earliest date the transactions were modified (inclusive)"
+              },
+              {
+                "name": "endDateModified",
+                "value": "",
+                "type": "query",
+                "description": "The latest date the transactions were modified (inclusive)"
+              },
+              {
+                "name": "text",
+                "value": "",
+                "type": "query",
+                "description": "The text to filter transactions descriptions by"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "query",
+                "description": "The account id to filter transactions by"
+              },
+              {
+                "name": "accountIds",
+                "value": "",
+                "type": "query",
+                "description": "The account ids to filter transactions by"
+              },
+              {
+                "name": "creditDebitIndicator",
+                "value": "",
+                "type": "query",
+                "description": "Filter transactions depending on whether they are credit or debit transactions"
+              },
+              {
+                "name": "onlyCount",
+                "value": "",
+                "type": "query",
+                "description": "Ensures ONLY the count of transactions is returned in the meta object"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** or **transactions_unenriched:read:all** scope. Transactions usually start around the account opening date however in most cases we only retrive the last 12 months before the connection was created. The Opening Date is available at the /accounts endpoint."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single transaction that has been enriched with our categorisation engine",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              },
+              {
+                "name": "counterpartiesVersion",
+                "value": "",
+                "type": "query",
+                "description": "Counterparties version"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** scope."
+        },
+        {
+          "info": {
+            "name": "Update a single transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/transactions/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** and either of **transactions:write** or **transactions:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Delete a single transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/transactions/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:write:all** scope."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single transaction - does not include data-enriched transaction properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions/unenriched/:transactionId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** or **transactions_unenriched:read:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Create multiple transactions for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/transactions-collection",
+            "params": [
+              {
+                "name": "categorise",
+                "value": "",
+                "type": "query",
+                "description": "Enable categorisation of transactions"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** and **transactions:write:all** scopes. A maximum of 50 transactions is imposed."
+        },
+        {
+          "info": {
+            "name": "Retrieve a transactions attachments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions/:transactionId/files",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** scope."
+        },
+        {
+          "info": {
+            "name": "Add an attachment to a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/transactions/:transactionId/files",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** and either of **transactions:write** or **transactions:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Retrieve a transactions attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions/:transactionId/files/:fileId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              },
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "The file id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** scope."
+        },
+        {
+          "info": {
+            "name": "Delete a single attachment on a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/transactions/:transactionId/files/:fileId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              },
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "The file id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** and either of **transactions:write** or **transactions:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Retrieve a transactions splits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/transactions/:transactionId/splits",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:read:all** scope."
+        },
+        {
+          "info": {
+            "name": "Split a transaction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/transactions/:transactionId/splits",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:write:all** scope."
+        },
+        {
+          "info": {
+            "name": "Merge split transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/transactions/:transactionId/splits",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:write:all** scope."
+        },
+        {
+          "info": {
+            "name": "Patch a transaction split",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/transactions/:transactionId/splits/:splitId",
+            "params": [
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path",
+                "description": "The transaction id"
+              },
+              {
+                "name": "splitId",
+                "value": "",
+                "type": "path",
+                "description": "The split id"
+              }
+            ]
+          },
+          "docs": "Requires **transactions:write:all** scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "categories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all categories for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The types of categories to be returned"
+              }
+            ]
+          },
+          "docs": "Requires **categories:read** scope."
+        },
+        {
+          "info": {
+            "name": "Add a new custom category for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/categories"
+          },
+          "docs": "Requires **categories:write** scope."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single category",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/categories/:categoryId",
+            "params": [
+              {
+                "name": "categoryId",
+                "value": "",
+                "type": "path",
+                "description": "The Category Id"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The types of categories to be returned"
+              }
+            ]
+          },
+          "docs": "Requires **categories:read** scope."
+        },
+        {
+          "info": {
+            "name": "Retrieve all category groups for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/category-groups",
+            "params": [
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The types of categories to be returned"
+              }
+            ]
+          },
+          "docs": "Requires **categories:read** scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "categorise transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Categorises a given set of transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/categorise-transactions"
+          },
+          "docs": "Requires **categorisation** scope. A maximum of 200 transactions is imposed."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "regular transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve regular transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/regular-transactions",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "query",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **regular_transactions:read**, **accounts:read** and **transactions:read:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Detect regular transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/regular-transactions/:accountId/detect",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The Account Id"
+              }
+            ]
+          },
+          "docs": "Requires **regular_transactions:write**, **regular_transactions:read**, **accounts:read** and **transactions:read:all** scopes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "rental records",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve rental recognition record",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/rental-records"
+          },
+          "docs": "Requires **rental_records:read** scope. Please note that a user will only have one rental recognition record. The rental record returned will be for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Create a rental recognition record for user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/rental-records"
+          },
+          "docs": "Requires **rental_records:write** scope. Please note that a user will only have one rental recognition record. The rental record created will be for the authenticated user."
+        },
+        {
+          "info": {
+            "name": "Delete a rental record",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/rental-records/:rentalId",
+            "params": [
+              {
+                "name": "rentalId",
+                "value": "",
+                "type": "path",
+                "description": "The rental record ID"
+              }
+            ]
+          },
+          "docs": "Requires **rental_records:write** scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "spending analysis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve spending analysis by categories, projects and accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/spending-analysis"
+          },
+          "docs": "Defaults to all categories and accounts if none specified.\n<br />The categories field in the response has a breakdown of the total by categories for the given periods. You can expect to also receive the breakdown for income and transfer categories.\n<br />The 'total' field in the response calculates the total outgoing expenditure for the given periods. This calculation do not include income and transfers.\n<br /> Categories under the transfer group are the only ones that can appear twice showing i"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "spending goals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all spending goals for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/spending-goals",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              }
+            ]
+          },
+          "docs": "Requires **spending_goals:read** scope."
+        },
+        {
+          "info": {
+            "name": "Create a single spending goal for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/spending-goals"
+          },
+          "docs": "Requires **spending_goals:read** and **spending_goals:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single spending goal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/spending-goals/:goalId",
+            "params": [
+              {
+                "name": "goalId",
+                "value": "",
+                "type": "path",
+                "description": "The Goal Id"
+              }
+            ]
+          },
+          "docs": "Requires **spending_goals:read** scope."
+        },
+        {
+          "info": {
+            "name": "Update a single spending goal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/spending-goals/:goalId",
+            "params": [
+              {
+                "name": "goalId",
+                "value": "",
+                "type": "path",
+                "description": "The Goal Id"
+              }
+            ]
+          },
+          "docs": "Requires **spending_goals:read spending_goals:write** scope."
+        },
+        {
+          "info": {
+            "name": "Delete a single spending goal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/spending-goals/:goalId",
+            "params": [
+              {
+                "name": "goalId",
+                "value": "",
+                "type": "path",
+                "description": "The Goal Id"
+              }
+            ]
+          },
+          "docs": "Requires **spending_goals:write:all** scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "savings goals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all saving goals for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/savings-goals",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              }
+            ]
+          },
+          "docs": "Requires **savings_goals:read** scope."
+        },
+        {
+          "info": {
+            "name": "Create a single savings goal for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/savings-goals"
+          },
+          "docs": "Requires **savings_goals:read** and **savings_goals:write:all** scopes."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single savings goal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/savings-goals/:goalId",
+            "params": [
+              {
+                "name": "goalId",
+                "value": "",
+                "type": "path",
+                "description": "The Goal Id"
+              }
+            ]
+          },
+          "docs": "Requires **savings_goals:read** scope."
+        },
+        {
+          "info": {
+            "name": "Update a single savings goal",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/savings-goals/:goalId",
+            "params": [
+              {
+                "name": "goalId",
+                "value": "",
+                "type": "path",
+                "description": "The Goal Id"
+              }
+            ]
+          },
+          "docs": "Requires **savings_goals:read** and either **savings_goals:write** or **savings_goals:write:all** scope."
+        },
+        {
+          "info": {
+            "name": "Delete a single savings goal",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/savings-goals/:goalId",
+            "params": [
+              {
+                "name": "goalId",
+                "value": "",
+                "type": "path",
+                "description": "The Goal Id"
+              }
+            ]
+          },
+          "docs": "Requires **savings_goals:write:all** scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "standard-financial-statements",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an existing standard financial statement for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/standard-financial-statements/:reportId",
+            "params": [
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "The Report Id"
+              }
+            ]
+          },
+          "docs": "Requires **standard_financial_statement:read** scope."
+        },
+        {
+          "info": {
+            "name": "List of metadata for all standard financial statements for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/standard-financial-statements",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              }
+            ]
+          },
+          "docs": "Requires **standard_financial_statement:read** scope."
+        },
+        {
+          "info": {
+            "name": "Request standard financial statement for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/standard-financial-statements"
+          },
+          "docs": "Requires **standard_financial_statement:write** and **standard_financial_statement:read** scopes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "sync",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sync an existing connection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sync/:connectionId",
+            "params": [
+              {
+                "name": "connectionId",
+                "value": "",
+                "type": "path",
+                "description": "The connection id"
+              }
+            ]
+          },
+          "docs": "Requires **accounts:read** and either **accounts:write** or **accounts:write:all** scopes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve all projects for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/projects",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The total number of records to retrieve"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The offset at which to start retrieving records"
+              }
+            ]
+          },
+          "docs": "Requires **projects:read** scope."
+        },
+        {
+          "info": {
+            "name": "Create a single project for a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/projects"
+          },
+          "docs": "Requires **projects:write** scopes."
+        },
+        {
+          "info": {
+            "name": "Retrieve a single project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The Project Id"
+              }
+            ]
+          },
+          "docs": "Requires **projects:read** scope."
+        },
+        {
+          "info": {
+            "name": "Update a single project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The Project Id"
+              }
+            ]
+          },
+          "docs": "Requires **projects:write** scopes."
+        },
+        {
+          "info": {
+            "name": "Delete a single project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "The Project Id"
+              }
+            ]
+          },
+          "docs": "This endpoint can only be used to delete projects created using the POST /projects endpoint. Projects created when connecting to a financial institution can only be deleted by removing the connection they belong to. Requires **projects:delete** scope."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "tax",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve transactions to help answer SA105 - the Self Assessment questions for properties for HMRC",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/tax",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The date to get transactions from"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The date to get transactions to"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query",
+                "description": "The project ID the transactions belong to"
+              },
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "query",
+                "description": "The account ID the transactions belong to"
+              }
+            ]
+          },
+          "docs": "Requires **tax:read** scope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

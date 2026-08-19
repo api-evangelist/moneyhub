@@ -244,3 +244,9 @@ tools:
   description: Retrieve transactions to help answer SA105 - the Self Assessment questions for properties
     for HMRC
   source_operation: openapi/moneyhub-data-api-swagger.json#GET /tax
+deployment:
+  mode: none
+  verified: derived
+  tools: 77
+  checked: '2026-08-12'
+  source: catalog MCP census
