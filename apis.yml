@@ -434,6 +434,9 @@ apis:
   - type: Documentation
     url: https://www.moneyhub.com/apis/data-intelligence
 common:
+- type: CapabilityMap
+  url: capabilities/moneyhub-capability-edges.yml
+  name: Moneyhub Business Capability Map
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/moneyhub/overview
 - type: AgenticAccess

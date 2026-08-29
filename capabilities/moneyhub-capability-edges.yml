@@ -1,0 +1,37 @@
+slug: moneyhub
+provider: Moneyhub
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: affordability
+  spec_file: moneyhub-affordability-api-openapi.yml
+  capability_id: BC-1320.20
+  capability_id_l1: BC-1320
+  capability_name: Credit Underwriting & Decisioning Management
+  confidence: 0.7
+  evidence: 'POST /affordability  Request affordability calculation for a user; POST /affordability/income  Request
+    affordability income calculation; schemas: AffordabilityConfidence'
+  reason: Affordability and income calculations derived from account and transaction data are used for
+    credit assessment/decisioning inputs, aligning with underwriting and financial spreading. Some chance
+    it is better placed at origination pre-screening.
+- tag: tax
+  spec_file: moneyhub-tax-api-openapi.yml
+  capability_id: BC-220.40
+  capability_id_l1: BC-220
+  capability_name: Tax Reporting & Compliance
+  confidence: 0.7
+  evidence: GET /tax — 'Retrieve transactions to help answer SA105 - the Self Assessment questions for
+    properties for HMRC'
+  reason: The single operation assembles data specifically to complete an HMRC Self Assessment return,
+    which is tax return preparation/compliance reporting; the personal (rather than corporate) context
+    lowers confidence slightly.
