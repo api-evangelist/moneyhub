@@ -1,0 +1,286 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data categorise transactions API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: categorise transactions
+paths:
+  /categorise-transactions:
+    post:
+      summary: Categorises a given set of transactions
+      description: Requires **categorisation** scope. A maximum of 200 transactions is imposed.
+      responses:
+        '200':
+          description: Successful Categorisation Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CategoriseTransactions'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - categorise transactions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoriseTransactionsPost'
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    CategoriseTransactions:
+      type: object
+      additionalProperties: false
+      properties:
+        accountType:
+          description: Type of account, defaults to 'cash' if no value is provided
+          example: cash
+          default: cash
+          type: string
+          enum:
+          - cash
+          - card
+          - savings
+          - pension
+          - investment
+        accountId:
+          description: The id of the account the transaction belongs to. Defaults to random uuid if no value is provided
+          example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          type: string
+          maxLength: 64
+        transactions:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              id:
+                description: The unique id of the transaction (can be any unique identifier). Defaults to random uuid if no value is provided
+                example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+                type: string
+                maxLength: 64
+              description:
+                description: The full text description of the transactions - often as it is represented on the users bank statement
+                example: Card Purchase SAINSBURYS S/MKTS  BCC
+                type: string
+                maxLength: 512
+              categoryId:
+                description: An identifier for the detected category, all categoryIds are prefixed with the standard prefix.
+                example: std:338d2636-7f88-491d-8129-255c98da1eb8
+                type: string
+                pattern: ^(std):(\w|-)+$
+              counterpartyId:
+                description: An identifier for the counterparty
+                example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+                format: uuid
+                type: string
+              amount:
+                properties:
+                  value:
+                    description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                    example: -2300
+                    type: integer
+                required:
+                - value
+                type: object
+              date:
+                description: Date of the transaction in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+                example: '2023-01-20T00:00:00Z'
+                format: date-time
+                type: string
+              proprietaryTransactionCode:
+                description: Unique identifier used by the financial institution to categorize a given transaction
+                example: DEBIT
+                type: string
+                maxLength: 64
+              merchantCategoryCode:
+                description: A 4-digit Merchant Category Code (MCC) defined by ISO 18245. This code identifies the type of business or service provided by the merchant. Examples include '5411' (Grocery Stores), '5812' (Eating Places and Restaurants), and '5999' (Miscellaneous Retail Stores).
+                example: '1234'
+                type: string
+                maxLength: 4
+            required:
+            - id
+            - description
+            - amount
+            - date
+        failedCategorisationIds:
+          description: Transaction Ids which failed to be categorised
+          type: array
+          items:
+            type: string
+          example:
+          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+      required:
+      - accountId
+      - accountType
+      - transactions
+      - failedCategorisationIds
+      example:
+        accountId: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        accountType: cash
+        transactions:
+        - id: c0626412-311e-43c3-b885-793a2de8f492
+          description: Amazon
+          amount:
+            value: -3000
+          date: '2025-04-29T10:51:34.747Z'
+          counterpartyId: ba4d83ec-3240-5d6e-b258-11e1c913da62
+          categoryId: std:cdc55410-176d-4c71-9bb2-6988b5d4913d
+        failedCategorisationIds: []
+    CategoriseTransactionsPost:
+      type: object
+      additionalProperties: false
+      description: Transactions to categorised for a given account.
+      properties:
+        accountType:
+          description: Type of account, defaults to 'cash' if no value is provided
+          example: cash
+          type: string
+          enum:
+          - cash
+          - card
+          - savings
+          - pension
+          - investment
+          default: cash
+        accountId:
+          description: The id of the account the transaction belongs to. Defaults to random uuid if no value is provided
+          example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          type: string
+          maxLength: 64
+        transactions:
+          type: array
+          items:
+            additionalProperties: false
+            type: object
+            properties:
+              id:
+                description: The unique id of the transaction (can be any unique identifier). Defaults to random uuid if no value is provided
+                example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+                type: string
+                maxLength: 64
+              description:
+                description: The full text description of the transactions - often as it is represented on the users bank statement
+                example: Card Purchase SAINSBURYS S/MKTS  BCC
+                type: string
+                maxLength: 512
+              amount:
+                properties:
+                  value:
+                    description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                    example: -2300
+                    type: integer
+                required:
+                - value
+                type: object
+              date:
+                description: Date of the transaction in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)
+                example: '2023-01-20T00:00:00Z'
+                type: string
+                format: date-time
+              proprietaryTransactionCode:
+                description: Unique identifier used by the financial institution to categorize a given transaction
+                example: DEBIT
+                type: string
+                maxLength: 64
+              merchantCategoryCode:
+                description: A 4-digit Merchant Category Code (MCC) defined by ISO 18245. This code identifies the type of business or service provided by the merchant. Examples include '5411' (Grocery Stores), '5812' (Eating Places and Restaurants), and '5999' (Miscellaneous Retail Stores).
+                example: '1234'
+                type: string
+                maxLength: 4
+            required:
+            - description
+            - amount
+            - date
+      required:
+      - transactions
+      example:
+        accountId: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        accountType: cash
+        transactions:
+        - id: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          description: Card Purchase SAINSBURYS S/MKTS  BCC
+          amount:
+            value: -4500
+          date: '2025-04-29T10:51:34.747Z'
+          proprietaryTransactionCode: DIRECT DEBIT
+          merchantCategoryCode: '1234'
+        - id: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          description: WM Morrisons
+          amount:
+            value: -5000
+          date: '2025-04-29T10:51:34.747Z'
+          proprietaryTransactionCode: DEBIT
+          merchantCategoryCode: '1234'
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

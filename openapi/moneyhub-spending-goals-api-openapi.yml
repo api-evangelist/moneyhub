@@ -1,0 +1,401 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data spending goals API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: spending goals
+paths:
+  /spending-goals:
+    get:
+      summary: Retrieve all spending goals for a user
+      description: Requires **spending_goals:read** scope.
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      responses:
+        '200':
+          description: Successful Spending Goals Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/SpendingGoal'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+      tags:
+      - spending goals
+    post:
+      summary: Create a single spending goal for a user
+      description: Requires **spending_goals:read** and **spending_goals:write:all** scopes.
+      responses:
+        '200':
+          description: Successful Spending Goal Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SpendingGoal'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - spending goals
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpendingGoalPost'
+  /spending-goals/{goalId}:
+    get:
+      summary: Retrieve a single spending goal
+      description: Requires **spending_goals:read** scope.
+      parameters:
+      - description: The Goal Id
+        in: path
+        name: goalId
+        required: true
+        x-example: 39577c49-350f-45a4-8ec3-48ce205585fb
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Spending Goal Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SpendingGoal'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - spending goals
+    patch:
+      summary: Update a single spending goal
+      description: Requires **spending_goals:read spending_goals:write** scope.
+      parameters:
+      - description: The Goal Id
+        in: path
+        name: goalId
+        required: true
+        x-example: 39577c49-350f-45a4-8ec3-48ce205585fb
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Spending Goal Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SpendingGoal'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - spending goals
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpendingGoalPatch'
+    delete:
+      summary: Delete a single spending goal
+      description: Requires **spending_goals:write:all** scope.
+      parameters:
+      - description: The Goal Id
+        in: path
+        name: goalId
+        required: true
+        x-example: 39577c49-350f-45a4-8ec3-48ce205585fb
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Successful Spending Goal Response
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - spending goals
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    SpendingGoalPatch:
+      properties:
+        categoryId:
+          description: The id of the category the spending goal should be created for
+          type: string
+          example: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+        amount:
+          properties:
+            value:
+              description: The amount of the spending goal in minor units of the currency, eg. pennies for GBP.
+              example: 300
+              type: integer
+              exclusiveMinimum: 0
+          required:
+          - value
+          type: object
+      example:
+        categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+        amount:
+          value: 300
+      type: object
+    SpendingGoal:
+      additionalProperties: false
+      type: object
+      properties:
+        categoryId:
+          example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+        dateCreated:
+          example: '2018-07-11T00:00:00.000Z'
+          format: date-time
+          type: string
+        periodType:
+          example: monthly
+          type: string
+          enum:
+          - monthly
+          - annual
+        periodStart:
+          example: '01'
+          type: string
+          pattern: ^(0?[1-9]|[12][0-9]|3[01])(-(0?[1-9]|1[012]))?$
+        id:
+          description: The unique id of the spending goal
+          type: string
+          example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        amount:
+          properties:
+            value:
+              description: The value of the amount in minor units of the currency, eg. pennies for GBP.
+              example: 40000
+              type: integer
+              minimum: 0
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 400
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 0
+              type: integer
+            currency:
+              description: The currency of the amount.
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        spending:
+          items:
+            additionalProperties: false
+            properties:
+              date:
+                example: 2018-07
+                type: string
+              spent:
+                description: The spending analysis amount of the specified month expressed in minor units of the currency.
+                example: -35000
+                type: integer
+            required:
+            - date
+            - spent
+            type: object
+          type: array
+      required:
+      - id
+      - dateCreated
+      - categoryId
+      - amount
+      - periodStart
+      - periodType
+      - spending
+    SpendingGoalPost:
+      properties:
+        categoryId:
+          description: The id of the category for the spending goal, either from the /categories endpoint or **std:all**
+          type: string
+          example: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+        periodType:
+          description: The period type of the goal, can be annual or monthly
+          example: monthly
+          type: string
+          enum:
+          - monthly
+          - annual
+        periodStart:
+          description: You can set a goal period to start on a certain date. DD when periodType is monthly, DD-MM when periodType is annual
+          example: '01'
+          type: string
+          pattern: ^(0?[1-9]|[12][0-9]|3[01])(-(0?[1-9]|1[012]))?$
+        amount:
+          properties:
+            value:
+              description: The amount of the spending goal in minor units of the currency, eg. pennies for GBP.
+              example: 500000
+              type: integer
+              exclusiveMinimum: 0
+          required:
+          - value
+          type: object
+      example:
+        categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+        amount:
+          value: 50000
+      type: object
+      required:
+      - categoryId
+      - amount
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,2911 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Affordability API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: affordability
+paths:
+  /affordability:
+    get:
+      summary: List of metadata for all affordability calculations for a user
+      description: Requires **affordability:read** scope.
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      responses:
+        '200':
+          description: Successful Affordability Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AffordabilityMetadata'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - affordability
+    post:
+      summary: Request affordability calculation for a user
+      description: Requires **affordability:write** and **affordability:read** scopes.
+      responses:
+        '200':
+          description: Successful Affordability Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Affordability'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad Request - Mixed account currencies
+          content:
+            application/json:
+              schema:
+                additionalProperties: false
+                properties:
+                  code:
+                    description: The error code
+                    type: string
+                  subCode:
+                    description: The error subCode
+                    enum:
+                    - CURRENCY_MISMATCH
+                  message:
+                    description: The error message
+                    type: string
+                  correlationId:
+                    description: Id that identifies the request and can be used to ask for more details related to the error
+                    type: string
+                required:
+                - code
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - affordability
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AffordabilityPost'
+  /affordability/confidence:
+    get:
+      summary: Get the affordability confidence calculation for a user, given the account and transaction data currently available
+      description: Requires **affordability:read** scope.
+      responses:
+        '200':
+          description: Successful Affordability Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AffordabilityConfidence'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - affordability
+  /affordability/{reportId}:
+    get:
+      summary: Get an existing affordability calculation for a user
+      description: Requires **affordability:read** scope.
+      parameters:
+      - description: The Report Id
+        in: path
+        name: reportId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Affordability Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Affordability'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - affordability
+  /affordability/income:
+    get:
+      summary: List of metadata for all affordability income calculations for a user
+      description: Requires **affordability_income:read** scope.
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      responses:
+        '200':
+          description: Successful Affordability Income Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AffordabilityIncomeMetadata'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - affordability
+    post:
+      summary: Request affordability income calculation for a user
+      description: Requires **affordability_income:write** and **affordability_income:read** scopes.
+      responses:
+        '200':
+          description: Successful Affordability Income Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AffordabilityIncome'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad Request - Mixed account currencies
+          content:
+            application/json:
+              schema:
+                additionalProperties: false
+                properties:
+                  code:
+                    description: The error code
+                    type: string
+                  subCode:
+                    description: The error subCode
+                    enum:
+                    - CURRENCY_MISMATCH
+                  message:
+                    description: The error message
+                    type: string
+                  correlationId:
+                    description: Id that identifies the request and can be used to ask for more details related to the error
+                    type: string
+                required:
+                - code
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - affordability
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AffordabilityIncomePost'
+  /affordability/income/{reportId}:
+    get:
+      summary: Get an existing affordability income calculation for a user
+      description: Requires **affordability_income:read** scope.
+      parameters:
+      - description: The Report Id
+        in: path
+        name: reportId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Affordability Income Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/AffordabilityIncome'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - affordability
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    Affordability:
+      additionalProperties: false
+      type: object
+      properties:
+        createdAt:
+          description: The timestamp at which the report was generated
+          type: string
+        id:
+          description: The report id
+          type: string
+        income:
+          type: object
+          properties:
+            amountConsistency:
+              description: Consistency of monthly income, as a number between 0 and 1
+              type: number
+            longevity:
+              type: object
+              properties:
+                consecutiveIncomeMonths:
+                  description: Longevity of income detected in number of months
+                  type: number
+                incomePeriodLengthMonths:
+                  description: The number of months of transaction history available for the income detection process
+                  type: number
+            predicted:
+              description: The predicted monthly income amount
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            regularIncomeDetected:
+              description: Whether or not regular income was detected
+              type: boolean
+          required:
+          - amountConsistency
+          - longevity
+          - predicted
+          - regularIncomeDetected
+        overdraftUseByAccount:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: The account id
+                type: string
+              daysInOverdraft:
+                description: The total number of days the account was overdrawn according to the account balance
+                type: number
+              daysInUnarrangedOverdraft:
+                description: The total number of days the account was in unarranged overdraft according to the account balance. If we were not provided with an overdraft limit by the account provider, we assume any negative balance is unarranged overdraft
+                type: number
+              earliestBalanceDate:
+                description: The earliest available balance date for the account
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    days:
+                      description: The number of days the account was overdrawn during the period
+                      type: number
+                    start:
+                      description: The start date of the period
+                      type: string
+                    end:
+                      description: The end date of the period
+                      type: string
+                    minimumBalance:
+                      description: The minimum balance of the account during the period
+                      additionalProperties: false
+                      type: object
+                      properties:
+                        value:
+                          description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                          example: -2323
+                          type: integer
+                        majorUnits:
+                          description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                          example: 23
+                          type: integer
+                        minorUnits:
+                          description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                          example: 23
+                          type: integer
+                        currency:
+                          description: The currency of the amount
+                          example: GBP
+                          type: string
+                      required:
+                      - value
+                      - currency
+                    unarrangedOverdraft:
+                      type: object
+                      properties:
+                        days:
+                          description: The total number of days the account was in unarranged overdraft according to the account balance during the period
+                          type: number
+                        details:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              days:
+                                description: The number of days the account was in unarranged overdraft during the unarranged overdraft period
+                                type: number
+                              start:
+                                description: The start date of the unarranged overdraft period
+                                type: string
+                              end:
+                                description: The end date of the unarranged overdraft period
+                                type: string
+                              minimumBalance:
+                                description: The minimum balance of the account during the unarranged overdraft period
+                                additionalProperties: false
+                                type: object
+                                properties:
+                                  value:
+                                    description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                    example: -2323
+                                    type: integer
+                                  majorUnits:
+                                    description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                    example: 23
+                                    type: integer
+                                  minorUnits:
+                                    description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                    example: 23
+                                    type: integer
+                                  currency:
+                                    description: The currency of the amount
+                                    example: GBP
+                                    type: string
+                                required:
+                                - value
+                                - currency
+                            required:
+                            - days
+                            - start
+                            - end
+                            - minimumBalance
+                      required:
+                      - days
+                      - details
+                  required:
+                  - days
+                  - end
+                  - minimumBalance
+                  - start
+            required:
+            - id
+            - daysInOverdraft
+            - earliestBalanceDate
+        overview:
+          type: object
+          properties:
+            discretionaryExpenses:
+              description: The median monthly discretionary spend
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            fixedExpenses:
+              description: The median monthly fixed spend
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            flexibleExpenses:
+              description: The median monthly flexible spend
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            income:
+              description: The median monthly income
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            incomeIncludingTransfers:
+              description: The median monthly income including incoming transfers when incoming transfers exceed outgoing transfers
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            nonDiscretionaryExpenses:
+              description: The median monthly non-discretionary spend
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+          required:
+          - discretionaryExpenses
+          - fixedExpenses
+          - flexibleExpenses
+          - income
+          - nonDiscretionaryExpenses
+        primaryIncomeAccountId:
+          description: The account id of the detected primary income account
+          type: string
+        riskIndicators:
+          type: object
+          properties:
+            cashWithdrawals:
+              description: The median monthly cash withdrawal amount
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            gambling:
+              description: The median monthly gambling spend
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            loansOpened:
+              type: object
+              properties:
+                byPeriod:
+                  type: object
+                  properties:
+                    30days:
+                      type: object
+                      properties:
+                        byType:
+                          type: object
+                          properties:
+                            bnpl:
+                              description: Total number of Buy Now Pay Later loans opened within the period
+                              type: number
+                            hcstc:
+                              description: Total number of high cost short term credit loans opened within the period
+                              type: number
+                            dca/dmp:
+                              description: Total number of debt collection agency and debt management plan loans opened within the period
+                              type: number
+                            secured:
+                              description: Total number of secured loans opened within the period
+                              type: number
+                            unknown:
+                              description: Total number of loans with an unknown type opened within the period
+                              type: number
+                            unsecured:
+                              description: Total number of unsecured loans opened within the period
+                              type: number
+                        totalByType:
+                          type: object
+                          properties:
+                            bnpl:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using Buy Now Pay Later loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on Buy Now Pay Later loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            hcstc:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using high cost short term credit loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on high cost short term credit loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            dca/dmp:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using debt collection agency and debt management plans loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on debt collection agency and debt management plans loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            secured:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using secured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on secured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            unknown:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using loans of unknown type within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on loans of unknown type within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            unsecured:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using unsecured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on unsecured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                    90days:
+                      type: object
+                      properties:
+                        byType:
+                          type: object
+                          properties:
+                            bnpl:
+                              description: Total number of Buy Now Pay Later loans opened within the period
+                              type: number
+                            hcstc:
+                              description: Total number of high cost short term credit loans opened within the period
+                              type: number
+                            dca/dmp:
+                              description: Total number of debt collection agency and debt management plan loans opened within the period
+                              type: number
+                            secured:
+                              description: Total number of secured loans opened within the period
+                              type: number
+                            unknown:
+                              description: Total number of loans with an unknown type opened within the period
+                              type: number
+                            unsecured:
+                              description: Total number of unsecured loans opened within the period
+                              type: number
+                        totalByType:
+                          type: object
+                          properties:
+                            bnpl:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using Buy Now Pay Later loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on Buy Now Pay Later loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            hcstc:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using high cost short term credit loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on high cost short term credit loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            dca/dmp:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using debt collection agency and debt management plans loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on debt collection agency and debt management plans loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            secured:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using secured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on secured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            unknown:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using loans of unknown type within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on loans of unknown type within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            unsecured:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using unsecured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on unsecured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                    180days:
+                      type: object
+                      properties:
+                        byType:
+                          type: object
+                          properties:
+                            bnpl:
+                              description: Total number of Buy Now Pay Later loans opened within the period
+                              type: number
+                            hcstc:
+                              description: Total number of high cost short term credit loans opened within the period
+                              type: number
+                            dca/dmp:
+                              description: Total number of debt collection agency and debt management plan loans opened within the period
+                              type: number
+                            secured:
+                              description: Total number of secured loans opened within the period
+                              type: number
+                            unknown:
+                              description: Total number of loans with an unknown type opened within the period
+                              type: number
+                            unsecured:
+                              description: Total number of unsecured loans opened within the period
+                              type: number
+                        totalByType:
+                          type: object
+                          properties:
+                            bnpl:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using Buy Now Pay Later loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on Buy Now Pay Later loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            hcstc:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using high cost short term credit loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on high cost short term credit loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            dca/dmp:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using debt collection agency and debt management plans loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on debt collection agency and debt management plans loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            secured:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using secured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on secured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            unknown:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using loans of unknown type within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on loans of unknown type within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            unsecured:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using unsecured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on unsecured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                    365days:
+                      type: object
+                      properties:
+                        byType:
+                          type: object
+                          properties:
+                            bnpl:
+                              description: Total number of Buy Now Pay Later loans opened within the period
+                              type: number
+                            hcstc:
+                              description: Total number of high cost short term credit loans opened within the period
+                              type: number
+                            dca/dmp:
+                              description: Total number of debt collection agency and debt management plan loans opened within the period
+                              type: number
+                            secured:
+                              description: Total number of secured loans opened within the period
+                              type: number
+                            unknown:
+                              description: Total number of loans with an unknown type opened within the period
+                              type: number
+                            unsecured:
+                              description: Total number of unsecured loans opened within the period
+                              type: number
+                        totalByType:
+                          type: object
+                          properties:
+                            bnpl:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using Buy Now Pay Later loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on Buy Now Pay Later loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            hcstc:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using high cost short term credit loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on high cost short term credit loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            dca/dmp:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using debt collection agency and debt management plans loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on debt collection agency and debt management plans loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            secured:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using secured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on secured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            unknown:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using loans of unknown type within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on loans of unknown type within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                            unsecured:
+                              type: object
+                              properties:
+                                borrowed:
+                                  description: Total amount borrowed using unsecured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+                                repaid:
+                                  description: Total amount repaid on unsecured loans within the period
+                                  additionalProperties: false
+                                  type: object
+                                  properties:
+                                    value:
+                                      description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                      example: -2323
+                                      type: integer
+                                    majorUnits:
+                                      description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                      example: 23
+                                      type: integer
+                                    minorUnits:
+                                      description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                      example: 23
+                                      type: integer
+                                    currency:
+                                      description: The currency of the amount
+                                      example: GBP
+                                      type: string
+                                  required:
+                                  - value
+                                  - currency
+            loanRepayments:
+              description: The median monthly loan repayment amount
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            outgoingTransfers:
+              description: The median monthly outgoing transfer amount
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            returnedDirectDebits:
+              type: object
+              properties:
+                count:
+                  description: The number of times a direct debit payment has been detected as returned
+                  type: number
+                details:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      category:
+                        type: string
+                        description: The category of the returned payments
+                      count:
+                        description: The number of returned payment transactions detected for the specified category and time period
+                        type: number
+                      period:
+                        type: object
+                        properties:
+                          unit:
+                            type: string
+                            description: The type of time unit over which the returned payments were detected
+                            enum:
+                            - days
+                          value:
+                            description: The number of time units over which the returned payments were detected
+                            type: number
+                        required:
+                        - unit
+                        - value
+                      total:
+                        type: object
+                        properties:
+                          returned:
+                            description: The total sum of the returned payments for the specified category and time period
+                            additionalProperties: false
+                            type: object
+                            properties:
+                              value:
+                                description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                                example: -2323
+                                type: integer
+                              majorUnits:
+                                description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                                example: 23
+                                type: integer
+                              minorUnits:
+                                description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                                example: 23
+                                type: integer
+                              currency:
+                                description: The currency of the amount
+                                example: GBP
+                                type: string
+                            required:
+                            - value
+                            - currency
+                        required:
+                        - returned
+                    required:
+                    - category
+                    - count
+                    - period
+                    - total
+                periodMonths:
+                  description: The number of months of regular payment history detected
+                  type: number
+          required:
+          - cashWithdrawals
+          - gambling
+          - loanRepayments
+          - outgoingTransfers
+          - returnedDirectDebits
+      example:
+        createdAt: '2022-01-01T00:00:00Z'
+        id: d372d09b-f50a-4114-9c83-687828fa8ac2
+        income:
+          amountConsistency: 1
+          longevity:
+            consecutiveIncomeMonths: 12
+            incomePeriodLengthMonths: 12
+          predicted:
+            value: 189900
+            majorUnits: 1899
+            minorUnits: 0
+            currency: GBP
+          regularIncomeDetected: true
+        overdraftUseByAccount:
+        - id: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          daysInOverdraft: 4
+          daysInUnarrangedOverdraft: 2
+          earliestBalanceDate: '2022-01-01T00:00:00Z'
+          details:
+          - days: 4
+            start: '2022-01-01T00:00:00Z'
+            end: '2022-01-05T00:00:00Z'
+            minimumBalance:
+              value: -10000
+              majorUnits: 100
+              minorUnits: 0
+              currency: GBP
+            unarrangedOverdraft:
+              days: 2
+              details:
+              - days: 1
+                start: '2022-01-01T00:00:00Z'
+                end: '2022-01-02T00:00:00Z'
+                minimumBalance:
+                  value: -10000
+                  majorUnits: 100
+                  minorUnits: 0
+                  currency: GBP
+              - days: 1
+                start: '2022-01-04T00:00:00Z'
+                end: '2022-01-05T00:00:00Z'
+                minimumBalance:
+                  value: -9900
+                  majorUnits: 99
+                  minorUnits: 0
+                  currency: GBP
+        overview:
+          discretionaryExpenses:
+            value: -55000
+            majorUnits: 550
+            minorUnits: 0
+            currency: GBP
+          fixedExpenses:
+            value: -125000
+            majorUnits: 1250
+            minorUnits: 0
+            currency: GBP
+          flexibleExpenses:
+            value: -59000
+            majorUnits: 590
+            minorUnits: 0
+            currency: GBP
+          income:
+            value: 189900
+            majorUnits: 1899
+            minorUnits: 0
+            currency: GBP
+          incomeIncludingTransfers:
+            value: 210000
+            majorUnits: 2100
+            minorUnits: 0
+            currency: GBP
+          nonDiscretionaryExpenses:
+            value: -130000
+            majorUnits: 1300
+            minorUnits: 0
+            currency: GBP
+        primaryIncomeAccountId: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+        riskIndicators:
+          cashWithdrawals:
+            value: -5000
+            majorUnits: 50
+            minorUnits: 0
+            currency: GBP
+          gambling:
+            value: -2000
+            majorUnits: 20
+            minorUnits: 0
+            currency: GBP
+          loansOpened:
+            byPeriod:
+              30days:
+                byType:
+                  bnpl: 1
+                  hcstc: 0
+                  dca/dmp: 0
+                  secured: 0
+                  unknown: 0
+                  unsecured: 0
+                totalByType:
+                  bnpl:
+                    borrowed:
+                      value: 100000
+                      majorUnits: 1000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -10000
+                      majorUnits: 100
+                      minorUnits: 0
+                      currency: GBP
+                  hcstc:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  dca/dmp:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  secured:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  unknown:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  unsecured:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+              90days:
+                byType:
+                  bnpl: 2
+                  hcstc: 0
+                  dca/dmp: 1
+                  secured: 0
+                  unknown: 0
+                  unsecured: 1
+                totalByType:
+                  bnpl:
+                    borrowed:
+                      value: 200000
+                      majorUnits: 2000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -20000
+                      majorUnits: 200
+                      minorUnits: 0
+                      currency: GBP
+                  hcstc:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  dca/dmp:
+                    borrowed:
+                      value: 100000
+                      majorUnits: 1000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -10000
+                      majorUnits: 100
+                      minorUnits: 0
+                      currency: GBP
+                  secured:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  unknown:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  unsecured:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+              180days:
+                byType:
+                  bnpl: 3
+                  hcstc: 1
+                  dca/dmp: 1
+                  secured: 0
+                  unknown: 0
+                  unsecured: 1
+                totalByType:
+                  bnpl:
+                    borrowed:
+                      value: 300000
+                      majorUnits: 3000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -30000
+                      majorUnits: 300
+                      minorUnits: 0
+                      currency: GBP
+                  hcstc:
+                    borrowed:
+                      value: 100000
+                      majorUnits: 1000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -10000
+                      majorUnits: 100
+                      minorUnits: 0
+                      currency: GBP
+                  dca/dmp:
+                    borrowed:
+                      value: 100000
+                      majorUnits: 1000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -10000
+                      majorUnits: 100
+                      minorUnits: 0
+                      currency: GBP
+                  secured:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  unknown:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  unsecured:
+                    borrowed:
+                      value: 100000
+                      majorUnits: 1000
+                      minorUnits: 100
+                      currency: GBP
+                    repaid:
+                      value: -10000
+                      majorUnits: 100
+                      minorUnits: 0
+                      currency: GBP
+              365days:
+                byType:
+                  bnpl: 3
+                  hcstc: 1
+                  dca/dmp: 2
+                  secured: 0
+                  unknown: 2
+                  unsecured: 1
+                totalByType:
+                  bnpl:
+                    borrowed:
+                      value: 300000
+                      majorUnits: 3000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -30000
+                      majorUnits: 300
+                      minorUnits: 0
+                      currency: GBP
+                  hcstc:
+                    borrowed:
+                      value: 100000
+                      majorUnits: 1000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -10000
+                      majorUnits: 100
+                      minorUnits: 0
+                      currency: GBP
+                  dca/dmp:
+                    borrowed:
+                      value: 200000
+                      majorUnits: 2000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -20000
+                      majorUnits: 200
+                      minorUnits: 0
+                      currency: GBP
+                  secured:
+                    borrowed:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: 0
+                      majorUnits: 0
+                      minorUnits: 0
+                      currency: GBP
+                  unknown:
+                    borrowed:
+                      value: 200000
+                      majorUnits: 2000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -20000
+                      majorUnits: 200
+                      minorUnits: 0
+                      currency: GBP
+                  unsecured:
+                    borrowed:
+                      value: 100000
+                      majorUnits: 1000
+                      minorUnits: 0
+                      currency: GBP
+                    repaid:
+                      value: -10000
+                      majorUnits: 100
+                      minorUnits: 0
+                      currency: GBP
+          loanRepayments:
+            value: 4400
+            majorUnits: 44
+            minorUnits: 0
+            currency: GBP
+          outgoingTransfers:
+            value: 20000
+            majorUnits: 200
+            minorUnits: 0
+            currency: GBP
+          returnedDirectDebits:
+            count: 1
+            details:
+            - category: utilities
+              count: 1
+              period:
+                unit: days
+                value: 30
+              total:
+                returned:
+                  value: 10000
+                  majorUnits: 100
+                  minorUnits: 0
+                  currency: GBP
+            periodMonths: 12
+      required:
+      - createdAt
+      - id
+    AffordabilityIncome:
+      additionalProperties: false
+      type: object
+      properties:
+        createdAt:
+          description: The timestamp at which the report was generated
+          type: string
+        id:
+          description: The report id
+          type: string
+        income:
+          type: object
+          properties:
+            amountConsistency:
+              description: Consistency of monthly income, as a number between 0 and 1
+              type: number
+            longevity:
+              type: object
+              properties:
+                consecutiveIncomeMonths:
+                  description: Longevity of income detected in number of months
+                  type: number
+                incomePeriodLengthMonths:
+                  description: The number of months of transaction history available for the income detection process
+                  type: number
+            predicted:
+              description: The predicted monthly income amount
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            regularIncomeDetected:
+              description: Whether or not regular income was detected
+              type: boolean
+          required:
+          - amountConsistency
+          - longevity
+          - predicted
+          - regularIncomeDetected
+        overview:
+          type: object
+          properties:
+            income:
+              description: The median monthly income
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            incomeIncludingTransfers:
+              description: The median monthly income including incoming transfers when incoming transfers exceed outgoing transfers
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+          required:
+          - income
+        primaryIncomeAccountId:
+          description: The account id of the detected primary income account
+          type: string
+      example:
+        createdAt: '2022-01-01T00:00:00Z'
+        id: d372d09b-f50a-4114-9c83-687828fa8ac2
+        income:
+          amountConsistency: 1
+          longevity:
+            consecutiveIncomeMonths: 12
+            incomePeriodLengthMonths: 12
+          predicted:
+            value: 189900
+            majorUnits: 1899
+            minorUnits: 0
+            currency: GBP
+          regularIncomeDetected: true
+        overview:
+          income:
+            value: 189900
+            majorUnits: 1899
+            minorUnits: 0
+            currency: GBP
+          incomeIncludingTransfers:
+            value: 210000
+            majorUnits: 2100
+            minorUnits: 0
+            currency: GBP
+        primaryIncomeAccountId: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+      required:
+      - createdAt
+      - id
+    AffordabilityConfidence:
+      additionalProperties: false
+      type: object
+      properties:
+        confidence:
+          description: 'The confidence level of an affordability report '
+          type: string
+          enum:
+          - high
+          - low
+      example:
+        confidence: high
+      required:
+      - confidence
+    AffordabilityIncomePost:
+      additionalProperties: false
+      type: object
+      properties:
+        externalUserId:
+          description: Your reference ID for the user or individual affordability income check. The same value could be assigned to all reports created as part of the same affordability income check's lifecycle, for example
+          type: string
+        name:
+          description: The full name of the user to whom the affordability income check applies
+          type: string
+        email:
+          description: The email address of the user to whom the affordability income check applies
+          type: string
+      example:
+        externalUserId: LENDERNAME-123
+        name: Joe Bloggs
+        email: joe.blogss@example.com
+    AffordabilityPost:
+      additionalProperties: false
+      type: object
+      properties:
+        externalUserId:
+          description: Your reference ID for the user or individual affordability application. The same value could be assigned to all reports created as part of the same affordability application's lifecycle, for example
+          type: string
+        name:
+          description: The full name of the user to whom the affordability application applies
+          type: string
+        email:
+          description: The email address of the user to whom the affordability application applies
+          type: string
+      example:
+        externalUserId: LENDERNAME-123
+        name: Joe Bloggs
+        email: joe.blogss@example.com
+    AffordabilityIncomeMetadata:
+      additionalProperties: false
+      type: object
+      properties:
+        createdAt:
+          description: The timestamp at which the report was generated
+          type: string
+        id:
+          description: The report id
+          type: string
+      example:
+        createdAt: '2022-01-01T00:00:00Z'
+        id: d372d09b-f50a-4114-9c83-687828fa8ac2
+      required:
+      - id
+    AffordabilityMetadata:
+      additionalProperties: false
+      type: object
+      properties:
+        createdAt:
+          description: The timestamp at which the report was generated
+          type: string
+        id:
+          description: The report id
+          type: string
+      example:
+        createdAt: '2022-01-01T00:00:00Z'
+        id: d372d09b-f50a-4114-9c83-687828fa8ac2
+      required:
+      - id
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,330 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data regular transactions API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: regular transactions
+paths:
+  /regular-transactions:
+    get:
+      summary: Retrieve regular transactions
+      description: Requires **regular_transactions:read**, **accounts:read** and **transactions:read:all** scopes.
+      parameters:
+      - description: The Account Id
+        in: query
+        name: accountId
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Regular Transactions Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/RegularTransactions'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - regular transactions
+  /regular-transactions/{accountId}/detect:
+    post:
+      summary: Detect regular transactions
+      description: Requires **regular_transactions:write**, **regular_transactions:read**, **accounts:read** and **transactions:read:all** scopes.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Regular Transactions Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/RegularTransactions'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - regular transactions
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+    RegularTransactions:
+      additionalProperties: false
+      type: object
+      properties:
+        seriesId:
+          description: The unique identity of the series.
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          type: string
+        accountId:
+          description: The unique identity of the account.
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          type: string
+        type:
+          description: Whether the transaction is income or payment
+          example: payment
+          type: string
+          enum:
+          - payment
+          - income
+        description:
+          description: The full text description of the transactions - often as it is represented on the users bank statement
+          example: Card Purchase SAINSBURYS S/MKTS  BCC
+          type: string
+        cleanedDescription:
+          description: A cleaned up and shorter description of the transaction, this can be edited
+          example: Sainsburys S/mkts
+          type: string
+        counterpartyId:
+          description: A matching id of the counterparty of the series
+          example: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
+          type: string
+        frequency:
+          description: The time between payments in the series
+          example: monthly
+          type: string
+          enum:
+          - weekly
+          - fortnightly
+          - monthly
+          - quarterly
+          - yearly
+        numTxMatchedInSeries:
+          description: The count of the transactions in the series
+          example: '5'
+          type: integer
+        gapLengthInFreqUnits:
+          description: The count of expected dates with no corresponding transactions
+          example: '1'
+          type: integer
+        dateAnomaliesCount:
+          description: The count of transactions which occurred outside the predicted date range
+          example: '0'
+          type: integer
+        numReturnedTxs:
+          description: The count of transactions we have detected were returned (reversed/declined)
+          example: '3'
+          type: integer
+        lastDate:
+          description: Date on which the most recent transaction in the series occured
+          example: '2018-07-10'
+          format: date
+          type: string
+        predictedDate:
+          description: Predicted date the next transactions is most likely to occur
+          example: '2018-07-10'
+          format: date
+          type: string
+        predictedDateEarliest:
+          description: Earliest predicted date of the next transaction in the series
+          example: '2018-07-08'
+          format: date
+          type: string
+        predictedDateLatest:
+          description: Lastest predicted date of the next transaction in the series
+          example: '2018-07-12'
+          format: date
+          type: string
+        predictedTxLateOrNotDetected:
+          description: Is the predicted payment late or not detected?
+          example: 'false'
+          type: boolean
+        predictedAmount:
+          description: Predicted amount of the next transaction
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -2323
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 23
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        predictedAmountLower:
+          description: The smallest amount predicted for the next transaction
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -357
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 35
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 7
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        predictedAmountUpper:
+          description: The largest amount predicted for the next transaction
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -5357
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 53
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 57
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        predictedCategoryId:
+          description: The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'
+          example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+        transactions:
+          description: An array of transaction IDs
+          type: array
+          items:
+            type: string
+            example:
+            - ac9bd177-d01e-449c-9f29-d3656d2edc2e
+            - 0b4e6488-6de0-420c-8f56-fee665707d57
+      required:
+      - seriesId
+      - accountId
+      - type
+      - cleanedDescription
+      - frequency
+      - numTxMatchedInSeries
+      - lastDate
+      - predictedDate
+      - predictedAmount
+      - transactions
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

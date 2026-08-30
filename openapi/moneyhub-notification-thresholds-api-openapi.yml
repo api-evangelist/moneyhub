@@ -1,0 +1,287 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data notification thresholds API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: notification thresholds
+paths:
+  /accounts/{accountId}/notification-thresholds:
+    get:
+      summary: Retrieve the notification thresholds for an account
+      description: Requires **accounts:read** scope.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Notification Thresholds Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/NotificationThreshold'
+                    type: array
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - notification thresholds
+    post:
+      summary: Add a notification threshold to an account
+      description: Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Notification Threshold Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/NotificationThreshold'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - notification thresholds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationThresholdPost'
+  /accounts/{accountId}/notification-thresholds/{thresholdId}:
+    patch:
+      summary: Update a single notification threshold
+      description: Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      - description: The Threshold Id
+        in: path
+        name: thresholdId
+        required: true
+        x-example: 199cae84-6876-4dc6-b905-9de7593be6d0
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Notification Threshold Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/NotificationThreshold'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Notification Threshold Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - notification thresholds
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationThresholdPost'
+    delete:
+      summary: Delete a single notification threshold
+      description: Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      - description: The Threshold Id
+        in: path
+        name: thresholdId
+        required: true
+        x-example: 199cae84-6876-4dc6-b905-9de7593be6d0
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - notification thresholds
+components:
+  schemas:
+    NotificationThreshold:
+      additionalProperties: false
+      type: object
+      properties:
+        id:
+          description: The id of the threshold, used to update and delete it
+          example: 199cae84-6876-4dc6-b905-9de7593be6d0
+          type: string
+        value:
+          description: The value of the threshold in minor units of the currency, eg. pennies for GBP. This can also be a negative value e.g. -10000.
+          example: 10000
+          type: integer
+        type:
+          description: The type of threshold, either great than or less than
+          enum:
+          - gt
+          - lt
+          example: lt
+          type: string
+    NotificationThresholdPost:
+      additionalProperties: false
+      type: object
+      properties:
+        value:
+          description: The value of the threshold in minor units of the currency, eg. pennies for GBP. This can also be a negative value e.g. -10000.
+          example: 10000
+          type: integer
+        type:
+          description: The type of threshold, either great than or less than
+          enum:
+          - gt
+          - lt
+          example: lt
+          type: string
+      required:
+      - value
+      - type
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

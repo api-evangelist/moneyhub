@@ -1,0 +1,315 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Counterparties API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: counterparties
+paths:
+  /accounts/{accountId}/counterparties:
+    get:
+      summary: Retrieve the counterparties for an account
+      description: '**THIS ENDPOINT IS DEPRECATED.** Requires **accounts:read** and **transactions:read:all** scope.'
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      - description: Counterparties version
+        in: query
+        name: counterpartiesVersion
+        schema:
+          type: string
+          enum:
+          - v2
+          - v3
+      responses:
+        '200':
+          description: Successful Counterparties Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Counterparty'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - counterparties
+  /global-counterparties:
+    get:
+      summary: Retrieve global counterparties
+      description: Retrieves list of global counterparties. The counterpartiesVersion query param can be used to get different versions. For more info refer to https://docs.moneyhubenterprise.com/docs/counterparties-2
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      - description: Counterparties version
+        in: query
+        name: counterpartiesVersion
+        x-example: v3
+        schema:
+          type: string
+          enum:
+          - v3
+          - v2
+          default: v3
+      responses:
+        '200':
+          description: Successful Counterparties Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/GlobalCounterpartyV3'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+      tags:
+      - counterparties
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    GlobalCounterpartyV3:
+      additionalProperties: false
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the counterparty.
+          format: uuid
+          example: a2c7b1e3-b9ce-5c61-9eb1-be897c04cee0
+        name:
+          type: string
+          description: Name of the counterparty
+          example: Tesco Mobile
+        parentId:
+          type:
+          - string
+          - 'null'
+          description: The unique identifier for the counterparty parent
+          example: 26c417bc-248f-5e3f-9835-3cd9c2842f50
+        parentName:
+          type:
+          - string
+          - 'null'
+          description: Name of the counterparty parent
+          example: Tesco
+        fullCompanyName:
+          type:
+          - string
+          - 'null'
+          description: Company name
+          example: Tesco Stores Limited
+        logoUrl:
+          type:
+          - string
+          - 'null'
+          description: Logo Url of counterparty
+          example: https://s3.eu-west-1.amazonaws.com/mft-counterparty-logos-prod/7e43257eac60348110bd15cc.svg
+        website:
+          type:
+          - string
+          - 'null'
+          description: Website url of counterparty
+          example: https://www.tescomobile.com
+        merchantCategoryCode:
+          type:
+          - string
+          - 'null'
+          description: ''
+          example: ''
+        merchantCategoryDescription:
+          type:
+          - string
+          - 'null'
+          description: ''
+          example: ''
+        registeredLocation:
+          type:
+          - string
+          - 'null'
+          description: Registered address of company
+          example: 17-21 Wenlock Road, London N1 7G
+        categoryId:
+          type:
+          - string
+          - 'null'
+          description: Category used to group similar counterparties
+          example: mobile-phone
+        analyticalCategory:
+          type:
+          - string
+          - 'null'
+          description: DEPRECATED. Category used to group similar counterparties
+          example: mobile-phone
+        transactionCategoryId:
+          type:
+          - string
+          - 'null'
+          description: Most appropriate transaction category id for transactions to this counterparty
+          example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+        transactionCategory:
+          type:
+          - string
+          - 'null'
+          description: Most appropriate transaction category name for transactions to this counterparty
+          example: telephone
+      required:
+      - id
+      - name
+      example:
+        id: a7920ee2-62f4-5465-84eb-af6ef1f7074a
+        name: J P Morgan Chase
+        parentId: null
+        parentName: null
+        fullCompanyName: J P MORGAN CHASE & CO.
+        logoUrl: https://s3.eu-west-1.amazonaws.com/mft-counterparty-logos-prod/55faa0f4226fe84c78e011df.svg
+        website: https://www.jpmorganchase.com/
+        merchantCategoryCode: null
+        merchantCategoryDescription: null
+        registeredLocation: 25 Bank Street, London, United Kingdom
+        categoryId: bank
+        analyticalCategory: bank
+        transactionCategoryId: std:2f3e2df7-827b-449d-a085-909c042d7f41
+        transactionCategory: investment
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+    Counterparty:
+      additionalProperties: false
+      type: object
+      properties:
+        id:
+          description: The unique identifier for the counterparty.
+          example: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
+          type: string
+        label:
+          description: A label describing the counterparty
+          example: British Gas
+          type: string
+        type:
+          description: The type of counterparty (specific to an account, or globally recognised across all users)
+          example: local
+          type: string
+          enum:
+          - global
+          - local
+        companyName:
+          description: The full name of the company (only for global counterparties)
+          example: Itsu Limited
+          type: string
+        logo:
+          description: The url to the company logo (only for global counterparties)
+          example: https://s3-eu-west-1.amazonaws.com/itsu-production/wp-content/uploads/2018/07/19152431/GUIDE_LOGO_itsu.png
+          type: string
+        website:
+          description: The url to the company website (only for global counterparties)
+          example: https://www.itsu.com
+          type: string
+        mcc:
+          type: object
+          properties:
+            code:
+              description: The merchant category code (only for global counterparties)
+              example: '5812'
+              type: string
+            name:
+              description: The merchant category code name (only for global counterparties)
+              example: Eating Places and Restaurants
+              type: string
+      example:
+        id: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
+        label: British Gas
+      required:
+      - id
+      - label
+      - type
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

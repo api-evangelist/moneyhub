@@ -1,0 +1,267 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data standing orders API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: standing orders
+paths:
+  /accounts/{accountId}/standing-orders:
+    get:
+      summary: Retrieve the standing orders for an account
+      description: Requires **accounts:read** and either of **standing_orders:read** or **standing_orders_detail:read** scopes.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Standing Orders Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/StandingOrder'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - standing orders
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    StandingOrder:
+      additionalProperties: false
+      type: object
+      properties:
+        id:
+          description: The unique identity of the standing order
+          example: d4c69cda-cd58-4bd3-b950-b085d97cc629
+          type: string
+        status:
+          enum:
+          - Active
+          - Inactive
+          type: string
+        reference:
+          description: The name or description given to the standing order
+          type: string
+        frequency:
+          additionalProperties: false
+          properties:
+            repeat:
+              enum:
+              - Daily
+              - Weekly
+              - Monthly
+              - Quarterly
+              - Yearly
+              example: Daily
+              type: string
+            day:
+              description: The number of the day on which to repeat the payment
+              type: number
+              example: 1
+            week:
+              description: The number of the week on which to repeat the payment
+              type: number
+              example: 1
+            month:
+              description: The number of the month on which to repeat the payment
+              type: number
+              example: 1
+            onlyWorkDays:
+              description: Specifies whether the payment should only be made on working days
+              type: boolean
+              example: false
+            region:
+              description: The region for dates of quarterly payments
+              enum:
+              - ENGLISH
+              - SCOTTISH
+              - RECEIVED
+              type: string
+          required:
+          - repeat
+          type: object
+        numberOfPayments:
+          description: The number of recurring payments to complete the standing order
+          example: 5
+          type: number
+        firstPaymentDate:
+          example: '2020-11-02T00:00:00.000Z'
+          format: date-time
+          type: string
+        nextPaymentDate:
+          example: '2020-12-02T00:00:00.000Z'
+          format: date-time
+          type: string
+        finalPaymentDate:
+          example: '2021-01-02T00:00:00.000Z'
+          format: date-time
+          type: string
+        firstPaymentAmount:
+          description: The value of the first payment in minor units of the currency, eg. pennies for GBP.
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: 2000
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 20
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 0
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+        nextPaymentAmount:
+          description: The value of the next payment in minor units of the currency, eg. pennies for GBP.
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: 1000
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 10
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 0
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+        finalPaymentAmount:
+          description: The value of the final payment in minor units of the currency, eg. pennies for GBP.
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: 999
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 99
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 9
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+        currency:
+          description: The currency of the standing order
+          example: GBP
+          type: string
+        payee:
+          additionalProperties: false
+          description: The details to identify the beneficiary account. It requires the **standing_orders_detail:read** scope.
+          properties:
+            name:
+              description: The name or names of the account owner(s)
+              type: string
+              example: Payee Name
+            sortCodeAccountNumber:
+              description: For cash accounts. Populated with the 6 digit Sort Code and 8 digit Account Number.
+              type: string
+              maxLength: 20
+              minLength: 14
+              example: '60161331926819'
+            iban:
+              description: For cash accounts. Populated with the full IBAN number.
+              type: string
+              maxLength: 34
+              minLength: 18
+              example: GB2960161331926819
+            pan:
+              description: For card accounts. Populated with the Primary Account Number.
+              type: string
+              example: '1234567812345678'
+          type: object
+      required:
+      - id
+      - frequency
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

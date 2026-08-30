@@ -1,0 +1,2048 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Transactions API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: transactions
+paths:
+  /transactions:
+    get:
+      summary: Retrieve all transactions for a user that have been enriched with our categorisation engine
+      description: Requires **transactions:read:all** scope. Transactions usually start around the account opening date however in most cases we only retrive the last 12 months before the connection was created. The Opening Date is available at the /accounts endpoint.
+      parameters:
+      - description: Filter on the transaction's Ids (maximum allowed 50)
+        in: query
+        name: ids
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 50
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      - description: The earliest date to receive transactions from (inclusive)
+        in: query
+        name: startDate
+        x-example: '2018-08-15'
+        schema:
+          type: string
+          format: date
+      - description: The latest date to receive transactions from (inclusive)
+        in: query
+        name: endDate
+        x-example: '2018-08-25'
+        schema:
+          type: string
+          format: date
+      - description: The earliest date the transactions were modified (inclusive)
+        in: query
+        name: startDateModified
+        schema:
+          type: string
+          format: date
+      - description: The latest date the transactions were modified (inclusive)
+        in: query
+        name: endDateModified
+        schema:
+          type: string
+          format: date
+      - description: The text to filter transactions descriptions/notes by
+        in: query
+        name: text
+        schema:
+          type: string
+      - description: The category id to filter transactions by
+        in: query
+        name: categoryId
+        x-example: std:39577c49-350f-45a4-8ec3-48ce205585fb
+        schema:
+          type: string
+      - description: The account id to filter transactions by
+        in: query
+        name: accountId
+        x-example: 39577c49-350f-45a4-8ec3-321321213213
+        schema:
+          type: string
+      - description: The account ids to filter transactions by
+        in: query
+        name: accountIds
+        schema:
+          type: array
+          items:
+            type: string
+      - description: The project id to filter transactions by
+        in: query
+        name: projectId
+        x-example: 39577c49-350f-45a4-8ec3-321321213213
+        schema:
+          type: string
+      - description: The project ids to filter transactions by
+        in: query
+        name: projectIds
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filter transactions depending on whether they are credit or debit transactions
+        in: query
+        name: creditDebitIndicator
+        schema:
+          type: string
+          pattern: ^(credit|debit)$
+      - description: Filter on whether transaction has an attached project
+        in: query
+        name: hasProject
+        schema:
+          type: boolean
+      - description: Ensures ONLY the count of transactions is returned in the meta object
+        in: query
+        name: onlyCount
+        schema:
+          type: boolean
+          default: false
+      - description: Filter on the beginning of words of a transaction's clean description or beginning of transaction amount
+        in: query
+        name: contains
+        schema:
+          type: string
+      - description: A property to check exists within a transaction
+        in: query
+        name: hasEnhancedCategory
+        schema:
+          type: string
+      - description: Filter on the transaction's counterparty Id
+        in: query
+        name: counterpartyIds
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filter on the transaction's counterparty Id (Deprecated)
+        in: query
+        name: counterpartyIdsV2
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Counterparties version
+        in: query
+        name: counterpartiesVersion
+        schema:
+          type: string
+          enum:
+          - v2
+          - v3
+      - description: An enhanced category to filter transactions by in the form of ${categoryField}:${categoryValue}
+        in: query
+        name: enhancedCategories
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Transactions Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Transaction'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+    post:
+      summary: Create a single transaction for a user
+      description: Requires **transactions:read:all** and **transactions:write:all** scopes.
+      responses:
+        '200':
+          description: Successful Transaction Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Transaction'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionPost'
+  /transactions/unenriched:
+    get:
+      summary: Retrieve all transactions for a user - does not include data-enriched transaction properties
+      description: Requires **transactions:read:all** or **transactions_unenriched:read:all** scope. Transactions usually start around the account opening date however in most cases we only retrive the last 12 months before the connection was created. The Opening Date is available at the /accounts endpoint.
+      parameters:
+      - description: Filter on the transaction's Ids (maximum allowed 50)
+        in: query
+        name: ids
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          maxItems: 50
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      - description: The earliest date to receive transactions from (inclusive)
+        in: query
+        name: startDate
+        x-example: '2018-08-15'
+        schema:
+          type: string
+          format: date
+      - description: The latest date to receive transactions from (inclusive)
+        in: query
+        name: endDate
+        x-example: '2018-08-25'
+        schema:
+          type: string
+          format: date
+      - description: The earliest date the transactions were modified (inclusive)
+        in: query
+        name: startDateModified
+        schema:
+          type: string
+          format: date
+      - description: The latest date the transactions were modified (inclusive)
+        in: query
+        name: endDateModified
+        schema:
+          type: string
+          format: date
+      - description: The text to filter transactions descriptions by
+        in: query
+        name: text
+        schema:
+          type: string
+      - description: The account id to filter transactions by
+        in: query
+        name: accountId
+        x-example: 39577c49-350f-45a4-8ec3-321321213213
+        schema:
+          type: string
+      - description: The account ids to filter transactions by
+        in: query
+        name: accountIds
+        schema:
+          type: array
+          items:
+            type: string
+      - description: Filter transactions depending on whether they are credit or debit transactions
+        in: query
+        name: creditDebitIndicator
+        schema:
+          type: string
+          pattern: ^(credit|debit)$
+      - description: Ensures ONLY the count of transactions is returned in the meta object
+        in: query
+        name: onlyCount
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Successful Transactions Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/TransactionUnenriched'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+  /transactions/{transactionId}:
+    get:
+      summary: Retrieve a single transaction that has been enriched with our categorisation engine
+      description: Requires **transactions:read:all** scope.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      - description: Counterparties version
+        in: query
+        name: counterpartiesVersion
+        schema:
+          type: string
+          enum:
+          - v2
+          - v3
+      responses:
+        '200':
+          description: Successful Transaction Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Transaction'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Unsuccessful Response - Too Many Requests - Rate limit has been reached
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: TooManyRequests
+                  message:
+                    type: string
+                    example: Too Many Requests
+                  retryAfterSecs:
+                    type: integer
+                    description: Number of seconds to wait before retrying the request
+                    example: 60
+                required:
+                - code
+                - message
+                - retryAfterSecs
+      tags:
+      - transactions
+    patch:
+      summary: Update a single transaction
+      description: Requires **transactions:read:all** and either of **transactions:write** or **transactions:write:all** scopes.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Transaction Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Transaction'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionPatch'
+    delete:
+      summary: Delete a single transaction
+      description: Requires **transactions:write:all** scope.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Successful Transaction Response
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+  /transactions/unenriched/{transactionId}:
+    get:
+      summary: Retrieve a single transaction - does not include data-enriched transaction properties
+      description: Requires **transactions:read:all** or **transactions_unenriched:read:all** scopes.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Transaction Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TransactionUnenriched'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+  /transactions-collection:
+    post:
+      summary: Create multiple transactions for a user
+      description: Requires **transactions:read:all** and **transactions:write:all** scopes. A maximum of 50 transactions is imposed.
+      parameters:
+      - description: Enable categorisation of transactions
+        in: query
+        name: categorise
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful Transaction Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      additionalProperties: false
+                      properties:
+                        id:
+                          description: The unique id of the transaction
+                          example: c390a94f-3824-4cdf-8d02-b0c5304d9f66
+                          format: uuid
+                          type: string
+                      type: object
+                      required:
+                      - id
+                    type: array
+                    minimum: 1
+                    maximum: 50
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionCollectionPost'
+  /transactions/{transactionId}/files:
+    get:
+      summary: Retrieve a transactions attachments
+      description: Requires **transactions:read:all** scope.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Transaction File Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/TransactionFile'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+    post:
+      summary: Add an attachment to a transaction
+      description: Requires **transactions:read:all** and either of **transactions:write** or **transactions:write:all** scopes.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Transaction Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TransactionFile'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: File to upload, limit of 10MB and must be an image or PDF.
+                  format: binary
+              required:
+              - file
+  /transactions/{transactionId}/files/{fileId}:
+    get:
+      summary: Retrieve a transactions attachment
+      description: Requires **transactions:read:all** scope.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      - description: The file id
+        in: path
+        name: fileId
+        required: true
+        x-example: 0b4e6488-6de0-420a-8f56-fee665707d57
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Transaction File Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TransactionFile'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+    delete:
+      summary: Delete a single attachment on a transaction
+      description: Requires **transactions:read:all** and either of **transactions:write** or **transactions:write:all** scopes.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      - description: The file id
+        in: path
+        name: fileId
+        required: true
+        x-example: 0b4e64886de0420a8f56fee665707d57
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Successful Transaction Response
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+  /transactions/{transactionId}/splits:
+    get:
+      summary: Retrieve a transactions splits
+      description: Requires **transactions:read:all** scope.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Transaction Splits Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/TransactionSplit'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+    post:
+      summary: Split a transaction
+      description: Requires **transactions:write:all** scope.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '201':
+          description: Successful Transaction Splits Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TransactionSplit'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/TransactionSplitPost'
+              example:
+              - categoryId: std:5a7ff1f3-cd2c-4676-a368-caf09f2ca35a
+                description: Split 1
+                amount: 200
+              - categoryId: std:eac238ec-3899-49ff-8cce-e3b9f4b1aede
+                description: Split 2
+                amount: 400
+    delete:
+      summary: Merge split transactions
+      description: Requires **transactions:write:all** scope.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Successful Transaction Splits Response
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+  /transactions/{transactionId}/splits/{splitId}:
+    patch:
+      summary: Patch a transaction split
+      description: Requires **transactions:write:all** scope.
+      parameters:
+      - description: The transaction id
+        in: path
+        name: transactionId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      - description: The split id
+        in: path
+        name: splitId
+        required: true
+        x-example: 0b4e6488-6de0-670c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Transaction Splits Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TransactionSplit'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - transactions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionSplitPatch'
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    TransactionSplit:
+      additionalProperties: false
+      properties:
+        amount:
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -2323
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 23
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+        categoryId:
+          description: The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'
+          example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+        description:
+          description: A description of the transaction split
+          example: Groceries contribution
+          type: string
+        id:
+          description: The unique id of the transaction split
+          example: c390a94f-3824-4cdf-8d02-b0c5304d9f66
+          type: string
+        projectId:
+          description: The project ID the transaction is associated with
+          example: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+          type: string
+      example:
+        amount:
+          value: -2300
+          majorUnits: 23
+          minorUnits: 0
+          currency: GBP
+        categoryId: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+        id: c390a94f-3824-4cdf-8d02-b0c5304d9f66
+        projectId: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+        description: Split 1
+      required:
+      - amount
+      - categoryId
+      - description
+      - id
+      type: object
+    TransactionPost:
+      additionalProperties: false
+      type: object
+      properties:
+        accountId:
+          description: The id of the account the transaction belongs to
+          example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          type: string
+        amount:
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -2300
+              type: integer
+          required:
+          - value
+          type: object
+        categoryId:
+          description: The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'
+          example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+        categoryIdConfirmed:
+          description: Flag indicating whether the user has confirmed the category id as correct
+          example: false
+          type: boolean
+        date:
+          description: The date that the transaction occurred. Where available this will contain an accurate time, where the time is not available it will default to midday.
+          example: '2018-07-10T12:00:00.000Z'
+          format: date-time
+          type: string
+        longDescription:
+          description: The full text description of the transactions - often as it is represented on the users bank statement
+          example: Card Purchase SAINSBURYS S/MKTS  BCC
+          type: string
+        shortDescription:
+          description: A cleaned up and shorter description of the transaction, this can be edited
+          example: Sainsburys S/mkts
+          type: string
+        notes:
+          default: ''
+          description: Arbitrary text that a user can add about a transaction
+          example: Some notes about the transaction
+          type: string
+          maxLength: 500
+        status:
+          description: Whether the transaction has been posted (booked) or is still a pending transaction. During the transition from pending to posted the description will normally change.
+          enum:
+          - posted
+          - pending
+          example: posted
+          type: string
+        projectId:
+          description: The project ID the transaction is associated with
+          example: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+          type: string
+        enhancedCategories:
+          additionalProperties: false
+          type: object
+          description: Categories to enrich a transaction with
+          properties:
+            uk-tax-hmrc:
+              description: The UK HMRC Tax category to aid in tax return queries
+              example: income.rent
+              type: string
+              pattern: ^(income|expenditure)\.([a-zA-Z-]+)$
+          example:
+            uk-tax-hmrc: income.rent
+      example:
+        accountId: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        amount:
+          value: -2300
+        categoryId: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+        categoryIdConfirmed: true
+        longDescription: New transaction
+        shortDescription: transaction
+        notes: notes
+        status: posted
+        date: '2018-07-10T12:00:00+00:00'
+      required:
+      - accountId
+      - amount
+      - categoryId
+      - date
+      - longDescription
+    TransactionSplitPatch:
+      additionalProperties: false
+      properties:
+        categoryId:
+          description: The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'
+          example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+        description:
+          description: A description of the transaction split
+          example: Groceries contribution
+          type: string
+        projectId:
+          description: The project ID the transaction is associated with
+          example: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+          type: string
+      example:
+        categoryId: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+      type: object
+    TransactionSplitPost:
+      additionalProperties: false
+      properties:
+        amount:
+          description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+          example: -2300
+          type: integer
+        categoryId:
+          description: The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'
+          example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+        description:
+          description: A description of the transaction split
+          example: Groceries contribution
+          type: string
+        projectId:
+          description: The project ID the transaction is associated with
+          example: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+          type: string
+      example:
+        amount: -2300
+        categoryId: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+        projectId: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+        description: Split 1
+      required:
+      - amount
+      - categoryId
+      - description
+      type: object
+    TransactionUnenriched:
+      additionalProperties: false
+      type: object
+      properties:
+        accountId:
+          description: The id of the account the transaction belongs to
+          example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          type: string
+        amount:
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -2323
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 23
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the amount. It uses the ISO 4217 currency codes.
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        date:
+          description: The date that the transaction occurred. Where available this will contain an accurate time, where the time is not available it will default to midday.
+          example: '2018-07-10T12:00:00.000Z'
+          format: date-time
+          type: string
+        dateModified:
+          description: The date the transaction was modified - this could be when it was added, or a category changed, or when notes were added
+          example: '2018-07-10T11:39:46.506Z'
+          format: date-time
+          type: string
+        dateCreated:
+          description: The date the transaction was created
+          example: '2018-07-10T11:39:46.506Z'
+          format: date-time
+          type: string
+        valueDate:
+          description: The date when funds become available to the account owner (for credits) or are withdrawn (for debits). This date may be different from the transaction date.
+          example: '2018-07-10T11:39:46.506Z'
+          format: date-time
+          type: string
+        id:
+          description: The unique id of the transaction
+          example: c390a94f-3824-4cdf-8d02-b0c5304d9f66
+          type: string
+        longDescription:
+          description: The full text description of the transactions - often as it is represented on the users bank statement
+          example: Card Purchase SAINSBURYS S/MKTS  BCC
+          type: string
+        providerId:
+          description: The id of the transaction the banking provider uses
+          example: 139ccc24c1
+          type: string
+        status:
+          description: Whether the transaction has been posted (booked) or is still a pending transaction. During the transition from pending to posted the description will normally change.
+          enum:
+          - posted
+          - pending
+          example: posted
+          type: string
+        transactionCode:
+          description: The ISO transaction code
+          type: object
+          properties:
+            code:
+              description: Specifies the family within a domain.
+              example: BAC
+              type: string
+            subCode:
+              description: Specifies the sub-product family within a specific family.
+              type: string
+          required:
+          - code
+          - subCode
+        proprietaryTransactionCode:
+          description: Set of elements to fully identify a proprietary bank transaction code.
+          type: object
+          properties:
+            code:
+              description: Proprietary bank transaction code to identify the underlying transaction.
+              example: BAC
+              type: string
+            issuer:
+              description: Identification of the issuer of the proprietary bank transaction code.
+              type: string
+          required:
+          - code
+        balance:
+          description: The amount of the account post transaction in minor units of the currency, eg. pennies for GBP.
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -2323
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 23
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+        balanceType:
+          description: 'Balance type, in a coded form. Options include: ClosingAvailable ClosingBooked ClosingCleared Expected ForwardAvailable Information InterimAvailable InterimBooked InterimCleared OpeningAvailable OpeningBooked OpeningCleared PreviouslyClosedBooked.'
+          example: Information
+          type: string
+        statementReference:
+          description: Unique reference for the statement. This reference may be optionally populated if available.
+          example: Merchant Name Unique Reference
+          type: string
+        merchantName:
+          description: Name by which the merchant is known.
+          example: Merchant Name
+          type: string
+        merchantCategoryCode:
+          description: Category code conform to ISO 18245, related to the type of services or goods the merchant provides for the transaction.
+          example: 50C
+          type: string
+        cardInstrument:
+          description: Set of elements to describe the card instrument used in the transaction.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: Name of the cardholder using the card instrument.
+              example: Mrs J Bloggs
+              type: string
+            pan:
+              description: The PAN of the card used in the transaction. This is known by the account owner, and may be masked.
+              example: xxxxxxxxxxxx4321
+              type: string
+            cardSchemeName:
+              description: Name of the card scheme.
+              example: VISA
+              type: string
+              pattern: ^(AmericanExpress|Diners|Discover|MasterCard|VISA|.*)$
+            authorisationType:
+              description: The card authorisation type.
+              example: Contactless
+              type: string
+              pattern: ^(ConsumerDevice|Contactless|None|PIN|.*)$
+        creditorAccount:
+          description: Unambiguous identification of the account of the creditor, in the case of a debit transaction.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP's online channels.
+              type: string
+            sortCode:
+              description: The sort code of the creditor account
+              type: string
+            accountNumber:
+              description: The account number of the creditor account
+              type: string
+            iban:
+              description: The IBAN of the creditor account
+              type: string
+            pan:
+              description: The PAN of the creditor account
+              type: string
+        creditorAgent:
+          description: Financial institution servicing an account for the creditor.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: Name by which an agent is known and which is usually used to identify that agent.
+              type: string
+            postalAddress:
+              description: The postal address for the financial institution
+              type: object
+              additionalProperties: true
+        debtorAccount:
+          description: Unambiguous identification of the account of the debtor, in the case of a credit transaction.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP's online channels.
+              type: string
+            sortCode:
+              description: The sort code of the debtor account
+              type: string
+            accountNumber:
+              description: The account number of the debtor account
+              type: string
+            iban:
+              description: The IBAN of the debtor account
+              type: string
+            pan:
+              description: The PAN of the debtor account
+              type: string
+        debtorAgent:
+          description: Financial institution servicing an account for the debtor.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: Name by which an agent is known and which is usually used to identify that agent.
+              type: string
+            postalAddress:
+              description: The postal address for the financial institution
+              type: object
+              additionalProperties: true
+        transactionReference:
+          description: Unique reference for the transaction. This reference is optionally populated, and may as an example be the FPID in the Faster Payments context. This field is only available for open banking connections
+          example: Ref 123
+          type: string
+        transactionInformation:
+          description: Further details of the transaction. This is the transaction narrative, which is unstructured text. This field is only available for open banking connections
+          example: Cash from Aubrey
+          type: string
+      required:
+      - amount
+      - date
+      - dateModified
+      - id
+      - longDescription
+      - status
+    TransactionCollectionPost:
+      items:
+        additionalProperties: false
+        type: object
+        properties:
+          accountId:
+            description: The id of the account the transaction belongs to
+            example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+            type: string
+          amount:
+            properties:
+              value:
+                description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                example: -2300
+                type: integer
+            required:
+            - value
+            type: object
+          categoryId:
+            description: The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'
+            example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+            type: string
+            pattern: ^(std|cus):(\w|-)+$
+          categoryIdConfirmed:
+            description: Flag indicating whether the user has confirmed the category id as correct
+            example: false
+            type: boolean
+          date:
+            description: The date that the transaction occurred. Where available this will contain an accurate time, where the time is not available it will default to midday.
+            example: '2018-07-10T12:00:00.000Z'
+            format: date-time
+            type: string
+          longDescription:
+            description: The full text description of the transactions - often as it is represented on the users bank statement
+            example: Card Purchase SAINSBURYS S/MKTS  BCC
+            type: string
+          shortDescription:
+            description: A cleaned up and shorter description of the transaction, this can be edited
+            example: Sainsburys S/mkts
+            type: string
+          notes:
+            default: ''
+            description: Arbitrary text that a user can add about a transaction
+            example: Some notes about the transaction
+            type: string
+            maxLength: 500
+          status:
+            description: Whether the transaction has been posted (booked) or is still a pending transaction. During the transition from pending to posted the description will normally change.
+            enum:
+            - posted
+            - pending
+            example: posted
+            type: string
+          projectId:
+            description: The project ID the transaction is associated with
+            example: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+            type: string
+          enhancedCategories:
+            additionalProperties: false
+            type: object
+            description: Categories to enrich a transaction with
+            properties:
+              uk-tax-hmrc:
+                description: The UK HMRC Tax category to aid in tax return queries
+                example: income.rent
+                type: string
+                pattern: ^(income|expenditure)\.([a-zA-Z-]+)$
+            example:
+              uk-tax-hmrc: income.rent
+        example:
+          accountId: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          amount:
+            value: -2300
+          categoryId: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+          categoryIdConfirmed: true
+          longDescription: New transaction
+          shortDescription: transaction
+          notes: notes
+          status: posted
+          date: '2018-07-10T12:00:00+00:00'
+        required:
+        - accountId
+        - amount
+        - categoryId
+        - date
+        - longDescription
+      type: array
+      description: List of transactions to be created or updated. Minimum 1 item required. Maximum 50 items allowed.
+      example:
+      - accountId: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        amount:
+          value: -4500
+        categoryId: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+        categoryIdConfirmed: true
+        longDescription: Long description 1
+        shortDescription: description 1
+        notes: notes
+        status: posted
+        date: '2018-07-10T12:00:00+00:00'
+      - accountId: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        amount:
+          value: 7800
+        categoryId: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+        longDescription: Long description 2
+        notes: notes
+        status: pending
+        date: '2018-07-10T12:00:00+00:00'
+    TransactionFile:
+      additionalProperties: false
+      type: object
+      properties:
+        id:
+          description: The id of the file attached to the transaction
+          example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          type: string
+        fileType:
+          description: The MIME type of the file
+          example: text/html
+          type: string
+        fileName:
+          description: The name of the file attachment
+          example: receipt.png
+          type: string
+        url:
+          description: The signed URL that is valid for 5 minutes that allows access to the attachment
+          example: https://s3.amazon.com/receipt.png
+          type: string
+      required:
+      - id
+      - fileType
+      - fileName
+      - url
+    Transaction:
+      additionalProperties: false
+      type: object
+      properties:
+        accountId:
+          description: The id of the account the transaction belongs to
+          example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          type: string
+        amount:
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -2323
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 23
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the amount. It uses the ISO 4217 currency codes.
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        categoryId:
+          description: The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'
+          example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+        categoryIdConfirmed:
+          description: Flag indicating whether the user has confirmed the category id as correct
+          example: false
+          type: boolean
+        date:
+          description: The date that the transaction occurred. Where available this will contain an accurate time, where the time is not available it will default to midday.
+          example: '2018-07-10T12:00:00.000Z'
+          format: date-time
+          type: string
+        dateModified:
+          description: The date the transaction was modified - this could be when it was added, or a category changed, or when notes were added
+          example: '2018-07-10T11:39:46.506Z'
+          format: date-time
+          type: string
+        dateCreated:
+          description: The date the transaction was created
+          example: '2018-07-10T11:39:46.506Z'
+          format: date-time
+          type: string
+        valueDate:
+          description: The date when funds become available to the account owner (for credits) or are withdrawn (for debits). This date may be different from the transaction date.
+          example: '2018-07-10T11:39:46.506Z'
+          format: date-time
+          type: string
+        id:
+          description: The unique id of the transaction
+          example: c390a94f-3824-4cdf-8d02-b0c5304d9f66
+          type: string
+        longDescription:
+          description: The full text description of the transactions - often as it is represented on the users bank statement
+          example: Card Purchase SAINSBURYS S/MKTS  BCC
+          type: string
+        providerId:
+          description: The id of the transaction the banking provider uses
+          example: 139ccc24c1
+          type: string
+        notes:
+          default: ''
+          description: Arbitrary text that a user can add about a transaction
+          example: Some notes about the transaction
+          type: string
+        shortDescription:
+          description: A cleaned up and shorter description of the transaction, this can be edited
+          example: Sainsburys S/mkts
+          type: string
+        counterpartyId:
+          description: An identifier for the counterparty
+          example: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+          type: string
+        status:
+          description: Whether the transaction has been posted (booked) or is still a pending transaction. During the transition from pending to posted the description will normally change.
+          enum:
+          - posted
+          - pending
+          example: posted
+          type: string
+        projectId:
+          description: The project ID the transaction belongs to
+          example: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+          type: string
+        enhancedCategories:
+          additionalProperties: false
+          type: object
+          description: Categories to enrich a transaction with
+          properties:
+            uk-tax-hmrc:
+              description: The UK HMRC Tax category to aid in tax return queries
+              example: income.rent
+              type: string
+              pattern: ^(income|expenditure)\.([a-zA-Z-]+)$
+          example:
+            uk-tax-hmrc: income.rent
+        splits:
+          description: List of transaction splits
+          type: array
+          items:
+            additionalProperties: false
+            properties:
+              amount:
+                properties:
+                  value:
+                    description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                    example: -2323
+                    type: integer
+                  majorUnits:
+                    description: The major units of the value, based on the values currency, eg. pounds for GBP.
+                    example: 23
+                    type: integer
+                  minorUnits:
+                    description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+                    example: 23
+                    type: integer
+                  currency:
+                    description: The currency of the amount
+                    example: GBP
+                    type: string
+              categoryId:
+                description: The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'
+                example: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+                type: string
+                pattern: ^(std|cus):(\w|-)+$
+              description:
+                description: A description of the transaction split
+                example: Groceries contribution
+                type: string
+              id:
+                description: The unique id of the transaction split
+                example: c390a94f-3824-4cdf-8d02-b0c5304d9f66
+                type: string
+              projectId:
+                description: The project ID the transaction is associated with
+                example: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+                type: string
+            example:
+              amount:
+                value: -2300
+                majorUnits: 23
+                minorUnits: 0
+                currency: GBP
+              categoryId: std:4b0255f0-0309-4509-9e05-4b4e386f9b0d
+              id: c390a94f-3824-4cdf-8d02-b0c5304d9f66
+              projectId: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+              description: Split 1
+            required:
+            - amount
+            - categoryId
+            - description
+            - id
+            type: object
+        transactionCode:
+          description: The ISO transaction code
+          type: object
+          properties:
+            code:
+              description: Specifies the family within a domain.
+              example: BAC
+              type: string
+            subCode:
+              description: Specifies the sub-product family within a specific family.
+              type: string
+          required:
+          - code
+          - subCode
+        proprietaryTransactionCode:
+          description: Set of elements to fully identify a proprietary bank transaction code.
+          type: object
+          properties:
+            code:
+              description: Proprietary bank transaction code to identify the underlying transaction.
+              example: BAC
+              type: string
+            issuer:
+              description: Identification of the issuer of the proprietary bank transaction code.
+              type: string
+          required:
+          - code
+        balance:
+          description: The amount of the account post transaction in minor units of the currency, eg. pennies for GBP.
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -2323
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 23
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+        balanceType:
+          description: 'Balance type, in a coded form. Options include: ClosingAvailable ClosingBooked ClosingCleared Expected ForwardAvailable Information InterimAvailable InterimBooked InterimCleared OpeningAvailable OpeningBooked OpeningCleared PreviouslyClosedBooked.'
+          example: Information
+          type: string
+        statementReference:
+          description: Unique reference for the statement. This reference may be optionally populated if available.
+          example: Merchant Name Unique Reference
+          type: string
+        merchantName:
+          description: Name by which the merchant is known.
+          example: Merchant Name
+          type: string
+        merchantCategoryCode:
+          description: Category code conform to ISO 18245, related to the type of services or goods the merchant provides for the transaction.
+          example: 50C
+          type: string
+        cardInstrument:
+          description: Set of elements to describe the card instrument used in the transaction.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: Name of the cardholder using the card instrument.
+              example: Mrs J Bloggs
+              type: string
+            pan:
+              description: The PAN of the card used in the transaction. This is known by the account owner, and may be masked.
+              example: xxxxxxxxxxxx4321
+              type: string
+            cardSchemeName:
+              description: Name of the card scheme.
+              example: VISA
+              type: string
+              pattern: ^(AmericanExpress|Diners|Discover|MasterCard|VISA|.*)$
+            authorisationType:
+              description: The card authorisation type.
+              example: Contactless
+              type: string
+              pattern: ^(ConsumerDevice|Contactless|None|PIN|.*)$
+        creditorAccount:
+          description: Unambiguous identification of the account of the creditor, in the case of a debit transaction.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP's online channels.
+              type: string
+            sortCode:
+              description: The sort code of the creditor account
+              type: string
+            accountNumber:
+              description: The account number of the creditor account
+              type: string
+            iban:
+              description: The IBAN of the creditor account
+              type: string
+            pan:
+              description: The PAN of the creditor account
+              type: string
+        creditorAgent:
+          description: Financial institution servicing an account for the creditor.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: Name by which an agent is known and which is usually used to identify that agent.
+              type: string
+            postalAddress:
+              description: The postal address for the financial institution
+              type: object
+              additionalProperties: true
+        debtorAccount:
+          description: Unambiguous identification of the account of the debtor, in the case of a credit transaction.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP's online channels.
+              type: string
+            sortCode:
+              description: The sort code of the debtor account
+              type: string
+            accountNumber:
+              description: The account number of the debtor account
+              type: string
+            iban:
+              description: The IBAN of the debtor account
+              type: string
+            pan:
+              description: The PAN of the debtor account
+              type: string
+        debtorAgent:
+          description: Financial institution servicing an account for the debtor.
+          additionalProperties: false
+          type: object
+          properties:
+            name:
+              description: Name by which an agent is known and which is usually used to identify that agent.
+              type: string
+            postalAddress:
+              description: The postal address for the financial institution
+              type: object
+              additionalProperties: true
+        transactionReference:
+          description: Unique reference for the transaction. This reference is optionally populated, and may as an example be the FPID in the Faster Payments context. This field is only available for open banking connections
+          example: Ref 123
+          type: string
+        transactionInformation:
+          description: Further details of the transaction. This is the transaction narrative, which is unstructured text. This field is only available for open banking connections
+          example: Cash from Aubrey
+          type: string
+      required:
+      - amount
+      - categoryId
+      - categoryIdConfirmed
+      - date
+      - dateModified
+      - id
+      - longDescription
+      - notes
+      - shortDescription
+      - status
+    TransactionPatch:
+      additionalProperties: false
+      type: object
+      properties:
+        accountId:
+          description: Scope 'transactions.write.all' required. The id of the account the transaction belongs to
+          example: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+          type: string
+        amount:
+          properties:
+            value:
+              description: Scope 'transactions.write.all' required. The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -2300
+              type: integer
+          required:
+          - value
+          type: object
+        categoryId:
+          description: The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'
+          example: std:09f5c144-6d90-4228-98c6-cac1331d874b
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+        categoryIdConfirmed:
+          description: Flag indicating whether the user has confirmed the category id as correct
+          example: false
+          type: boolean
+        date:
+          description: Scope 'transactions.write.all' required. The date that the transaction occurred. Where available this will contain an accurate time, where the time is not available it will default to midday.
+          example: '2018-07-10T12:00:00.000Z'
+          format: date-time
+          type: string
+        longDescription:
+          description: Scope 'transactions.write.all' required. The full text description of the transactions - often as it is represented on the users bank statement
+          example: Card Purchase SAINSBURYS S/MKTS  BCC
+          type: string
+        shortDescription:
+          description: A cleaned up and shorter description of the transaction, this can be edited
+          example: Sainsburys S/mkts
+          type: string
+        notes:
+          default: ''
+          description: Arbitrary text that a user can add about a transaction
+          example: Some notes about the transaction
+          type: string
+          maxLength: 500
+        status:
+          description: Scope 'transactions.write.all' required. Whether the transaction has been posted (booked) or is still a pending transaction. During the transition from pending to posted the description will normally change.
+          enum:
+          - posted
+          - pending
+          example: posted
+          type: string
+        projectId:
+          description: The project ID the transaction is associated with
+          example: 30be8fa43f30fc285e4c479e9dfd6a1dec2bead8ee6cc6276b8dac152c565e9e
+          type: string
+        enhancedCategories:
+          additionalProperties: false
+          type: object
+          description: Categories to enrich a transaction with
+          properties:
+            uk-tax-hmrc:
+              description: The UK HMRC Tax category to aid in tax return queries
+              example: income.rent
+              type: string
+              pattern: ^(income|expenditure)\.([a-zA-Z-]+)$
+          example:
+            uk-tax-hmrc: income.rent
+      example:
+        accountId: c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        amount:
+          value: -51000
+        categoryId: std:09f5c144-6d90-4228-98c6-cac1331d874b
+        categoryIdConfirmed: true
+        longDescription: New long description
+        shortDescription: New short description
+        notes: New notes
+        status: posted
+        date: '2018-07-10T12:00:00+00:00'
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

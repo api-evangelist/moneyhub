@@ -1,0 +1,1915 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Accounts API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: accounts
+paths:
+  /accounts:
+    get:
+      summary: Retrieve all accounts for a user
+      description: 'Requires **accounts:read** scope. Optional scope **accounts_details:read** is needed for some extra fields such as account number and sort code. Please note: field **additionalBalances** is currently in **beta**'
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      - description: Return transaction data for the account when available
+        in: query
+        name: showTransactionData
+        schema:
+          type: boolean
+          default: true
+      - description: Return performance score for the account when available
+        in: query
+        name: showPerformanceScore
+        schema:
+          type: boolean
+          default: true
+      - description: Filter accounts by their connectionId
+        in: query
+        name: connectionId
+        x-example: 1ffe704d39629a929c8e293880fb449a:c1ef4ce6-c1d6-4900-9288-228fb21f5dc4
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Accounts Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Account'
+                    type: array
+                    example:
+                    - id: d372d09b-f50a-4114-9c83-687828fa8ac2
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Joint Account
+                      accountOpeningDate: '2014-08-10T00:00:00.000Z'
+                      type: cash:current
+                      providerAccountId: '12345678'
+                      providerName: Lloyds
+                      providerId: DEMO
+                      providerReference: demo
+                      connectionId: 1ffe704d39629a929c8e293880fb449a:c1ef4ce6-c1d6-4900-9288-228fb21f5dc4
+                      accountHolderName: Robert Cantu
+                      balance:
+                        date: '2020-07-27'
+                        amount:
+                          value: 802323
+                          currency: GBP
+                      currency: GBP
+                      details:
+                        AER: 0
+                        overdraftLimit: 0
+                        sortCodeAccountNumber: '30949301273345'
+                      transactionData:
+                        count: 218
+                        earliestDate: '2019-08-02'
+                        lastDate: '2020-07-27'
+                      additionalBalances:
+                      - date: '2020-07-27'
+                        amount:
+                          value: 1000
+                          currency: GBP
+                        type: InterimAvailable
+                    - id: 3cc555e4-d954-4eb1-a1df-90df15b132a9
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Current Account
+                      type: cash:current
+                      providerAccountId: C4735247524
+                      providerName: Lloyds
+                      providerId: DEMO
+                      providerReference: demo
+                      connectionId: 1ffe704d39629a929c8e293880fb449a:c1ef4ce6-c1d6-4900-9288-228fb21f5dc4
+                      accountHolderName: Robert Cantu
+                      balance:
+                        date: '2020-07-11'
+                        amount:
+                          value: 216258
+                          currency: GBP
+                      currency: GBP
+                      details:
+                        AER: 0
+                        overdraftLimit: 0
+                        sortCodeAccountNumber: '30949301273801'
+                      providerAccountIdentifications:
+                      - identification: ACCOUNT12345678
+                        type: AccountNumber
+                      transactionData:
+                        count: 133
+                        earliestDate: '2019-08-03'
+                        lastDate: '2020-07-11'
+                      additionalBalances:
+                      - date: '2020-07-27'
+                        amount:
+                          value: 1000
+                          currency: GBP
+                        type: ClosingBooked
+                    - id: 7abc948a-416d-44ab-8a23-69d3ea13bcf1
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Credit Card
+                      type: card
+                      providerAccountId: '23534724573'
+                      providerName: Virgin
+                      providerId: DEMO
+                      providerReference: demo
+                      connectionId: DEMO:888
+                      balance:
+                        date: '2020-07-27'
+                        amount:
+                          value: -196700
+                          currency: GBP
+                      currency: GBP
+                      details:
+                        creditLimit: 250000
+                        APR: 0
+                        pan: '5498572687746087'
+                      transactionData:
+                        count: 163
+                        earliestDate: '2019-07-28'
+                        lastDate: '2020-07-27'
+                      additionalBalances: []
+                    - id: 344f69f8-0172-4d68-ac38-ea11be1f7373
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Starling Current Account
+                      productName: Personal Current Account
+                      accountOpeningDate: '2013-09-13T00:00:00.000Z'
+                      type: cash:current
+                      providerAccountId: S13123513D
+                      providerName: Starling
+                      providerId: DEMO
+                      providerReference: demo
+                      connectionId: DEMO:999
+                      balance:
+                        date: '2020-07-12'
+                        amount:
+                          value: 124885
+                          currency: GBP
+                      currency: GBP
+                      details:
+                        AER: 0
+                        overdraftLimit: 0
+                        sortCodeAccountNumber: '30949301273045'
+                      transactionData:
+                        count: 108
+                        earliestDate: '2019-07-28'
+                        lastDate: '2020-07-12'
+                      additionalBalances: []
+                    - id: 478a84cc-296f-4388-af24-cf15f81a2fd4
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Natwest savings a/c
+                      accountOpeningDate: '2014-08-10T00:00:00.000Z'
+                      type: savings
+                      providerAccountId: NW2352135
+                      providerName: Natwest
+                      providerId: DEMO
+                      providerReference: demo
+                      connectionId: DEMO:222
+                      balance:
+                        date: '2020-07-05'
+                        amount:
+                          value: 1500000
+                          currency: GBP
+                      currency: GBP
+                      details:
+                        AER: 0
+                        iban: GB24BKEN10000031510604
+                      transactionData:
+                        count: 12
+                        earliestDate: '2019-08-05'
+                        lastDate: '2020-07-05'
+                      additionalBalances: []
+                    - id: 2e30e166-70f8-4b46-b0e3-8afe4acda964
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: 15 Hardys Rd
+                      type: properties:residential
+                      balance:
+                        amount:
+                          value: 27600000
+                          currency: GBP
+                        date: '2016-01-01'
+                      currency: GBP
+                      details: {}
+                      additionalBalances: []
+                    - id: 54841fea-7eb6-4523-9a20-2722d19d7766
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: HL Sipp
+                      type: pension
+                      providerName: Hargreaves Lansdown
+                      balance:
+                        amount:
+                          value: 3525134
+                          currency: GBP
+                        date: '2020-07-01'
+                      currency: GBP
+                      details: {}
+                      providerAccountIdentifications:
+                      - identification: XXXX5168
+                        type: AccountNumber
+                      performanceScore:
+                        months:
+                        - date: 2020-04
+                          openingBalance: 3465134
+                          nonContributionGrowth: 24000
+                          aer: 8.64
+                        - date: 2020-05
+                          openingBalance: 3489134
+                          nonContributionGrowth: 12000
+                          aer: 4.21
+                        - date: 2020-06
+                          openingBalance: 3501134
+                          nonContributionGrowth: 24000
+                          aer: 8.54
+                        totals:
+                          openingBalance:
+                            amount:
+                              value: 3325134
+                              currency: GBP
+                            date: '2019-08-01'
+                          currentBalance:
+                            amount:
+                              value: 3525134
+                              currency: GBP
+                            date: '2020-07-01'
+                          contributions: 0
+                          withdrawals: 0
+                          nonContributionGrowth: 200000
+                          growthRate: 6.01
+                          annualisedGrowthRate: 6.57
+                      additionalBalances: []
+                    - id: fa447159-13d2-4089-bbbc-28be41d5febd
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Wealthify ISA (Stocks and Shares)
+                      type: investment
+                      providerName: Wealthify
+                      balance:
+                        amount:
+                          value: 253214
+                          currency: GBP
+                        date: '2020-07-16'
+                      currency: GBP
+                      details: {}
+                      providerAccountIdentifications:
+                      - identification: XXXX5168
+                        type: AccountNumber
+                      performanceScore:
+                        months:
+                        - date: 2020-05
+                          openingBalance: 237023
+                          nonContributionGrowth: 5140
+                          aer: 29.36
+                        - date: 2020-06
+                          openingBalance: 242163
+                          nonContributionGrowth: 11051
+                          aer: 70.83
+                        totals:
+                          openingBalance:
+                            amount:
+                              value: 200000
+                              currency: GBP
+                            date: '2020-01-16'
+                          currentBalance:
+                            amount:
+                              value: 253214
+                              currency: GBP
+                            date: '2020-07-16'
+                          contributions: 0
+                          withdrawals: 0
+                          nonContributionGrowth: 53214
+                          growthRate: 26.61
+                          annualisedGrowthRate: 60.5
+                      additionalBalances: []
+                    - id: fe9e0391-960e-4251-b3b6-f7f9d144db36
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Nationwide Repayment Mortgage
+                      type: mortgage:repayment
+                      providerName: Nationwide
+                      balance:
+                        amount:
+                          value: -16900000
+                          currency: GBP
+                        date: '2020-07-01'
+                      currency: GBP
+                      details:
+                        linkedProperty: 2e30e166-70f8-4b46-b0e3-8afe4acda964
+                        monthlyRepayment: 1000
+                        term: 300
+                        APR: 1.94
+                        interestType: fixed
+                        fixedDate: '2023-07-27'
+                      providerAccountIdentifications:
+                      - identification: XXXX5168
+                        type: AccountNumber
+                      additionalBalances: []
+                    - id: 1e30e166-70f8-4b46-b0e3-8afe4acda478
+                      dateAdded: '2020-07-29T15:33:44+00:00'
+                      dateModified: '2020-07-29T15:33:44+00:00'
+                      accountName: Santander Mortgage
+                      type: mortgage:interestOnly
+                      providerName: Santander
+                      balance:
+                        amount:
+                          value: -1500000
+                          currency: GBP
+                        date: '2020-06-01'
+                      currency: GBP
+                      details:
+                        monthlyRepayment: 1200
+                        term: 270
+                        APR: 3.94
+                        interestType: fixed
+                        fixedDate: '2025-06-25'
+                      providerAccountIdentifications:
+                      - identification: XXXX5168
+                        type: AccountNumber
+                      additionalBalances: []
+                    - id: 5cbf59cf-c112-4864-b4e3-11b3ca794000
+                      accountName: Audi Finance
+                      type: loan
+                      providerName: Audi Financial Services
+                      balance:
+                        amount:
+                          value: -1095000
+                          currency: GBP
+                        date: '2020-07-05'
+                      currency: GBP
+                      details:
+                        monthlyRepayment: 35000
+                        endDate: '2020-07-27'
+                        APR: 4.1
+                        interestFreePeriod: 24
+                      providerAccountIdentifications:
+                      - identification: XXXX5168
+                        type: AccountNumber
+                      additionalBalances: []
+                    - id: 8e5320c9-a285-47f6-bac0-e2f78f5db9cd
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Work Pension
+                      type: pension
+                      providerName: Aviva
+                      balance:
+                        amount:
+                          value: 20524578
+                          currency: GBP
+                        date: '2020-06-28'
+                      currency: GBP
+                      details: {}
+                      providerAccountIdentifications:
+                      - identification: XXXX5168
+                        type: AccountNumber
+                      performanceScore:
+                        months:
+                        - date: 2020-04
+                          openingBalance: 20180078
+                          nonContributionGrowth: 160000
+                          aer: 9.94
+                        - date: 2020-05
+                          openingBalance: 20340078
+                          nonContributionGrowth: 184500
+                          aer: 11.44
+                        totals:
+                          openingBalance:
+                            amount:
+                              value: 18456778
+                              currency: GBP
+                            date: '2019-07-28'
+                          currentBalance:
+                            amount:
+                              value: 20524578
+                              currency: GBP
+                            date: '2020-06-28'
+                          contributions: 0
+                          withdrawals: 0
+                          nonContributionGrowth: 2067800
+                          growthRate: 11.2
+                          annualisedGrowthRate: 12.23
+                      additionalBalances: []
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+    post:
+      summary: Create a single account for a user
+      description: Requires **accounts:read** and **accounts:write:all** scopes.
+      responses:
+        '200':
+          description: Successful Account Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountPost'
+  /accounts-list:
+    get:
+      summary: Retrieve all accounts for a user without additional data
+      description: 'Requires **accounts:read** scope. Optional scope **accounts_details:read** is needed for some extra fields such as account number and sort code. By default this endpoint does not return transaction data (when this isn''t returned response times are quicker than the GET /accounts endpoint). Please note: field **additionalBalances** is currently in **beta**'
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      - description: Return transaction data for the account when available
+        in: query
+        name: showTransactionData
+        schema:
+          type: boolean
+          default: false
+      - description: Return performance score for the account when available
+        in: query
+        name: showPerformanceScore
+        schema:
+          type: boolean
+          default: false
+      - description: Filter accounts by their connectionId
+        in: query
+        name: connectionId
+        x-example: 1ffe704d39629a929c8e293880fb449a:c1ef4ce6-c1d6-4900-9288-228fb21f5dc4
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Accounts Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Account'
+                    type: array
+                    example:
+                    - id: d372d09b-f50a-4114-9c83-687828fa8ac2
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Joint Account
+                      type: cash:current
+                      providerName: Lloyds
+                      providerId: DEMO
+                      providerReference: demo
+                      connectionId: 1ffe704d39629a929c8e293880fb449a:c1ef4ce6-c1d6-4900-9288-228fb21f5dc4
+                      accountHolderName: Robert Cantu
+                      balance:
+                        date: '2020-07-27'
+                        amount:
+                          value: 802323
+                          currency: GBP
+                      currency: GBP
+                      details:
+                        AER: 0
+                        overdraftLimit: 0
+                        sortCodeAccountNumber: '30949301273345'
+                      additionalBalances:
+                      - date: '2020-07-27'
+                        amount:
+                          value: 1000
+                          currency: GBP
+                        type: InterimAvailable
+                    - id: 3cc555e4-d954-4eb1-a1df-90df15b132a9
+                      dateAdded: '2020-07-27T14:33:44+00:00'
+                      dateModified: '2020-07-27T14:33:44+00:00'
+                      accountName: Current Account
+                      type: cash:current
+                      providerName: Lloyds
+                      providerId: DEMO
+                      providerReference: demo
+                      connectionId: 1ffe704d39629a929c8e293880fb449a:c1ef4ce6-c1d6-4900-9288-228fb21f5dc4
+                      accountHolderName: Robert Cantu
+                      balance:
+                        date: '2020-07-11'
+                        amount:
+                          value: 216258
+                          currency: GBP
+                      currency: GBP
+                      details:
+                        AER: 0
+                        overdraftLimit: 0
+                        sortCodeAccountNumber: '30949301273801'
+                      additionalBalances:
+                      - date: '2020-07-27'
+                        amount:
+                          value: 1000
+                          currency: GBP
+                        type: InterimAvailable
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+  /accounts/{accountId}:
+    get:
+      summary: Retrieve a single account
+      description: 'Requires **accounts:read** scope. Optional scope **accounts_details:read** is needed for some extra fields such as account number and sort code. Please note: field **additionalBalances** is currently in **beta**'
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Account Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+    patch:
+      summary: Update a single account
+      description: Requires **accounts:read** and **accounts:write:all** scopes.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Account Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Account'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountPatch'
+    delete:
+      summary: Delete a single account
+      description: This endpoint can only be used to delete accounts created using the POST /accounts endpoint. Accounts created when connecting to a financial institution can only be deleted by removing the connection they belong to. Requires **accounts:write:all** scope.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+  /accounts/{accountId}/balances:
+    get:
+      summary: Retrieve the historical balances for an account
+      description: Requires **accounts:read** scope.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Balances Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Balance'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+    post:
+      summary: Add a new balance for an account
+      description: Requires **accounts:read** and either of **accounts:write** or **accounts:write:all** scopes.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Balance Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Balance'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Balance Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BalancePost'
+  /accounts/{accountId}/recurring-transactions:
+    post:
+      summary: Create an estimate of the recurring transactions for an account
+      description: '**THIS ENDPOINT IS DEPRECATED.** Estimation of recurring transactions has ben superseded by the regular transactions endpoint. Requires **accounts:read** and **transactions:read:all** scope.'
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Recurring Transactions Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/RecurringTransactionEstimate'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+  /accounts/syncs:
+    get:
+      summary: Retrieve sync information for all of a user's accounts
+      description: Requires **accounts:read** scope.
+      responses:
+        '200':
+          description: Successful Accounts Syncs Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/AccountSync'
+                    type: array
+                    example:
+                    - accountId: d372d09b-f50a-4114-9c83-687828fa8ac2
+                      lastSuccessfulSync: '2020-07-27T14:33:44+00:00'
+                    - accountId: 3cc555e4-d954-4eb1-a1df-90df15b132a9
+                      lastSuccessfulSync: null
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - accounts
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    RecurringTransactionEstimate:
+      additionalProperties: false
+      type: object
+      properties:
+        counterpartyId:
+          description: The id of the counterparty that the estimate is for
+          example: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
+          type: string
+        amount:
+          properties:
+            value:
+              description: The average predicted amount of the recurring transaction in minor units of the currency, eg. pennies for GBP.
+              example: 300023
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 3000
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the predicted amount taken from the account
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        amountRange:
+          properties:
+            value:
+              description: The predicted range of the recurring transaction in minor units of the currency, eg. pennies for GBP.
+              example: 5000
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 50
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 0
+              type: integer
+            currency:
+              description: The currency of the predicted range taken from the account
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        monthlyAmount:
+          properties:
+            value:
+              description: The predicted monthly amount for this counterparty, regardless of how many transactions in minor units of the currency, eg. pennies for GBP.
+              example: 5000
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 50
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 0
+              type: integer
+            currency:
+              description: The currency of the monthly amount taken from the account
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        predictionSource:
+          description: The source of the prediction
+          enum:
+          - moneyhub
+          example: moneyhub
+          type: string
+        monthlyAverageOnly:
+          description: A flag indicating whether the predictions are based only on a monthly average or not. If the predictions are based solely on monthly averages then the dates array will be defaulted to the end of the month for the next 3 motnhs.
+          type: boolean
+          example: false
+        dates:
+          type: array
+          items:
+            type: string
+            example: '2018-07-10'
+            format: date
+          example:
+          - '2019-03-07'
+          - '2019-04-07'
+          - '2019-05-07'
+    Account:
+      additionalProperties: false
+      type: object
+      properties:
+        accountName:
+          description: The name of the account
+          example: Cash ISA
+          type: string
+        currency:
+          description: The currency of the account. It uses the ISO 4217 currency codes.
+          example: GBP
+          type: string
+        balance:
+          additionalProperties: false
+          type: object
+          properties:
+            amount:
+              properties:
+                value:
+                  description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+                  example: 300023
+                  type: integer
+                majorUnits:
+                  description: The major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 3000
+                  type: integer
+                minorUnits:
+                  description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the balance taken from the account
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+              type: object
+            date:
+              description: The date of the balance
+              example: '2018-08-12'
+              format: date
+              type: string
+            type:
+              description: The type of balance as returned by the banking provider. This field is only available for open banking connections. More information can be found [here](https://docs.moneyhubenterprise.com/docs/balance-types)
+              example: InterimAvailable
+              type: string
+              enum:
+              - ClosingAvailable
+              - ClosingBooked
+              - ClosingCleared
+              - Expected
+              - ForwardAvailable
+              - Information
+              - InterimAvailable
+              - InterimBooked
+              - InterimCleared
+              - OpeningAvailable
+              - OpeningBooked
+              - OpeningCleared
+              - PreviouslyClosedBooked
+          example:
+            date: '2018-08-12'
+            amount:
+              value: 300023
+              majorUnits: 3000
+              minorUnits: 23
+              currency: GBP
+            type: InterimAvailable
+          required:
+          - amount
+          - date
+        details:
+          type: object
+          additionalProperties: false
+          properties:
+            AER:
+              description: For cash and savings accounts. Interest rate expressed as a percentage 'Annual Equivalent Rate'.
+              example: 1.3
+              type: number
+              minimum: 0
+              maximum: 100
+            APR:
+              description: For credit cards, mortgages and loans. Interest rate expressed as a percentage 'Annual Percentage Rate'.
+              example: 13.1
+              type: number
+              minimum: 0
+              maximum: 100
+            sortCodeAccountNumber:
+              description: For cash and saving accounts. Populated with the 6 digit Sort Code and 8 digit Account Number. It requires the `accounts_details:read` scope.
+              type: string
+              maxLength: 20
+              minLength: 14
+              example: '60161331926819'
+            iban:
+              description: For cash and savings accounts. Populated with the full IBAN number. It requires the `accounts_details:read` scope.
+              type: string
+              maxLength: 34
+              minLength: 18
+              example: GB2960161331926819
+            pan:
+              description: For card accounts. Populated with the full Primary Account Number of the credit card. It requires the `accounts_details:read` scope.
+              type: string
+              maxLength: 16
+              minLength: 16
+              example: '5498572687746087'
+            creditLimit:
+              description: For credit cards. The agreed overdraft limit of the account in minor units of the currency.
+              example: 150000
+              minimum: 0
+              type: integer
+            endDate:
+              description: For Mortgages and loans. The date at which the loan/mortgage will finish.
+              format: date
+              example: '2020-01-01'
+              type: string
+            fixedDate:
+              description: For Mortgages. The date at which the current fixed rate ends
+              format: date
+              example: '2019-01-01'
+              type: string
+            interestFreePeriod:
+              type: integer
+              description: For loans. The length in months of the interest free period
+              example: 12
+              minimum: 0
+            interestType:
+              description: For mortgages. The interest type
+              enum:
+              - fixed
+              - variable
+              example: fixed
+              type: string
+            linkedProperty:
+              type: string
+              description: For Mortgages. The id of an associated property account
+              example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+            monthlyRepayment:
+              type: integer
+              description: For mortgages and loans. The monthly amount due to the mortgage provider in minor units of the currency.
+              example: 60000
+              minimum: 0
+            overdraftLimit:
+              description: For cash accounts. The agreed overdraft limit of the account in minor units of the currency.
+              example: 150000
+              type: integer
+              minimum: 0
+            postcode:
+              description: For properties. The postcode of the property
+              example: bs1 1aa
+              type: string
+            runningCost:
+              description: For assets. The running cost in minor units of the currency.
+              example: 20000
+              type: integer
+              minimum: 0
+            runningCostPeriod:
+              type: string
+              description: For assets. The running cost period
+              enum:
+              - month
+              - year
+              example: month
+            term:
+              type: integer
+              description: For mortgages. The term of the mortgage in months.
+              example: 13
+              minimum: 0
+            yearlyAppreciation:
+              type: number
+              description: For assets. The rate of appreciation as a percentage, negative values indicate that the asset will depreciate
+              example: -10
+        transactionData:
+          additionalProperties: false
+          type: object
+          required:
+          - count
+          - earliestDate
+          - lastDate
+          properties:
+            count:
+              type: integer
+              example: 6
+            earliestDate:
+              type: string
+              format: date-time
+              example: '2017-11-28T00:00:00.000Z'
+            lastDate:
+              type: string
+              format: date-time
+              example: '2018-05-28T00:00:00.000Z'
+        dateAdded:
+          description: The date at which the account was added.
+          example: '2018-07-10T11:39:44.000Z'
+          format: date-time
+          type: string
+        dateModified:
+          description: The date at which the account was last modified
+          example: '2018-07-10T11:39:44.000Z'
+          format: date-time
+          type: string
+        id:
+          description: The unique identity of the account.
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          type: string
+        providerName:
+          description: The name of the provider of the account.
+          example: HSBC
+          type: string
+        providerReference:
+          description: Reference that uniquely identifies a set of connections as being part of the same institution (e.g. HSBC Open banking and HSBC credit cards). It is used to group a set of connections by the banking institution they refer to. It can also be used to retrieve the bank icon.
+          example: hsbc
+          type: string
+        connectionId:
+          description: The id of the connection of the account. This value is not present for accounts created manually by the user.
+          example: 049c10ab871e8d60aa891c0ae368322d:639cf079-a585-4852-8b4d-1ebd17f4d2cb
+          pattern: (API|DEMO|.{32}):(.{32}|.{36})
+          type: string
+        providerId:
+          description: The id of the provider of the account. Accounts created using the api have a value of 'API'. Accounts crated for a Test user have a value of 'DEMO'. This value is not present for accounts created manually by the user.
+          example: 049c10ab871e8d60aa891c0ae368322d
+          pattern: API|DEMO|.{32}
+          type: string
+        providerAccountId:
+          description: The id of the account given by the provider. This can be used to uniquely identify accounts across different connections.
+          example: '3572357243'
+          type: string
+        providerParentAccountId:
+          description: The id of the parent account given by the provider. This can be used to uniquely identify accounts across different connections. Only supports Monzo pots currently
+          example: '3572357243'
+          type: string
+        providerAccountName:
+          description: The name of the account given by the provider. Allows to keep track of the provider's name if the account name has been manually updated
+          example: Account Name
+          type: string
+        accountReference:
+          description: A reference number for the account which consists of the last 4 digits of the account identification number (Account Number, IBAN or PAN). It requires the `accounts_details:read` scope
+          example: '3201'
+          type: string
+        accountHolderName:
+          description: Account Holder name. It requires the `accounts_details:read` scope.
+          example: Mr Rob Ike
+          type: string
+        accountOpeningDate:
+          description: The date the account was opened as reported by the account provider.
+          example: '2002-03-07T00:00:00.000Z'
+          format: date-time
+          type: string
+        accountType:
+          description: The type of account (personal/business)
+          enum:
+          - personal
+          - business
+          type: string
+          example: personal
+          default: personal
+        productName:
+          description: The name of the product sold / provided from the account provider.
+          example: Personal Supercharged Savings Account
+          type: string
+        providerAccountIdentifications:
+          type: array
+          description: List of specific account identifications when there is no sort code/account number, iban or pan available.
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              identification:
+                description: The account identification
+                example: SAVINGR12345678
+                type: string
+              type:
+                description: The type of account identification
+                example: UK.Santander.SavingsRollNumber
+                type: string
+            required:
+            - identification
+            - type
+        type:
+          description: The type of account - this will determine the data available in the details field
+          enum:
+          - cash:current
+          - savings
+          - card
+          - investment
+          - loan
+          - mortgage:repayment
+          - mortgage:interestOnly
+          - pension
+          - pension:definedBenefit
+          - pension:definedContribution
+          - asset
+          - properties:residential
+          - properties:buyToLet
+          - crypto
+          type: string
+          example: cash:current
+        performanceScore:
+          type: object
+          description: Performance score of investment and pension accounts. Once that an account has at least 3 balances the score will be provided. Please note that this is an experimental feature.
+          additionalProperties: false
+          properties:
+            totals:
+              type: object
+              additionalProperties: false
+              properties:
+                openingBalance:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    date:
+                      example: '2018-08-12'
+                      format: date
+                      type: string
+                    amount:
+                      additionalProperties: false
+                      type: object
+                      properties:
+                        value:
+                          description: The opening balance in minor units of the currency, eg. pennies for GBP
+                          type: integer
+                          example: 300023
+                        majorUnits:
+                          description: The major units of the value, based on the values currency, eg. pounds for GBP.
+                          example: 3000
+                          type: integer
+                        minorUnits:
+                          description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+                          example: 23
+                          type: integer
+                        currency:
+                          type: string
+                          example: GBP
+                      required:
+                      - value
+                      - currency
+                currentBalance:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    date:
+                      example: '2018-08-12'
+                      format: date
+                      type: string
+                    amount:
+                      additionalProperties: false
+                      type: object
+                      properties:
+                        value:
+                          description: The current balance in minor units of the currency, eg. pennies for GBP
+                          type: integer
+                          example: 300023
+                        majorUnits:
+                          description: The major units of the value, based on the values currency, eg. pounds for GBP.
+                          example: 3000
+                          type: integer
+                        minorUnits:
+                          description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+                          example: 23
+                          type: integer
+                        currency:
+                          type: string
+                          example: GBP
+                      required:
+                      - value
+                      - currency
+                contributions:
+                  description: The contributions in minor units of the currency, eg. pennies for GBP
+                  type: integer
+                  example: 240098
+                withdrawals:
+                  description: The withdrawals in minor units of the currency, eg. pennies for GBP
+                  type: integer
+                  example: 20067
+                nonContributionGrowth:
+                  description: The non contribution growth in minor units of the currency, eg. pennies for GBP
+                  type: integer
+                  example: 340054
+                growthRate:
+                  description: The growth rate expressed in percentage
+                  type: number
+                  example: 35.98
+                annualisedGrowthRate:
+                  description: The annualised growth rate expressed in percentage
+                  type: number
+                  example: 60.98
+            months:
+              items:
+                type: object
+                additionalProperties: false
+                properties:
+                  date:
+                    description: Date in the format YYYY-MM
+                    example: 2018-08
+                    pattern: ^(\d{4})(-(0[1-9]|1[012]))?$
+                    type: string
+                  openingBalance:
+                    description: The opening balance in minor units of the currency, eg. pennies for GBP
+                    type: integer
+                    example: 300023
+                  nonContributionGrowth:
+                    description: The non contribution growth in minor units of the currency, eg. pennies for GBP
+                    type: integer
+                    example: 1567
+                  aer:
+                    description: The aer expressed in percentage
+                    type: number
+                    example: 35.98
+              type: array
+          required:
+          - totals
+          - months
+        additionalBalances:
+          description: (BETA) Additional balance types for the account. The balances will be the latest for each type retrieved from the bank. Will only appear for cash:current, card and savings account types. Please note not all banking providers will return additional balance types, and the types returned will vary. It is recommended to fall back to the main account balance in this case.
+          type: array
+          items:
+            additionalProperties: false
+            type: object
+            properties:
+              amount:
+                properties:
+                  value:
+                    description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+                    example: 300023
+                    type: integer
+                  majorUnits:
+                    description: The major units of the value, based on the values currency, eg. pounds for GBP.
+                    example: 3000
+                    type: integer
+                  minorUnits:
+                    description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+                    example: 23
+                    type: integer
+                  currency:
+                    description: The currency of the balance taken from the account
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+                type: object
+              date:
+                description: The date of the balance
+                example: '2018-08-12'
+                format: date
+                type: string
+              type:
+                description: The type of balance as returned by the banking provider. This field is only available for open banking connections. More information can be found [here](https://docs.moneyhubenterprise.com/docs/balance-types)
+                example: InterimAvailable
+                type: string
+                enum:
+                - ClosingAvailable
+                - ClosingBooked
+                - ClosingCleared
+                - Expected
+                - ForwardAvailable
+                - Information
+                - InterimAvailable
+                - InterimBooked
+                - InterimCleared
+                - OpeningAvailable
+                - OpeningBooked
+                - OpeningCleared
+                - PreviouslyClosedBooked
+            example:
+              date: '2018-08-12'
+              amount:
+                value: 300023
+                majorUnits: 3000
+                minorUnits: 23
+                currency: GBP
+              type: InterimAvailable
+            required:
+            - amount
+            - date
+      required:
+      - id
+      - dateAdded
+      - dateModified
+      - accountName
+      - type
+      - balance
+      - details
+    AccountPost:
+      properties:
+        accountName:
+          description: The name of the account
+          example: Account name
+          type: string
+        providerName:
+          description: The name of the provider of the account.
+          example: Provider name
+          type: string
+        currency:
+          description: The currency of the account. Defaults to GBP.
+          example: GBP
+          type: string
+        type:
+          description: The type of account - this will determine the data available in the details field
+          enum:
+          - cash:current
+          - savings
+          - card
+          - investment
+          - loan
+          - mortgage:repayment
+          - mortgage:interestOnly
+          - pension
+          - pension:definedBenefit
+          - pension:definedContribution
+          - asset
+          - properties:residential
+          - properties:buyToLet
+          - crypto
+          type: string
+          example: cash:current
+        accountType:
+          description: The type of account (personal/business)
+          enum:
+          - personal
+          - business
+          type: string
+          example: personal
+          default: personal
+        balance:
+          additionalProperties: false
+          type: object
+          properties:
+            amount:
+              properties:
+                value:
+                  description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+                  example: 300023
+                  type: integer
+              required:
+              - value
+              type: object
+            date:
+              description: The date of the balance
+              example: '2018-08-12'
+              format: date
+              type: string
+          example:
+            date: '2018-08-12'
+            amount:
+              value: 300023
+          required:
+          - amount
+          - date
+        details:
+          additionalProperties: false
+          type: object
+          properties:
+            AER:
+              description: For cash and savings accounts. Interest rate expressed as a percentage 'Annual Equivalent Rate'.
+              example: 1.3
+              type: number
+              minimum: 0
+              maximum: 100
+            APR:
+              description: For credit cards, mortgages and loans. Interest rate expressed as a percentage 'Annual Percentage Rate'.
+              example: 13.1
+              type: number
+              minimum: 0
+              maximum: 100
+            creditLimit:
+              description: For credit cards. The agreed overdraft limit of the account in minor units of the currency.
+              example: 150000
+              minimum: 0
+              type: integer
+            endDate:
+              description: For Mortgages and loans. The date at which the loan/mortgage will finish.
+              format: date
+              example: '2020-01-01'
+              type: string
+            fixedDate:
+              description: For Mortgages. The date at which the current fixed rate ends
+              format: date
+              example: '2019-01-01'
+              type: string
+            interestFreePeriod:
+              type: integer
+              description: For loans. The length in months of the interest free period
+              example: 12
+              minimum: 0
+            interestType:
+              description: For mortgages. The interest type
+              enum:
+              - fixed
+              - variable
+              example: fixed
+              type: string
+            linkedProperty:
+              type: string
+              description: For Mortgages. The id of an associated property account
+              example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+            monthlyRepayment:
+              type: integer
+              description: For mortgages and loans. The monthly amount due to the mortgage provider in minor units of the currency.
+              example: 60000
+              minimum: 0
+            overdraftLimit:
+              description: For cash accounts. The agreed overdraft limit of the account in minor units of the currency.
+              example: 150000
+              type: integer
+              minimum: 0
+            postcode:
+              description: For properties. The postcode of the property
+              example: bs1 1aa
+              type: string
+            runningCost:
+              description: For assets. The running cost in minor units of the currency.
+              example: 20000
+              type: integer
+              minimum: 0
+            runningCostPeriod:
+              type: string
+              description: For assets. The running cost period
+              enum:
+              - month
+              - year
+              example: month
+            term:
+              type: integer
+              description: For mortgages. The term of the mortgage in months.
+              example: 13
+              minimum: 0
+            yearlyAppreciation:
+              type: number
+              description: For assets. The rate of appreciation as a percentage, negative values indicate that the asset will depreciate
+              example: -10
+        providerAccountIdentifications:
+          type: array
+          description: List of provider specific account identifications
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              identification:
+                description: The account identification
+                example: SAVINGR12345678
+                type: string
+              type:
+                description: The type of account identification
+                example: savingsRollNumber
+                type: string
+                enum:
+                - accountNumber
+                - savingsRollNumber
+                - policyNumber
+            required:
+            - identification
+            - type
+      required:
+      - accountName
+      - providerName
+      - type
+      - balance
+      type: object
+    Balance:
+      additionalProperties: false
+      type: object
+      properties:
+        amount:
+          properties:
+            value:
+              description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+              example: 300023
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 3000
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the balance taken from the account
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        date:
+          description: The date of the balance
+          example: '2018-08-12'
+          format: date
+          type: string
+        type:
+          description: The type of balance as returned by the banking provider. This field is only available for open banking connections. More information can be found [here](https://docs.moneyhubenterprise.com/docs/balance-types)
+          example: InterimAvailable
+          type: string
+          enum:
+          - ClosingAvailable
+          - ClosingBooked
+          - ClosingCleared
+          - Expected
+          - ForwardAvailable
+          - Information
+          - InterimAvailable
+          - InterimBooked
+          - InterimCleared
+          - OpeningAvailable
+          - OpeningBooked
+          - OpeningCleared
+          - PreviouslyClosedBooked
+      example:
+        date: '2018-08-12'
+        amount:
+          value: 300023
+          majorUnits: 3000
+          minorUnits: 23
+          currency: GBP
+        type: InterimAvailable
+      required:
+      - amount
+      - date
+    AccountSync:
+      additionalProperties: false
+      type: object
+      properties:
+        accountId:
+          description: The unique identity of the account.
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          type: string
+        lastSuccessfulSync:
+          description: The date at which the account was last synchronised successfully with the provider
+          example: '2018-07-10T11:39:44.000Z'
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - accountId
+      - lastSuccessfulSync
+    BalancePost:
+      additionalProperties: false
+      type: object
+      properties:
+        amount:
+          properties:
+            value:
+              description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+              example: 300023
+              type: integer
+          required:
+          - value
+          type: object
+        date:
+          description: The date of the balance
+          example: '2018-08-12'
+          format: date
+          type: string
+      example:
+        date: '2018-08-12'
+        amount:
+          value: 300023
+      required:
+      - amount
+      - date
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+    AccountPatch:
+      properties:
+        accountName:
+          description: The name of the account
+          example: Account name
+          type: string
+        providerName:
+          description: The name of the provider of the account.
+          example: Provider name
+          type: string
+        details:
+          additionalProperties: false
+          type: object
+          properties:
+            AER:
+              description: For cash and savings accounts. Interest rate expressed as a percentage 'Annual Equivalent Rate'.
+              example: 1.3
+              type: number
+              minimum: 0
+              maximum: 100
+            APR:
+              description: For credit cards, mortgages and loans. Interest rate expressed as a percentage 'Annual Percentage Rate'.
+              example: 13.1
+              type: number
+              minimum: 0
+              maximum: 100
+            creditLimit:
+              description: For credit cards. The agreed overdraft limit of the account in minor units of the currency.
+              example: 150000
+              minimum: 0
+              type: integer
+            endDate:
+              description: For Mortgages and loans. The date at which the loan/mortgage will finish.
+              format: date
+              example: '2020-01-01'
+              type: string
+            fixedDate:
+              description: For Mortgages. The date at which the current fixed rate ends
+              format: date
+              example: '2019-01-01'
+              type: string
+            interestFreePeriod:
+              type: integer
+              description: For loans. The length in months of the interest free period
+              example: 12
+              minimum: 0
+            interestType:
+              description: For mortgages. The interest type
+              enum:
+              - fixed
+              - variable
+              example: fixed
+              type: string
+            linkedProperty:
+              type: string
+              description: For Mortgages. The id of an associated property account
+              example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+            monthlyRepayment:
+              type: integer
+              description: For mortgages and loans. The monthly amount due to the mortgage provider in minor units of the currency.
+              example: 60000
+              minimum: 0
+            overdraftLimit:
+              description: For cash accounts. The agreed overdraft limit of the account in minor units of the currency.
+              example: 150000
+              type: integer
+              minimum: 0
+            postcode:
+              description: For properties. The postcode of the property
+              example: bs1 1aa
+              type: string
+            runningCost:
+              description: For assets. The running cost in minor units of the currency.
+              example: 20000
+              type: integer
+              minimum: 0
+            runningCostPeriod:
+              type: string
+              description: For assets. The running cost period
+              enum:
+              - month
+              - year
+              example: month
+            term:
+              type: integer
+              description: For mortgages. The term of the mortgage in months.
+              example: 13
+              minimum: 0
+            yearlyAppreciation:
+              type: number
+              description: For assets. The rate of appreciation as a percentage, negative values indicate that the asset will depreciate
+              example: -10
+      required:
+      - accountName
+      - providerName
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

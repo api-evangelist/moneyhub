@@ -1,0 +1,426 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Statements API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: statements
+paths:
+  /accounts/{accountId}/statements:
+    get:
+      summary: Retrieve the statements for an account
+      description: Requires **accounts:read** and either **statements_basic:read** or **statements_detail:read** scopes.
+      parameters:
+      - name: accountId
+        in: path
+        description: The Account Id
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Statements Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Statement'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unauthorized - Missing or invalid access token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found - Account not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - statements
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    Statement:
+      type: object
+      required:
+      - id
+      - accountId
+      - userId
+      - providerStatementId
+      - providerAccountId
+      - type
+      - startDate
+      - endDate
+      - creationDate
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        accountId:
+          type: string
+        userId:
+          type: string
+        providerStatementId:
+          type: string
+        providerAccountId:
+          type: string
+        reference:
+          type: string
+        type:
+          type: string
+          enum:
+          - AccountClosure
+          - AccountOpening
+          - Annual
+          - Interim
+          - RegularPeriodic
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        creationDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        benefits:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              amount:
+                additionalProperties: false
+                type: object
+                properties:
+                  value:
+                    description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                    example: -2323
+                    type: integer
+                  majorUnits:
+                    description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                    example: 23
+                    type: integer
+                  minorUnits:
+                    description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                    example: 23
+                    type: integer
+                  currency:
+                    description: The currency of the amount
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+        fees:
+          type: array
+          items:
+            type: object
+            required:
+            - creditDebitIndicator
+            - type
+            - amount
+            properties:
+              description:
+                type: string
+              creditDebitIndicator:
+                type: string
+              type:
+                type: string
+              rate:
+                type: string
+              rateType:
+                type: string
+                enum:
+                - BOEBaseRate
+                - FixedRate
+                - Gross
+                - LoanProviderBaseRate
+                - Net
+              frequency:
+                type: string
+                enum:
+                - ChargingPeriod
+                - PerTransactionAmount
+                - PerTransactionPercentage
+                - Quarterly
+                - StatementMonthly
+                - Weekly
+              amount:
+                additionalProperties: false
+                type: object
+                properties:
+                  value:
+                    description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                    example: -2323
+                    type: integer
+                  majorUnits:
+                    description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                    example: 23
+                    type: integer
+                  minorUnits:
+                    description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                    example: 23
+                    type: integer
+                  currency:
+                    description: The currency of the amount
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+        interest:
+          type: array
+          items:
+            type: object
+            required:
+            - amount
+            properties:
+              description:
+                type: string
+              creditDebitIndicator:
+                type: string
+              rate:
+                type: string
+              rateType:
+                type: string
+                enum:
+                - BOEBaseRate
+                - FixedRate
+                - Gross
+                - LoanProviderBaseRate
+                - Net
+              frequency:
+                type: string
+                enum:
+                - Daily
+                - HalfYearly
+                - Monthly
+                - PerStatementDate
+                - Quarterly
+                - Weekly
+                - Yearly
+              type:
+                type: string
+              amount:
+                additionalProperties: false
+                type: object
+                properties:
+                  value:
+                    description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                    example: -2323
+                    type: integer
+                  majorUnits:
+                    description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                    example: 23
+                    type: integer
+                  minorUnits:
+                    description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                    example: 23
+                    type: integer
+                  currency:
+                    description: The currency of the amount
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+        amounts:
+          type: array
+          items:
+            type: object
+            required:
+            - creditDebitIndicator
+            - type
+            - amount
+            properties:
+              creditDebitIndicator:
+                type: string
+              type:
+                type: string
+              amount:
+                additionalProperties: false
+                type: object
+                properties:
+                  value:
+                    description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                    example: -2323
+                    type: integer
+                  majorUnits:
+                    description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                    example: 23
+                    type: integer
+                  minorUnits:
+                    description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                    example: 23
+                    type: integer
+                  currency:
+                    description: The currency of the amount
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+              amountSubType:
+                type: string
+                enum:
+                - BaseCurrency
+                - LocalCurrency
+              localAmount:
+                additionalProperties: false
+                type: object
+                properties:
+                  value:
+                    description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                    example: -2323
+                    type: integer
+                  majorUnits:
+                    description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                    example: 23
+                    type: integer
+                  minorUnits:
+                    description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                    example: 23
+                    type: integer
+                  currency:
+                    description: The currency of the amount
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+              localAmountSubType:
+                type: string
+                enum:
+                - BaseCurrency
+                - LocalCurrency
+        dates:
+          type: array
+          items:
+            type: object
+            required:
+            - date
+            - type
+            properties:
+              date:
+                type: string
+                format: date-time
+              type:
+                type: string
+        rates:
+          type: array
+          items:
+            type: object
+            required:
+            - rate
+            - type
+            properties:
+              rate:
+                type: string
+              type:
+                type: string
+        values:
+          type: array
+          items:
+            type: object
+            required:
+            - value
+            - type
+            properties:
+              value:
+                type: string
+              type:
+                type: string
+        totalValue:
+          additionalProperties: false
+          type: object
+          properties:
+            value:
+              description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: -2323
+              type: integer
+            majorUnits:
+              description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 23
+              type: integer
+            minorUnits:
+              description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+        currency:
+          type: string
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

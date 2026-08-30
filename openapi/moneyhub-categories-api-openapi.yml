@@ -1,0 +1,319 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Categories API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: categories
+paths:
+  /categories:
+    get:
+      summary: Retrieve all categories for a user
+      description: Requires **categories:read** scope.
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      - description: The types of categories to be returned
+        in: query
+        name: type
+        x-example: personal
+        schema:
+          type: string
+          enum:
+          - personal
+          - business
+          - all
+          default: personal
+      responses:
+        '200':
+          description: Successful Categories Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Category'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - categories
+    post:
+      summary: Add a new custom category for a user
+      description: Requires **categories:write** scope.
+      responses:
+        '200':
+          description: Successful Category Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Category'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - categories
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CategoryPost'
+  /categories/{categoryId}:
+    get:
+      summary: Retrieve a single category
+      description: Requires **categories:read** scope.
+      parameters:
+      - description: The Category Id
+        in: path
+        name: categoryId
+        required: true
+        x-example: std:39577c49-350f-45a4-8ec3-48ce205585fb
+        schema:
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+      - description: The types of categories to be returned
+        in: query
+        name: type
+        x-example: personal
+        schema:
+          type: string
+          enum:
+          - personal
+          - business
+          - all
+          default: personal
+      responses:
+        '200':
+          description: Successful Category Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Category'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - categories
+  /category-groups:
+    get:
+      summary: Retrieve all category groups for a user
+      description: Requires **categories:read** scope.
+      parameters:
+      - description: The types of categories to be returned
+        in: query
+        name: type
+        x-example: personal
+        schema:
+          type: string
+          enum:
+          - personal
+          - business
+          default: personal
+      responses:
+        '200':
+          description: Successful Category Groups Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/CategoryGroup'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - categories
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    CategoryGroup:
+      additionalProperties: false
+      properties:
+        id:
+          description: The id of the category group.
+          example: group-1
+          type: string
+        key:
+          description: A text key for the category group
+          example: bills
+          type: string
+      type: object
+      required:
+      - id
+      - key
+    CategoryPost:
+      properties:
+        group:
+          description: The id of the category group that the custom category should be part of
+          type: string
+          pattern: ^group:\d+
+        name:
+          description: The name of the custom category
+          type: string
+      example:
+        group: group:1
+        name: Bus travel
+      required:
+      - group
+      - name
+      type: object
+    Category:
+      additionalProperties: false
+      properties:
+        categoryId:
+          description: The id of the category. Custom categories are prefixed with 'cus:'
+          example: std:338d2636-7f88-491d-8129-255c98da1eb8
+          type: string
+          pattern: ^(std|cus):(\w|-)+$
+        name:
+          description: The name of the category - only applicable for custom categories
+          example: Days Out
+          type: string
+        key:
+          description: A text key for standard categories
+          example: wages
+          type: string
+        group:
+          description: The category group to which the category belongs
+          example: group:2
+          type: string
+      type: object
+      required:
+      - categoryId
+      - group
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

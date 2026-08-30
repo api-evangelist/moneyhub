@@ -1,0 +1,157 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Sync API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: sync
+paths:
+  /sync/{connectionId}:
+    post:
+      summary: Sync an existing connection
+      description: Requires **accounts:read** and either **accounts:write** or **accounts:write:all** scopes.
+      parameters:
+      - description: The connection id
+        in: path
+        name: connectionId
+        required: true
+        x-example: b74f1a79f0be8bdb857d82d0f041d7d2:a1d4e70e-bee9-4a91-84a6-23e2826023e5
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Sync Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    additionalProperties: false
+                    properties:
+                      syncId:
+                        description: The Id the sync, which can be used to retrieve the sync status
+                        format: uuid
+                        type: string
+                        example: 9f3678b2-9fd1-47dd-8b69-4eab49bd2d66
+                      status:
+                        description: Status of the connection
+                        enum:
+                        - ok
+                        - error
+                        type: string
+                        example: ok
+                    example:
+                      syncId: 9f3678b2-9fd1-47dd-8b69-4eab49bd2d66
+                      status: ok
+                    type: object
+                    required:
+                    - syncId
+                    - status
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'
+      tags:
+      - sync
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SyncPost'
+components:
+  schemas:
+    InternalError:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+          enum:
+          - InternalServer
+          - ExternalProvider
+          example: ExternalProvider
+        message:
+          description: The error message
+          type: string
+          example: The server encountered an error and could not complete your request
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+          example: '1234567890'
+        statusCode:
+          description: When the error is generated on the Provider, this field will contain the HTTP status code returned by the Provider
+          type: integer
+          example: 500
+      required:
+      - code
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+    SyncPost:
+      additionalProperties: false
+      properties:
+        customerIpAddress:
+          type: string
+          description: The customer ip address if it is currently logged in
+          example: 104.25.212.99
+        customerLastLoggedTime:
+          type: string
+          description: The time when the customer last logged in represented as an ISO 8601 date-time format including timezone
+          example: '2017-04-05T10:43:07.000Z'
+        enableAsync:
+          type: boolean
+          description: If set to true, the sync for data will happen in the background
+          example: 'false'
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

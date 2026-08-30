@@ -1,0 +1,393 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Projects API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: projects
+paths:
+  /projects:
+    get:
+      summary: Retrieve all projects for a user
+      description: Requires **projects:read** scope.
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      responses:
+        '200':
+          description: Successful Projects Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Project'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - projects
+    post:
+      summary: Create a single project for a user
+      description: Requires **projects:write** scopes.
+      responses:
+        '200':
+          description: Successful Project Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectPost'
+  /projects/{projectId}:
+    get:
+      summary: Retrieve a single project
+      description: Requires **projects:read** scope.
+      parameters:
+      - description: The Project Id
+        in: path
+        name: projectId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Project Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - projects
+    patch:
+      summary: Update a single project
+      description: Requires **projects:write** scopes.
+      parameters:
+      - description: The Project Id
+        in: path
+        name: projectId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Project Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - projects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectPatch'
+    delete:
+      summary: Delete a single project
+      description: This endpoint can only be used to delete projects created using the POST /projects endpoint. Projects created when connecting to a financial institution can only be deleted by removing the connection they belong to. Requires **projects:delete** scope.
+      parameters:
+      - description: The Project Id
+        in: path
+        name: projectId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - projects
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    Project:
+      additionalProperties: false
+      properties:
+        id:
+          description: The unique identifier for the project
+        name:
+          description: The name of the project
+          type: string
+          example: Home Improvement
+        accountIds:
+          description: Account IDs that are associated with the project
+          type: array
+          items:
+            type: string
+          example:
+          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type:
+          description: The project type
+          type: string
+          enum:
+          - PropertyProject
+          - RentalProject
+          - GenericProject
+          example: PropertyProject
+        dateCreated:
+          description: The date the project was created
+          format: date-time
+          type: string
+          example: '2018-07-11T03:51:08.000Z'
+        archived:
+          description: Flag to show if project is archived or not
+          type: boolean
+          example: false
+      example:
+        name: Home Improvement
+        accountIds:
+        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type: RentalProject
+        dateCreated: '2018-07-11T03:51:08.000Z'
+        archived: false
+      required:
+      - id
+      - name
+      - accountIds
+      - type
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+    ProjectPatch:
+      additionalProperties: false
+      properties:
+        name:
+          description: The name of the project
+          type: string
+          example: Home Improvement
+        accountIds:
+          description: Account IDs that are associated with the project
+          type: array
+          items:
+            type: string
+          example:
+          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type:
+          description: The project type
+          type: string
+          enum:
+          - PropertyProject
+          - RentalProject
+          - GenericProject
+          example: PropertyProject
+        archived:
+          description: Flag to determine if project is archived or not
+          type: boolean
+          example: true
+      example:
+        name: Home Improvement
+        accountIds:
+        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type: RentalProject
+        archived: true
+      type: object
+    ProjectPost:
+      additionalProperties: false
+      properties:
+        name:
+          description: The name of the project
+          type: string
+          example: Home Improvement
+        accountIds:
+          description: Account IDs that are associated with the project
+          type: array
+          items:
+            type: string
+          example:
+          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type:
+          description: The project type
+          type: string
+          enum:
+          - PropertyProject
+          - RentalProject
+          - GenericProject
+          example: RentalProject
+      example:
+        name: Home Improvement
+        accountIds:
+        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type: RentalProject
+      required:
+      - name
+      - type
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

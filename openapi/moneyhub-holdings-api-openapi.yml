@@ -1,0 +1,586 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Holdings API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: holdings
+paths:
+  /accounts/{accountId}/holdings:
+    get:
+      summary: Retrieve the holdings for an account
+      description: Requires **accounts:read** scope.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Holdings Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/HoldingsValuation'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - holdings
+  /accounts/{accountId}/holdings/{holdingId}:
+    get:
+      summary: Retrieves a single holding for an account with matched ISIN codes
+      description: Requires **accounts:read** scope.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      - description: The Holding Id
+        in: path
+        name: holdingId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d58
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Holding Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/HoldingWithMatchesAndHistory'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - holdings
+  /accounts/{accountId}/holdings-with-matches:
+    get:
+      summary: Retrieve the holdings for an account with matched ISIN codes
+      description: Requires **accounts:read** scope.
+      parameters:
+      - description: The Account Id
+        in: path
+        name: accountId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Holdings Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/HoldingWithMatches'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - holdings
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    HoldingsValuation:
+      additionalProperties: false
+      type: object
+      properties:
+        date:
+          description: Date of the valuation
+          example: '2018-07-11'
+          format: date
+          type: string
+        items:
+          items:
+            additionalProperties: false
+            type: object
+            properties:
+              id:
+                description: The unique identity of the holding.
+                example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+                type: string
+              codes:
+                items:
+                  additionalProperties: false
+                  properties:
+                    code:
+                      example: GB00B39TQT96
+                      type: string
+                    type:
+                      enum:
+                      - ISIN
+                      - SEDOL
+                      - MEX
+                      example: ISIN
+                      type: string
+                  type: object
+                type: array
+              description:
+                example: Dynamic Bond Fund
+                type: string
+              quantity:
+                description: The total number of units. This value reflects the quantity of the holding in its local currency context and is used to calculate the total value as unitPrice * quantity.
+                example: 100
+                type: number
+              total:
+                properties:
+                  value:
+                    description: The total value of the holding in minor units of the currency (e.g. pence for GBP).
+                    example: 123400
+                    type: number
+                  currency:
+                    description: The currency of the total.
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+                type: object
+              unitPrice:
+                properties:
+                  value:
+                    description: The price per unit in minor units of the holding. Provided by the holdings data source in its original currency.
+                    example: 1234
+                    type: number
+                  currency:
+                    description: The currency of the unit price.
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+                type: object
+              costBasis:
+                description: In a one-off security purchase, the cost basis is the quantity acquired multiplied by the price paid per unit plus any commission. In the event the same position is acquired in different lots on different days at different prices, the sum total of the cost incurred is divided by the total units acquired to arrive at the average cost basis.
+                example: 120050
+                type: number
+              currency:
+                description: The currency of the holding
+                example: GBP
+                type: string
+            required:
+            - description
+            - quantity
+            - unitPrice
+            - total
+            - codes
+          type: array
+      required:
+      - date
+      - items
+    HoldingWithMatches:
+      additionalProperties: false
+      type: object
+      properties:
+        date:
+          description: Date of the valuation
+          example: '2018-07-11'
+          format: date
+          type: string
+        id:
+          description: The id of the holding
+          example: 6a8b01768a50b095a8c0445c1b080900f1096fd0b6e40863c6b82d63607c3bbe
+          type: string
+        matched:
+          items:
+            additionalProperties: false
+            properties:
+              isin:
+                description: The ISIN code of the match
+                example: GB00B39TQT96
+                type: string
+              name:
+                description: The name of the match
+                example: Dynamic Bond Fund Acc
+                type: string
+              score:
+                example: 0.8
+                type: number
+              priceGBP:
+                description: The unit price of the holding match converted to GBP. The unitPrice is converted from the local currency (e.g. USD) to GBP on a daily basis during our import of holdings data.
+                example: 12.34
+                type: number
+              price:
+                properties:
+                  value:
+                    description: The unit price in minor units of the currency (e.g. pence for GBP)
+                    example: 1234
+                    type: number
+                  currency:
+                    description: The currency of the matched holding
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+                type: object
+              date:
+                description: Date of the valuation
+                example: '2018-07-11'
+                format: date
+                type: string
+            type: object
+          type: array
+        codes:
+          items:
+            additionalProperties: false
+            properties:
+              code:
+                example: GB00B39TQT96
+                type: string
+              type:
+                enum:
+                - ISIN
+                - SEDOL
+                - MEX
+                example: ISIN
+                type: string
+            type: object
+          type: array
+        name:
+          example: Dynamic Bond Fund
+          type: string
+        quantity:
+          description: The total number of units. This value reflects the quantity of the holding in its local currency context and is used to calculate the total value as unitPrice * quantity.
+          example: 100
+          type: number
+        total:
+          properties:
+            value:
+              description: The value of the total in minor units of the currency, eg. pennies for GBP.
+              example: 123400
+              type: number
+            currency:
+              description: The currency of the total.
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        unitPrice:
+          properties:
+            value:
+              description: The price per unit of the holding. Provided by the holdings data source in its original currency.
+              example: 1234
+              type: number
+            currency:
+              description: The currency of the unit price.
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        costBasis:
+          description: In a one-off security purchase, the cost basis is the quantity acquired multiplied by the price paid per unit plus any commission. In the event the same position is acquired in different lots on different days at different prices, the sum total of the cost incurred is divided by the total units acquired to arrive at the average cost basis.
+          example: 120050
+          type: number
+        currency:
+          description: The currency of the holding
+          example: GBP
+          type: string
+      required:
+      - name
+      - quantity
+      - unitPrice
+      - total
+      - codes
+      - id
+      - matched
+    HoldingWithMatchesAndHistory:
+      additionalProperties: false
+      type: object
+      properties:
+        id:
+          description: The id of the holding
+          example: 6a8b01768a50b095a8c0445c1b080900f1096fd0b6e40863c6b82d63607c3bbe
+          type: string
+        date:
+          description: Date of the valuation
+          example: '2018-07-11'
+          format: date
+          type: string
+        history:
+          items:
+            additionalProperties: false
+            properties:
+              total:
+                properties:
+                  value:
+                    description: The value of the total in minor units of the currency, eg. pennies for GBP.
+                    example: 123400
+                    type: number
+                  currency:
+                    description: The currency of the total.
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+                type: object
+              unitPrice:
+                properties:
+                  value:
+                    description: The value of the unit price in minor units of the currency, eg. pennies for GBP.
+                    example: 1234
+                    type: number
+                  currency:
+                    description: The currency of the unit price.
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+                type: object
+              costBasis:
+                description: In a one-off security purchase, the cost basis is the quantity acquired multiplied by the price paid per unit plus any commission. In the event the same position is acquired in different lots on different days at different prices, the sum total of the cost incurred is divided by the total units acquired to arrive at the average cost basis.
+                example: 120050
+                type: number
+              quantity:
+                description: The total number of units held for this security at the specified historical date.
+                example: 100
+                type: number
+              date:
+                description: Date of the valuation
+                example: '2018-07-11'
+                format: date
+                type: string
+            type: object
+          type: array
+        matched:
+          items:
+            additionalProperties: false
+            properties:
+              isin:
+                description: The ISIN code of the match
+                example: GB00B39TQT96
+                type: string
+              name:
+                description: The name of the match
+                example: Dynamic Bond Fund Acc
+                type: string
+              score:
+                example: 0.8
+                type: number
+              priceGBP:
+                description: The unit price of the holding match converted to GBP. The unitPrice is converted from the local currency (e.g. USD) to GBP on a daily basis during our import of holdings data.
+                example: 12.34
+                type: number
+              price:
+                properties:
+                  value:
+                    description: The unit price in minor units of the currency (e.g. pence for GBP)
+                    example: 1234
+                    type: number
+                  currency:
+                    description: The currency of the matched holding
+                    example: GBP
+                    type: string
+                required:
+                - value
+                - currency
+                type: object
+              date:
+                description: Date of the valuation
+                example: '2018-07-11'
+                format: date
+                type: string
+            type: object
+          type: array
+        codes:
+          items:
+            additionalProperties: false
+            properties:
+              code:
+                example: GB00B39TQT96
+                type: string
+              type:
+                enum:
+                - ISIN
+                - SEDOL
+                - MEX
+                example: ISIN
+                type: string
+            type: object
+          type: array
+        name:
+          example: Dynamic Bond Fund
+          type: string
+        quantity:
+          description: The total number of units. This value reflects the quantity of the holding in its local currency context and is used to calculate the total value as unitPrice * quantity.
+          example: 100
+          type: number
+        total:
+          properties:
+            value:
+              description: The value of the total in minor units of the currency, eg. pennies for GBP.
+              example: 123400
+              type: number
+            currency:
+              description: The currency of the total.
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        unitPrice:
+          properties:
+            value:
+              description: The price per unit of the holding. Provided by the holdings data source in its original currency.
+              example: 1234
+              type: number
+            currency:
+              description: The currency of the unit price.
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        costBasis:
+          description: In a one-off security purchase, the cost basis is the quantity acquired multiplied by the price paid per unit plus any commission. In the event the same position is acquired in different lots on different days at different prices, the sum total of the cost incurred is divided by the total units acquired to arrive at the average cost basis.
+          example: 120050
+          type: number
+        currency:
+          description: The currency of the holding
+          example: GBP
+          type: string
+      required:
+      - name
+      - quantity
+      - unitPrice
+      - total
+      - codes
+      - history
+      - matched
+      - id
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

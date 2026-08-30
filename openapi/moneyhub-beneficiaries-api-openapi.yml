@@ -1,0 +1,249 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Beneficiaries API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: beneficiaries
+paths:
+  /beneficiaries:
+    get:
+      summary: Retrieve all beneficiaries for a user
+      description: Requires **beneficiaries:read** scope. Optional scope **beneficiaries_detail:read** is needed for some extra fields such as postal address.
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      - description: Whether the beneficiaries returned include duplicates with differing references
+        in: query
+        name: isUnique
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Successful Beneficiaries Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/Beneficiary'
+                    type: array
+                    example:
+                    - id: d372d09b-f50a-4114-9c83-687828fa8ac2
+                      name: Bob
+                      reference: Payment
+                      accountNumber: '12345678'
+                      sortCode: '123456'
+                      providerAccountId: provider-account-id1
+                      providerBeneficiaryId: provider-beneficiary-id1
+                      connectionId: 1ffe704d39629a929c8e293880fb449a:c1ef4ce6-c1d6-4900-9288-228fb21f5dc4
+                      accountId: fc9bd177-d01e-449c-9f29-d3656d2edc2e
+                    - id: d372d09b-f50a-4614-9c83-687828fa8ac2
+                      name: Alice
+                      reference: Payment
+                      accountNumber: '87654321'
+                      sortCode: '654321'
+                      providerAccountId: provider-account-id1
+                      providerBeneficiaryId: provider-beneficiary-id2
+                      connectionId: 1ffe704d39629a929c8e293880fb449a:c1ef4ce6-c1d6-4900-9288-228fb21f5dc4
+                      accountId: fc9bd177-d01e-449c-9f29-d3656d2edc2e
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - beneficiaries
+  /beneficiaries/{beneficiaryId}:
+    get:
+      summary: Retrieve a single beneficiary
+      description: Requires **beneficiaries:read** scope. Optional scope **beneficiaries_detail:read** is needed for some extra fields such as postal address.
+      parameters:
+      - description: The Beneficiary Id
+        in: path
+        name: beneficiaryId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707557
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Beneficiary Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Beneficiary'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - beneficiaries
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    Beneficiary:
+      additionalProperties: false
+      properties:
+        id:
+          description: The unique identifier for the beneficiary
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          type: string
+        active:
+          description: Shows whether the payee is currently active or not
+          type: boolean
+        name:
+          description: The name for the beneficiary
+          example: Beneficiary
+          type: string
+        reference:
+          description: The reference attached to the beneficiary
+          example: Beneficiary reference
+          type: string
+        accountNumber:
+          description: The beneficiary's account number
+          example: '12345678'
+          type: string
+          pattern: ^\d{8}$
+        sortCode:
+          description: The beneficiary's sort code
+          example: '123456'
+          type: string
+          pattern: ^\d{6}$
+        iban:
+          description: For cash accounts. Populated with the full IBAN number.
+          type: string
+          maxLength: 34
+          minLength: 18
+          example: GB2960161331926819
+        pan:
+          description: For card accounts. Populated with the Primary Account Number.
+          type: string
+          example: '1234567812345678'
+        providerAccountId:
+          description: The provider account ID the beneficiary belongs to
+          type: string
+        providerBeneficiaryId:
+          description: The provider beneficiary ID for the beneficiary
+          type: string
+        accountId:
+          description: The Moneyhub account ID that the beneficiary belongs to
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          type: string
+        postalAddress:
+          description: Additional postal address information for the beneficiary agent, only retrieved using **beneficiaries_detail:read** scope
+          type: object
+        createdAt:
+          description: The date at which the beneficiary was added.
+          example: '2018-07-10T11:39:44.000Z'
+          format: date-time
+          type: string
+        modifiedAt:
+          description: The date at which the beneficiary was added.
+          example: '2018-07-10T11:39:44.000Z'
+          format: date-time
+          type: string
+      type: object
+      required:
+      - id
+      - active
+      - providerAccountId
+      - providerBeneficiaryId
+      - accountId
+      - createdAt
+      - modifiedAt
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

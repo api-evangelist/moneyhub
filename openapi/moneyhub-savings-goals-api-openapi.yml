@@ -1,0 +1,515 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data savings goals API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: savings goals
+paths:
+  /savings-goals:
+    get:
+      summary: Retrieve all saving goals for a user
+      description: Requires **savings_goals:read** scope.
+      parameters:
+      - description: The total number of records to retrieve
+        in: query
+        name: limit
+        schema:
+          type: integer
+          maximum: 1000
+          minimum: 0
+      - description: The offset at which to start retrieving records
+        in: query
+        name: offset
+        schema:
+          type: integer
+          maximum: 1000000000
+          minimum: 0
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/SavingsGoals'
+                    type: array
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - savings goals
+    post:
+      summary: Create a single savings goal for a user
+      description: Requires **savings_goals:read** and **savings_goals:write:all** scopes.
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SavingsGoals'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing query parameters - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - savings goals
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SavingsGoalsPost'
+  /savings-goals/{goalId}:
+    get:
+      summary: Retrieve a single savings goal
+      description: Requires **savings_goals:read** scope.
+      parameters:
+      - description: The Goal Id
+        in: path
+        name: goalId
+        required: true
+        x-example: 39577c49-350f-45a4-8ec3-48ce205585fb
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Spending Goal Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SavingsGoals'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - savings goals
+    patch:
+      summary: Update a single savings goal
+      description: Requires **savings_goals:read** and either **savings_goals:write** or **savings_goals:write:all** scope.
+      parameters:
+      - description: The Goal Id
+        in: path
+        name: goalId
+        required: true
+        x-example: 39577c49-350f-45a4-8ec3-48ce205585fb
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SavingsGoals'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - savings goals
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SavingsGoalsPatch'
+    delete:
+      summary: Delete a single savings goal
+      description: Requires **savings_goals:write:all** scope.
+      parameters:
+      - description: The Goal Id
+        in: path
+        name: goalId
+        required: true
+        x-example: 39577c49-350f-45a4-8ec3-48ce205585fb
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - savings goals
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    SavingsGoals:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          description: Unique id of the saving goal.
+          type: string
+          example: 27c316ef-8dfa-4a4b-b0a2-4979b7db1543
+        name:
+          description: Name for the savings goal.
+          type: string
+          example: House deposit
+        amount:
+          properties:
+            value:
+              description: The target amount in minor unit in minor units of the currency, eg. pennies for GBP.
+              example: 500000
+              type: integer
+              exclusiveMinimum: 0
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 5000
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 0
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          additionalProperties: false
+          type: object
+        targetDate:
+          description: The target date for the savings goal. Format YYYY-MM-DD
+          type: string
+          format: date
+          example: '2026-12-21'
+        dateCreated:
+          description: The date at which the savings goal was added.
+          type: string
+          format: date-time
+          example: '2018-10-11T00:00:00.000Z'
+        imageUrl:
+          type: string
+          example: url
+        notes:
+          description: Arbitrary text that a user can add about a savings goal.
+          type: string
+          example: Notes
+        progressPercentage:
+          description: Progress achieved towards the target amount represented in percentage.
+          type: number
+          example: 33.3
+        progressAmount:
+          description: Progress achieved towards the target amount by adding up the balances of the selected accounts.
+          properties:
+            value:
+              description: The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+              example: 300000
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 3000
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 0
+              type: integer
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+        accounts:
+          type: array
+          description: Accounts that will be taken into account towards the target amount.
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              id:
+                description: Id of the account
+                type: string
+                example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+            required:
+            - id
+          minItems: 1
+      required:
+      - id
+      - name
+      - amount
+      - dateCreated
+      - accounts
+      example:
+        id: 9bef2cc3-e62f-4dfb-9a51-e3085bfbf5c4
+        name: Savings goal
+        amount:
+          value: 1000000
+          majorUnits: 10000
+          minorUnits: 0
+          currency: GBP
+        progressPercentage: 30
+        progressAmount:
+          value: 300000
+          majorUnits: 3000
+          minorUnits: 0
+          currency: GBP
+        imageUrl: ''
+        dateCreated: '2021-12-21T15:27:02+00:00'
+        targetDate: '2026-12-24'
+        accounts:
+        - id: a4f88d50-665c-461e-a54b-fb8da07d3b56
+        - id: 80a7f96b-ba20-43cd-82d0-e06a35f68051
+    SavingsGoalsPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          description: Name for the savings goal.
+          type: string
+          example: House deposit
+        amount:
+          properties:
+            value:
+              description: The target amount in minor unit in minor units of the currency, eg. pennies for GBP.
+              example: 500000
+              type: integer
+              exclusiveMinimum: 0
+          required:
+          - value
+          additionalProperties: false
+          type: object
+        imageUrl:
+          type: string
+          example: Image url
+        notes:
+          description: Arbitrary text that a user can add about a savings goal.
+          type: string
+          example: Notes
+        targetDate:
+          description: The target date for the savings goal. Format YYYY-MM-DD. It must be today or in the future.
+          type: string
+          format: date
+          example: '2026-12-21'
+        accounts:
+          type: array
+          description: Accounts that will be taken into account towards the target amount.
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              id:
+                description: Id of the account
+                type: string
+                example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+            required:
+            - id
+          minItems: 1
+      example:
+        name: New name
+        amount:
+          value: 1800000
+        imageUrl: New Image url
+        notes: New Notes
+        targetDate: '2026-12-24'
+        accounts:
+        - id: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+    SavingsGoalsPost:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          description: Name for the savings goal.
+          type: string
+          example: House deposit
+        amount:
+          properties:
+            value:
+              description: The target amount in minor unit in minor units of the currency, eg. pennies for GBP.
+              example: 500000
+              type: integer
+              exclusiveMinimum: 0
+            currency:
+              description: The currency of the amount
+              example: GBP
+              type: string
+          required:
+          - value
+          additionalProperties: false
+          type: object
+        imageUrl:
+          type: string
+          example: Image url
+        notes:
+          description: Arbitrary text that a user can add about a savings goal.
+          type: string
+          example: Notes
+        targetDate:
+          description: The target date for the savings goal. Format YYYY-MM-DD. It must be today or in the future.
+          type: string
+          format: date
+          example: '2026-12-21'
+        accounts:
+          type: array
+          description: Accounts that will be taken into account towards the target amount.
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              id:
+                description: Id of the account
+                type: string
+                example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+            required:
+            - id
+          minItems: 1
+      required:
+      - name
+      - amount
+      - accounts
+      example:
+        name: House Deposit
+        amount:
+          value: 1800000
+        imageUrl: Image url
+        notes: Notes
+        targetDate: '2026-12-24'
+        accounts:
+        - id: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,217 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data spending analysis API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: spending analysis
+paths:
+  /spending-analysis:
+    post:
+      summary: Retrieve spending analysis by categories, projects and accounts
+      description: 'Defaults to all categories and accounts if none specified.
+
+        <br />The categories field in the response has a breakdown of the total by categories for the given periods. You can expect to also receive the breakdown for income and transfer categories.
+
+        <br />The ''total'' field in the response calculates the total outgoing expenditure for the given periods. This calculation do not include income and transfers.
+
+        <br /> Categories under the transfer group are the only ones that can appear twice showing income and expenditure separately
+
+        <br />Requires **spending_analysis:read** scope.'
+      responses:
+        '200':
+          description: Successful Spending Analysis Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/SpendingAnalysis'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '400':
+          description: Unsuccessful Response - Bad request - Missing body properties
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - spending analysis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpendingAnalysisPost'
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    SpendingAnalysis:
+      type: object
+      properties:
+        categories:
+          type: array
+          description: Array of categories showing the outgoing expenditure for the given period requested
+          items:
+            type: object
+            properties:
+              categoryId:
+                type: string
+                example: std:338d2636-7f88-491d-8129-255c98da1eb8
+                description: Category Id
+              categoryGroup:
+                type: string
+                example: group:2
+                description: Category group where the category group belongs to
+            additionalProperties: true
+          required:
+          - categoryId
+          - categoryGroup
+          additionalProperties: false
+          example:
+          - categoryId: std:65ebdcdb-c46b-478f-bbbc-feabeb0b4342
+            categoryGroup: group:2
+            currentMonth: -2000
+            previousMonth: -1000
+          - categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+            categoryGroup: group:3
+            currentMonth: -1500
+            previousMonth: -500
+        total:
+          type: object
+          description: Total outgoing expenditure for the given periods. This calculation do not include income and transfers
+          properties: {}
+          additionalProperties: true
+          example:
+            currentMonth: -3500
+            previousMonth: -1500
+      required:
+      - categories
+      - total
+      additionalProperties: false
+    SpendingAnalysisPost:
+      type: object
+      properties:
+        dates:
+          type: array
+          description: List of date ranges to calculate spending analysis for. This allows retrieving spending analysis of up to three different date ranges in one request.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                format: '[a-zA-Z0-9_-]{1,50}'
+                description: Descriptive name for the date range. The name will be used in the response payload to identify it.
+                example: currentMonth
+              from:
+                type: string
+                format: date
+                description: Start date to perform spending analysis.
+                example: '2018-09-01'
+              to:
+                type: string
+                format: date
+                description: End date to perform spending analysis.
+                example: '2018-09-30'
+            required:
+            - name
+            - from
+            - to
+            additionalProperties: false
+          minItems: 1
+          maxItems: 3
+        accountIds:
+          type: array
+          items:
+            type: string
+            description: Account ids to be included in the spending analysis. If none are given the analysis will include all accounts.
+            example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+        categoryIds:
+          type: array
+          items:
+            type: string
+            description: Category ids to be included in the spending analysis. If none are given the analysis will include all categories.
+            example: std:338d2636-7f88-491d-8129-255c98da1eb8
+        projectIds:
+          type: array
+          items:
+            type: string
+            description: Project ids to be included in the spending analysis. If none are given the analysis will include all projects.
+            example: 338d2636-7f88-491d-8129-255c98da1eb8
+      example:
+        dates:
+        - name: currentMonth
+          from: '2018-10-01'
+          to: '2018-10-31'
+        - name: previousMonth
+          from: '2018-09-01'
+          to: '2018-09-30'
+        accountIds:
+        - ac9bd177-d01e-449c-9f29-d3656d2edc2e
+        categoryIds:
+        - std:338d2636-7f88-491d-8129-255c98da1eb8
+      required:
+      - dates
+      additionalProperties: false
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

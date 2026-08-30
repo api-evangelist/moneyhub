@@ -1,0 +1,331 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data Tax API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: tax
+paths:
+  /tax:
+    get:
+      summary: Retrieve transactions to help answer SA105 - the Self Assessment questions for properties for HMRC
+      description: Requires **tax:read** scope.
+      parameters:
+      - description: The date to get transactions from
+        in: query
+        name: startDate
+        x-example: '2018-04-06'
+        required: true
+        schema:
+          type: string
+          format: date
+      - description: The date to get transactions to
+        in: query
+        name: endDate
+        x-example: '2019-04-05'
+        required: true
+        schema:
+          type: string
+          format: date
+      - description: The project ID the transactions belong to
+        in: query
+        name: projectId
+        x-example: 39577c49-350f-45a4-8ec3-321321213213
+        schema:
+          type: string
+      - description: The account ID the transactions belong to
+        in: query
+        name: accountId
+        x-example: 39577c49-350f-45a4-8ec3-321321213213
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful Tax Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Tax'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - tax
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+    Tax:
+      additionalProperties: false
+      type: object
+      properties:
+        dateFrom:
+          description: The date the transactions are from
+          format: date
+          type: string
+          example: '2019-05-22'
+        dateTo:
+          description: The date the transactions are to
+          format: date
+          type: string
+          example: '2019-05-25'
+        taxReturn:
+          description: The calculated tax return amounts.
+          type: object
+          properties:
+            sa105:
+              properties:
+                income:
+                  type: object
+                  properties:
+                    total:
+                      additionalProperties: false
+                      type: object
+                      properties:
+                        value:
+                          description: The opening balance in minor units of the currency, eg. pennies for GBP
+                          type: integer
+                          example: 300023
+                        majorUnits:
+                          description: The major units of the value, based on the values currency, eg. pounds for GBP.
+                          example: 3000
+                          type: integer
+                        minorUnits:
+                          description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+                          example: 23
+                          type: integer
+                        currency:
+                          type: string
+                          example: GBP
+                      required:
+                      - value
+                      - currency
+                    details:
+                      type: array
+                      items:
+                        additionalProperties: false
+                        properties:
+                          category:
+                            description: The category the detail belongs to
+                            example: income.rent
+                            type: string
+                            pattern: ^(income|expenditure)\.([a-zA-Z-]+)$
+                          amount:
+                            additionalProperties: false
+                            type: object
+                            properties:
+                              value:
+                                description: The opening balance in minor units of the currency, eg. pennies for GBP
+                                type: integer
+                                example: 300023
+                              currency:
+                                type: string
+                                example: GBP
+                            required:
+                            - value
+                            - currency
+                        type: object
+                        required:
+                        - category
+                        - amount
+                  required:
+                  - total
+                  - details
+                expenditure:
+                  type: object
+                  properties:
+                    total:
+                      additionalProperties: false
+                      type: object
+                      properties:
+                        value:
+                          description: The opening balance in minor units of the currency, eg. pennies for GBP
+                          type: integer
+                          example: 300023
+                        majorUnits:
+                          description: The major units of the value, based on the values currency, eg. pounds for GBP.
+                          example: 3000
+                          type: integer
+                        minorUnits:
+                          description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+                          example: 23
+                          type: integer
+                        currency:
+                          type: string
+                          example: GBP
+                      required:
+                      - value
+                      - currency
+                    details:
+                      type: array
+                      items:
+                        additionalProperties: false
+                        properties:
+                          category:
+                            description: The category the detail belongs to
+                            example: income.rent
+                            type: string
+                            pattern: ^(income|expenditure)\.([a-zA-Z-]+)$
+                          amount:
+                            additionalProperties: false
+                            type: object
+                            properties:
+                              value:
+                                description: The opening balance in minor units of the currency, eg. pennies for GBP
+                                type: integer
+                                example: 300023
+                              currency:
+                                type: string
+                                example: GBP
+                            required:
+                            - value
+                            - currency
+                        type: object
+                        required:
+                        - category
+                        - amount
+                  required:
+                  - total
+                  - details
+                taxableIncome:
+                  type: object
+                  properties:
+                    total:
+                      additionalProperties: false
+                      type: object
+                      properties:
+                        value:
+                          description: The opening balance in minor units of the currency, eg. pennies for GBP
+                          type: integer
+                          example: 300023
+                        majorUnits:
+                          description: The major units of the value, based on the values currency, eg. pounds for GBP.
+                          example: 3000
+                          type: integer
+                        minorUnits:
+                          description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+                          example: 23
+                          type: integer
+                        currency:
+                          type: string
+                          example: GBP
+                      required:
+                      - value
+                      - currency
+                  required:
+                  - total
+              required:
+              - income
+              - expenditure
+              - taxableIncome
+              type: object
+      required:
+      - dateFrom
+      - dateTo
+      - taxReturn
+      example:
+        dateFrom: '2018-04-06'
+        dateTo: '2019-04-05'
+        taxReturn:
+          sa105:
+            income:
+              total:
+                value: 1500000
+                majorUnits: 15000
+                minorUnits: 0
+                currency: GBP
+              details:
+              - amount:
+                  value: 1500000
+                  majorUnits: 15000
+                  minorUnits: 0
+                  currency: GBP
+                category: income.rent
+            expenditure:
+              total:
+                value: 300000
+                majorUnits: 3000
+                minorUnits: 0
+                currency: GBP
+              details:
+              - amount:
+                  value: 200000
+                  majorUnits: 2000
+                  minorUnits: 0
+                  currency: GBP
+                category: expenditure.professional
+              - amount:
+                  value: 100000
+                  majorUnits: 1000
+                  minorUnits: 0
+                  currency: GBP
+                category: expenditure.maintenance
+            taxableIncome:
+              total:
+                value: 1200000
+                majorUnits: 12000
+                minorUnits: 0
+                currency: GBP
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header

@@ -1,0 +1,430 @@
+openapi: 3.2.0
+info:
+  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  title: Moneyhub Data rental records API
+  version: 2.0.0
+  x-build-sha: 5d5191d
+servers:
+- url: https://api.moneyhub.co.uk/v2.0
+security:
+- Bearer: []
+tags:
+- name: rental records
+paths:
+  /rental-records:
+    get:
+      summary: Retrieve rental recognition record
+      description: Requires **rental_records:read** scope. Please note that a user will only have one rental recognition record. The rental record returned will be for the authenticated user.
+      responses:
+        '200':
+          description: Successful Rental Record Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    items:
+                      $ref: '#/components/schemas/RentalRecords'
+                    type: array
+                    example:
+                    - id: bf8dcceb-6550-48cc-8ba8-2779c29cdfa9
+                      userId: 61a0b1f535c30072d101b05f
+                      title: Title
+                      firstName: firstName
+                      lastName: lastName
+                      birthdate: '2000-11-19'
+                      addressLine1: First address line
+                      addressLine2: Second address line
+                      addressLine3: Third address line
+                      addressLine4: Fourth address line
+                      postalCode: CA12345
+                      tenancyStartDate: '2020-11-19'
+                      lastSubmittedDate: '2021-07-10'
+                      rentalAmount:
+                        value: 10000
+                        currency: GBP
+                      rentalFrequency: monthly
+                      seriesId: 9f0cb6a3-7fc6-54de-a855-aca4f821c100
+                      consentApprovedAt: '2020-11-20T11:39:44Z'
+                      createdAt: '2021-11-26T10:13:48.529Z'
+                      modifiedAt: '2021-11-26T10:13:48.529Z'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden - Invalid scopes
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - rental records
+    post:
+      summary: Create a rental recognition record for user
+      description: Requires **rental_records:write** scope. Please note that a user will only have one rental recognition record. The rental record created will be for the authenticated user.
+      responses:
+        '200':
+          description: Successful Rental Record Response
+          content:
+            application/json:
+              schema:
+                properties:
+                  data:
+                    $ref: '#/components/schemas/RentalRecords'
+                    type: object
+                    example:
+                      id: bf8dcceb-6550-48cc-8ba8-2779c29cdfa9
+                      userId: 61a0b1f535c30072d101b05f
+                      title: Title
+                      firstName: firstName
+                      lastName: lastName
+                      birthdate: '2000-11-19'
+                      addressLine1: First address line
+                      addressLine2: Second address line
+                      addressLine3: Third address line
+                      addressLine4: Fourth address line
+                      postalCode: CA12345
+                      tenancyStartDate: '2020-11-19'
+                      lastSubmittedDate: '2021-07-10'
+                      rentalAmount:
+                        value: 100
+                        currency: GBP
+                      rentalFrequency: monthly
+                      seriesId: 9f0cb6a3-7fc6-54de-a855-aca4f821c100
+                      consentApprovedAt: '2020-11-20T11:39:44Z'
+                      createdAt: '2021-11-26T10:13:48.529Z'
+                      modifiedAt: '2021-11-26T10:13:48.529Z'
+                  links:
+                    $ref: '#/components/schemas/Links'
+                  meta:
+                    type: object
+                type: object
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - rental records
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RentalRecordsPost'
+  /rental-records/{rentalId}:
+    delete:
+      summary: Delete a rental record
+      description: Requires **rental_records:write** scope.
+      parameters:
+      - description: The rental record ID
+        in: path
+        name: rentalId
+        required: true
+        x-example: 0b4e6488-6de0-420c-8f56-fee665707d57
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '204':
+          description: Successful Response
+        '401':
+          description: Unsuccessful Response - Not authorised - Missing authorization header - Invalid access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Unsuccessful Response - Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Unsuccessful Response - Resource Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - rental records
+components:
+  schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    RentalRecords:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          description: The unique identifier for the rental recognition record.
+        userId:
+          type: string
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          description: The unique identifier for the user.
+        title:
+          type: string
+          example: Ms
+          description: Title of the user the rental record belongs to.
+          maxLength: 5
+        firstName:
+          type: string
+          description: First name of the user the rental record belongs to.
+          example: name
+        lastName:
+          type: string
+          description: Last name of the user the rental record belongs to.
+          example: surname
+        birthdate:
+          type: string
+          format: date
+          description: Date of birth of the user the rental record belongs to.
+          example: '2021-01-31'
+          pattern: ^\d{4}-\d{1,2}-\d{1,2}$
+        addressLine1:
+          type: string
+          description: First line of the rented address.
+          example: 123 Example Road
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          description: Second line of the rented address.
+          example: Building
+        addressLine3:
+          type:
+          - string
+          - 'null'
+          description: Third line of the rented address.
+          example: City
+        addressLine4:
+          type:
+          - string
+          - 'null'
+          description: Fourth line of the rented address.
+          example: County
+        postalCode:
+          type: string
+          description: Postal code of rented address.
+          example: BS1 6QF
+          maxLength: 8
+          pattern: ^[a-zA-Z0-9- ]+$
+        tenancyStartDate:
+          type: string
+          format: date
+          example: '2021-01-31'
+          description: Start date of the tenancy agreement.
+          pattern: ^\d{4}-\d{1,2}-\d{1,2}$
+        rentalAmount:
+          type: object
+          properties:
+            value:
+              type: number
+              description: The amount of the regular rental transactions in minor units of the currency e.g. pennies for GBP.
+              example: 10000
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 100
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 0
+              type: integer
+            currency:
+              type: string
+              description: The currency of the amount.
+              example: GBP
+          description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+        rentalFrequency:
+          type: string
+          enum:
+          - weekly
+          - fortnightly
+          - monthly
+          description: Frequency of the rental payments e.g. monthly.
+        seriesId:
+          type: string
+          description: The unique identity of the regular transaction series.
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+        createdAt:
+          description: The date at which the rental record was added.
+          example: '2018-07-10T11:39:44.000Z'
+          format: date-time
+          type: string
+        modifiedAt:
+          description: The date at which the rental was modified.
+          example: '2018-07-10T11:39:44.000Z'
+          format: date-time
+          type: string
+        lastSubmittedDate:
+          description: The date rental record data was last sent to Experian.
+          example: '2018-07-10'
+          format: date
+          type:
+          - string
+          - 'null'
+        consentApprovedAt:
+          description: The date on which consent to send data to Experian was given.
+          example: '2018-07-10T11:39:44.000Z'
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - userId
+      - firstName
+      - lastName
+      - birthdate
+      - addressLine1
+      - postalCode
+      - tenancyStartDate
+      - rentalAmount
+      - rentalFrequency
+      - seriesId
+      - createdAt
+      - modifiedAt
+    RentalRecordsPost:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          example: Ms
+          description: Title of the user the rental record belongs to.
+          maxLength: 5
+        firstName:
+          type: string
+          description: First name of the user the rental record belongs to.
+          example: name
+        lastName:
+          type: string
+          description: Last name of the user the rental record belongs to.
+          example: surname
+        birthdate:
+          type: string
+          format: date
+          description: Date of birth of the user the rental record belongs to.
+          example: '2021-01-31'
+          pattern: ^\d{4}-\d{1,2}-\d{1,2}$
+        addressLine1:
+          type: string
+          description: First line of the rented address.
+          example: 123 Example Road
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          description: Second line of the rented address.
+          example: Building
+        addressLine3:
+          type:
+          - string
+          - 'null'
+          description: Third line of the rented address.
+          example: City
+        addressLine4:
+          type:
+          - string
+          - 'null'
+          description: Fourth line of the rented address.
+          example: County
+        postalCode:
+          type: string
+          description: Postal code of rented address.
+          example: BS1 6QF
+          maxLength: 8
+          pattern: ^[a-zA-Z0-9- ]+$
+        tenancyStartDate:
+          type: string
+          format: date
+          example: '2021-01-31'
+          description: Start date of the tenancy agreement.
+          pattern: ^\d{4}-\d{1,2}-\d{1,2}$
+        rentalAmount:
+          type: object
+          properties:
+            value:
+              type: number
+              description: The amount of the regular rental transactions in minor units of the currency e.g. pennies for GBP.
+              example: 10000
+          description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+        rentalFrequency:
+          type: string
+          enum:
+          - weekly
+          - fortnightly
+          - monthly
+          description: Frequency of the rental payments e.g. monthly.
+        seriesId:
+          type: string
+          description: The unique identity of the regular transaction series.
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+      required:
+      - firstName
+      - lastName
+      - birthdate
+      - addressLine1
+      - postalCode
+      - tenancyStartDate
+      - rentalAmount
+      - rentalFrequency
+      - seriesId
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      name: Authorization
+      in: header
