@@ -1,6 +1,8 @@
 openapi: 3.2.0
 info:
-  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  description: 'Documentation for the Moneyhub data API.
+
+    Authentication is via bearer token.'
   title: Moneyhub Data Projects API
   version: 2.0.0
   x-build-sha: 5d5191d
@@ -9,7 +11,7 @@ servers:
 security:
 - Bearer: []
 tags:
-- name: projects
+- name: Projects
 paths:
   /projects:
     get:
@@ -59,7 +61,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - projects
+      - Projects
+      operationId: getProjects
+      x-operation-id-source: derived
     post:
       summary: Create a single project for a user
       description: Requires **projects:write** scopes.
@@ -96,12 +100,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - projects
+      - Projects
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ProjectPost'
+      operationId: postProjects
+      x-operation-id-source: derived
   /projects/{projectId}:
     get:
       summary: Retrieve a single project
@@ -148,7 +154,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - projects
+      - Projects
+      operationId: getProjectsByProjectId
+      x-operation-id-source: derived
     patch:
       summary: Update a single project
       description: Requires **projects:write** scopes.
@@ -194,12 +202,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - projects
+      - Projects
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/ProjectPatch'
+      operationId: patchProjectsByProjectId
+      x-operation-id-source: derived
     delete:
       summary: Delete a single project
       description: This endpoint can only be used to delete projects created using the POST /projects endpoint. Projects created when connecting to a financial institution can only be deleted by removing the connection they belong to. Requires **projects:delete** scope.
@@ -234,26 +244,43 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - projects
+      - Projects
+      operationId: deleteProjectsByProjectId
+      x-operation-id-source: derived
 components:
   schemas:
-    Links:
+    ProjectPatch:
       additionalProperties: false
       properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
+        name:
+          description: The name of the project
           type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
+          example: Home Improvement
+        accountIds:
+          description: Account IDs that are associated with the project
+          type: array
+          items:
+            type: string
+          example:
+          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type:
+          description: The project type
           type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
+          enum:
+          - PropertyProject
+          - RentalProject
+          - GenericProject
+          example: PropertyProject
+        archived:
+          description: Flag to determine if project is archived or not
+          type: boolean
+          example: true
+      example:
+        name: Home Improvement
+        accountIds:
+        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type: RentalProject
+        archived: true
       type: object
     Project:
       additionalProperties: false
@@ -322,39 +349,6 @@ components:
       required:
       - code
       type: object
-    ProjectPatch:
-      additionalProperties: false
-      properties:
-        name:
-          description: The name of the project
-          type: string
-          example: Home Improvement
-        accountIds:
-          description: Account IDs that are associated with the project
-          type: array
-          items:
-            type: string
-          example:
-          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type:
-          description: The project type
-          type: string
-          enum:
-          - PropertyProject
-          - RentalProject
-          - GenericProject
-          example: PropertyProject
-        archived:
-          description: Flag to determine if project is archived or not
-          type: boolean
-          example: true
-      example:
-        name: Home Improvement
-        accountIds:
-        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type: RentalProject
-        archived: true
-      type: object
     ProjectPost:
       additionalProperties: false
       properties:
@@ -385,6 +379,24 @@ components:
       required:
       - name
       - type
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
       type: object
   securitySchemes:
     Bearer:

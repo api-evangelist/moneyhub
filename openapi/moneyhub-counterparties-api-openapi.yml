@@ -1,6 +1,8 @@
 openapi: 3.2.0
 info:
-  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  description: 'Documentation for the Moneyhub data API.
+
+    Authentication is via bearer token.'
   title: Moneyhub Data Counterparties API
   version: 2.0.0
   x-build-sha: 5d5191d
@@ -9,7 +11,7 @@ servers:
 security:
 - Bearer: []
 tags:
-- name: counterparties
+- name: Counterparties
 paths:
   /accounts/{accountId}/counterparties:
     get:
@@ -67,7 +69,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - counterparties
+      - Counterparties
+      operationId: getAccountsByAccountIdCounterparties
+      x-operation-id-source: derived
   /global-counterparties:
     get:
       summary: Retrieve global counterparties
@@ -114,9 +118,60 @@ paths:
                     type: object
                 type: object
       tags:
-      - counterparties
+      - Counterparties
+      operationId: getGlobalCounterparties
+      x-operation-id-source: derived
 components:
   schemas:
+    Counterparty:
+      additionalProperties: false
+      type: object
+      properties:
+        id:
+          description: The unique identifier for the counterparty.
+          example: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
+          type: string
+        label:
+          description: A label describing the counterparty
+          example: British Gas
+          type: string
+        type:
+          description: The type of counterparty (specific to an account, or globally recognised across all users)
+          example: local
+          type: string
+          enum:
+          - global
+          - local
+        companyName:
+          description: The full name of the company (only for global counterparties)
+          example: Itsu Limited
+          type: string
+        logo:
+          description: The url to the company logo (only for global counterparties)
+          example: https://s3-eu-west-1.amazonaws.com/itsu-production/wp-content/uploads/2018/07/19152431/GUIDE_LOGO_itsu.png
+          type: string
+        website:
+          description: The url to the company website (only for global counterparties)
+          example: https://www.itsu.com
+          type: string
+        mcc:
+          type: object
+          properties:
+            code:
+              description: The merchant category code (only for global counterparties)
+              example: '5812'
+              type: string
+            name:
+              description: The merchant category code name (only for global counterparties)
+              example: Eating Places and Restaurants
+              type: string
+      example:
+        id: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
+        label: British Gas
+      required:
+      - id
+      - label
+      - type
     Links:
       additionalProperties: false
       properties:
@@ -134,6 +189,27 @@ components:
           type: string
       required:
       - self
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
       type: object
     GlobalCounterpartyV3:
       additionalProperties: false
@@ -238,76 +314,6 @@ components:
         analyticalCategory: bank
         transactionCategoryId: std:2f3e2df7-827b-449d-a085-909c042d7f41
         transactionCategory: investment
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
-      type: object
-    Counterparty:
-      additionalProperties: false
-      type: object
-      properties:
-        id:
-          description: The unique identifier for the counterparty.
-          example: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
-          type: string
-        label:
-          description: A label describing the counterparty
-          example: British Gas
-          type: string
-        type:
-          description: The type of counterparty (specific to an account, or globally recognised across all users)
-          example: local
-          type: string
-          enum:
-          - global
-          - local
-        companyName:
-          description: The full name of the company (only for global counterparties)
-          example: Itsu Limited
-          type: string
-        logo:
-          description: The url to the company logo (only for global counterparties)
-          example: https://s3-eu-west-1.amazonaws.com/itsu-production/wp-content/uploads/2018/07/19152431/GUIDE_LOGO_itsu.png
-          type: string
-        website:
-          description: The url to the company website (only for global counterparties)
-          example: https://www.itsu.com
-          type: string
-        mcc:
-          type: object
-          properties:
-            code:
-              description: The merchant category code (only for global counterparties)
-              example: '5812'
-              type: string
-            name:
-              description: The merchant category code name (only for global counterparties)
-              example: Eating Places and Restaurants
-              type: string
-      example:
-        id: 4bac27393bdd9777ce02453256c5577cd02275510b2227f473d03f533924f877
-        label: British Gas
-      required:
-      - id
-      - label
-      - type
   securitySchemes:
     Bearer:
       type: apiKey

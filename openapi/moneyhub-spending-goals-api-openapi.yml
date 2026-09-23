@@ -1,6 +1,8 @@
 openapi: 3.2.0
 info:
-  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  description: 'Documentation for the Moneyhub data API.
+
+    Authentication is via bearer token.'
   title: Moneyhub Data spending goals API
   version: 2.0.0
   x-build-sha: 5d5191d
@@ -48,6 +50,8 @@ paths:
                 type: object
       tags:
       - spending goals
+      operationId: getSpendingGoals
+      x-operation-id-source: derived
     post:
       summary: Create a single spending goal for a user
       description: Requires **spending_goals:read** and **spending_goals:write:all** scopes.
@@ -90,6 +94,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SpendingGoalPost'
+      operationId: postSpendingGoals
+      x-operation-id-source: derived
   /spending-goals/{goalId}:
     get:
       summary: Retrieve a single spending goal
@@ -137,6 +143,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
       - spending goals
+      operationId: getSpendingGoalsByGoalId
+      x-operation-id-source: derived
     patch:
       summary: Update a single spending goal
       description: Requires **spending_goals:read spending_goals:write** scope.
@@ -188,6 +196,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SpendingGoalPatch'
+      operationId: patchSpendingGoalsByGoalId
+      x-operation-id-source: derived
     delete:
       summary: Delete a single spending goal
       description: Requires **spending_goals:write:all** scope.
@@ -223,26 +233,10 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
       - spending goals
+      operationId: deleteSpendingGoalsByGoalId
+      x-operation-id-source: derived
 components:
   schemas:
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
     SpendingGoalPatch:
       properties:
         categoryId:
@@ -263,6 +257,27 @@ components:
         categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
         amount:
           value: 300
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
       type: object
     SpendingGoal:
       additionalProperties: false
@@ -373,26 +388,23 @@ components:
       required:
       - categoryId
       - amount
-    Error:
+    Links:
       additionalProperties: false
       properties:
-        code:
-          description: The error code
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
           type: string
-        message:
-          description: The error message
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
           type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
+        self:
+          description: The url of the current resource(s)
+          format: uri
           type: string
       required:
-      - code
+      - self
       type: object
   securitySchemes:
     Bearer:

@@ -1,6 +1,8 @@
 openapi: 3.2.0
 info:
-  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  description: 'Documentation for the Moneyhub data API.
+
+    Authentication is via bearer token.'
   title: Moneyhub Data rental records API
   version: 2.0.0
   x-build-sha: 5d5191d
@@ -67,6 +69,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
       - rental records
+      operationId: getRentalRecords
+      x-operation-id-source: derived
     post:
       summary: Create a rental recognition record for user
       description: Requires **rental_records:write** scope. Please note that a user will only have one rental recognition record. The rental record created will be for the authenticated user.
@@ -126,6 +130,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RentalRecordsPost'
+      operationId: postRentalRecords
+      x-operation-id-source: derived
   /rental-records/{rentalId}:
     delete:
       summary: Delete a rental record
@@ -162,8 +168,96 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
       - rental records
+      operationId: deleteRentalRecordsByRentalId
+      x-operation-id-source: derived
 components:
   schemas:
+    RentalRecordsPost:
+      type: object
+      additionalProperties: false
+      properties:
+        title:
+          type: string
+          example: Ms
+          description: Title of the user the rental record belongs to.
+          maxLength: 5
+        firstName:
+          type: string
+          description: First name of the user the rental record belongs to.
+          example: name
+        lastName:
+          type: string
+          description: Last name of the user the rental record belongs to.
+          example: surname
+        birthdate:
+          type: string
+          format: date
+          description: Date of birth of the user the rental record belongs to.
+          example: '2021-01-31'
+          pattern: ^\d{4}-\d{1,2}-\d{1,2}$
+        addressLine1:
+          type: string
+          description: First line of the rented address.
+          example: 123 Example Road
+        addressLine2:
+          type:
+          - string
+          - 'null'
+          description: Second line of the rented address.
+          example: Building
+        addressLine3:
+          type:
+          - string
+          - 'null'
+          description: Third line of the rented address.
+          example: City
+        addressLine4:
+          type:
+          - string
+          - 'null'
+          description: Fourth line of the rented address.
+          example: County
+        postalCode:
+          type: string
+          description: Postal code of rented address.
+          example: BS1 6QF
+          maxLength: 8
+          pattern: ^[a-zA-Z0-9- ]+$
+        tenancyStartDate:
+          type: string
+          format: date
+          example: '2021-01-31'
+          description: Start date of the tenancy agreement.
+          pattern: ^\d{4}-\d{1,2}-\d{1,2}$
+        rentalAmount:
+          type: object
+          properties:
+            value:
+              type: number
+              description: The amount of the regular rental transactions in minor units of the currency e.g. pennies for GBP.
+              example: 10000
+          description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+        rentalFrequency:
+          type: string
+          enum:
+          - weekly
+          - fortnightly
+          - monthly
+          description: Frequency of the rental payments e.g. monthly.
+        seriesId:
+          type: string
+          description: The unique identity of the regular transaction series.
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+      required:
+      - firstName
+      - lastName
+      - birthdate
+      - addressLine1
+      - postalCode
+      - tenancyStartDate
+      - rentalAmount
+      - rentalFrequency
+      - seriesId
     Links:
       additionalProperties: false
       properties:
@@ -316,92 +410,6 @@ components:
       - seriesId
       - createdAt
       - modifiedAt
-    RentalRecordsPost:
-      type: object
-      additionalProperties: false
-      properties:
-        title:
-          type: string
-          example: Ms
-          description: Title of the user the rental record belongs to.
-          maxLength: 5
-        firstName:
-          type: string
-          description: First name of the user the rental record belongs to.
-          example: name
-        lastName:
-          type: string
-          description: Last name of the user the rental record belongs to.
-          example: surname
-        birthdate:
-          type: string
-          format: date
-          description: Date of birth of the user the rental record belongs to.
-          example: '2021-01-31'
-          pattern: ^\d{4}-\d{1,2}-\d{1,2}$
-        addressLine1:
-          type: string
-          description: First line of the rented address.
-          example: 123 Example Road
-        addressLine2:
-          type:
-          - string
-          - 'null'
-          description: Second line of the rented address.
-          example: Building
-        addressLine3:
-          type:
-          - string
-          - 'null'
-          description: Third line of the rented address.
-          example: City
-        addressLine4:
-          type:
-          - string
-          - 'null'
-          description: Fourth line of the rented address.
-          example: County
-        postalCode:
-          type: string
-          description: Postal code of rented address.
-          example: BS1 6QF
-          maxLength: 8
-          pattern: ^[a-zA-Z0-9- ]+$
-        tenancyStartDate:
-          type: string
-          format: date
-          example: '2021-01-31'
-          description: Start date of the tenancy agreement.
-          pattern: ^\d{4}-\d{1,2}-\d{1,2}$
-        rentalAmount:
-          type: object
-          properties:
-            value:
-              type: number
-              description: The amount of the regular rental transactions in minor units of the currency e.g. pennies for GBP.
-              example: 10000
-          description: The value of the balance in minor units of the currency, eg. pennies for GBP.
-        rentalFrequency:
-          type: string
-          enum:
-          - weekly
-          - fortnightly
-          - monthly
-          description: Frequency of the rental payments e.g. monthly.
-        seriesId:
-          type: string
-          description: The unique identity of the regular transaction series.
-          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
-      required:
-      - firstName
-      - lastName
-      - birthdate
-      - addressLine1
-      - postalCode
-      - tenancyStartDate
-      - rentalAmount
-      - rentalFrequency
-      - seriesId
     Error:
       additionalProperties: false
       properties:

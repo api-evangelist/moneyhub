@@ -1,6 +1,8 @@
 openapi: 3.2.0
 info:
-  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  description: 'Documentation for the Moneyhub data API.
+
+    Authentication is via bearer token.'
   title: Moneyhub Data spending analysis API
   version: 2.0.0
   x-build-sha: 5d5191d
@@ -16,13 +18,17 @@ paths:
       summary: Retrieve spending analysis by categories, projects and accounts
       description: 'Defaults to all categories and accounts if none specified.
 
-        <br />The categories field in the response has a breakdown of the total by categories for the given periods. You can expect to also receive the breakdown for income and transfer categories.
 
-        <br />The ''total'' field in the response calculates the total outgoing expenditure for the given periods. This calculation do not include income and transfers.
+        The categories field in the response has a breakdown of the total by categories for the given periods. You can expect to also receive the breakdown for income and transfer categories.
 
-        <br /> Categories under the transfer group are the only ones that can appear twice showing income and expenditure separately
 
-        <br />Requires **spending_analysis:read** scope.'
+        The ''total'' field in the response calculates the total outgoing expenditure for the given periods. This calculation do not include income and transfers.
+
+
+        Categories under the transfer group are the only ones that can appear twice showing income and expenditure separately
+
+
+        Requires **spending_analysis:read** scope.'
       responses:
         '200':
           description: Successful Spending Analysis Response
@@ -62,26 +68,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SpendingAnalysisPost'
+      operationId: postSpendingAnalysis
+      x-operation-id-source: derived
 components:
   schemas:
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
     SpendingAnalysis:
       type: object
       properties:
@@ -189,6 +179,24 @@ components:
       required:
       - dates
       additionalProperties: false
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
     Error:
       additionalProperties: false
       properties:

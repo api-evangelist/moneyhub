@@ -1,6 +1,8 @@
 openapi: 3.2.0
 info:
-  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  description: 'Documentation for the Moneyhub data API.
+
+    Authentication is via bearer token.'
   title: Moneyhub Data Standard Financial Statements API
   version: 2.0.0
   x-build-sha: 5d5191d
@@ -58,6 +60,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
       - standard-financial-statements
+      operationId: getStandardFinancialStatementsByReportId
+      x-operation-id-source: derived
   /standard-financial-statements:
     get:
       summary: List of metadata for all standard financial statements for a user
@@ -113,6 +117,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
       - standard-financial-statements
+      operationId: getStandardFinancialStatements
+      x-operation-id-source: derived
     post:
       summary: Request standard financial statement for a user
       description: Requires **standard_financial_statement:write** and **standard_financial_statement:read** scopes.
@@ -168,63 +174,10 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/StandardFinancialStatementsPost'
+      operationId: postStandardFinancialStatements
+      x-operation-id-source: derived
 components:
   schemas:
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
-    StandardFinancialStatementsMetadata:
-      additionalProperties: false
-      type: object
-      properties:
-        createdAt:
-          description: The timestamp at which the standard financial statement was generated
-          type: string
-        requestedAt:
-          description: The timestamp at which the standard financial statement was requested
-          type:
-          - string
-          - 'null'
-        id:
-          description: The standard financial statement ID
-          type: string
-        status:
-          description: Whether the standard financial statement is 'complete', 'pending' or 'failed'.
-          type: string
-          enum:
-          - pending
-          - complete
-          - failed
-        statusDetails:
-          description: Additional information about the status of the standard financial statement (if applicable)
-          type: object
-          additionalProperties: true
-          properties:
-            message:
-              description: A message describing the status of the standard financial statement, e.g. an error if the standard financial statement status is 'failed'
-              type: string
-      example:
-        createdAt: '2022-01-01T00:00:00Z'
-        requestedAt: '2021-12-31T23:00:00Z'
-        id: d372d09b-f50a-4114-9c83-687828fa8ac2
-        status: complete
-      required:
-      - id
     StandardFinancialStatement:
       type: object
       additionalProperties: false
@@ -7106,23 +7059,6 @@ components:
                       majorUnits: 200
                       minorUnits: 0
                       currency: GBP
-    StandardFinancialStatementsPost:
-      additionalProperties: false
-      type: object
-      properties:
-        externalUserId:
-          description: Your reference ID for the user or individual standard financial statement. The same value could be assigned to all statements created as part of the same collections lifecycle, for example
-          type: string
-        name:
-          description: The full name of the user to whom the standard financial statement application applies
-          type: string
-        email:
-          description: The email address of the user to whom the standard financial statement applies
-          type: string
-      example:
-        externalUserId: AGENCYNAME-123
-        name: Joe Bloggs
-        email: joe.blogss@example.com
     Error:
       additionalProperties: false
       properties:
@@ -7144,6 +7080,78 @@ components:
       required:
       - code
       type: object
+    StandardFinancialStatementsPost:
+      additionalProperties: false
+      type: object
+      properties:
+        externalUserId:
+          description: Your reference ID for the user or individual standard financial statement. The same value could be assigned to all statements created as part of the same collections lifecycle, for example
+          type: string
+        name:
+          description: The full name of the user to whom the standard financial statement application applies
+          type: string
+        email:
+          description: The email address of the user to whom the standard financial statement applies
+          type: string
+      example:
+        externalUserId: AGENCYNAME-123
+        name: Joe Bloggs
+        email: joe.blogss@example.com
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    StandardFinancialStatementsMetadata:
+      additionalProperties: false
+      type: object
+      properties:
+        createdAt:
+          description: The timestamp at which the standard financial statement was generated
+          type: string
+        requestedAt:
+          description: The timestamp at which the standard financial statement was requested
+          type:
+          - string
+          - 'null'
+        id:
+          description: The standard financial statement ID
+          type: string
+        status:
+          description: Whether the standard financial statement is 'complete', 'pending' or 'failed'.
+          type: string
+          enum:
+          - pending
+          - complete
+          - failed
+        statusDetails:
+          description: Additional information about the status of the standard financial statement (if applicable)
+          type: object
+          additionalProperties: true
+          properties:
+            message:
+              description: A message describing the status of the standard financial statement, e.g. an error if the standard financial statement status is 'failed'
+              type: string
+      example:
+        createdAt: '2022-01-01T00:00:00Z'
+        requestedAt: '2021-12-31T23:00:00Z'
+        id: d372d09b-f50a-4114-9c83-687828fa8ac2
+        status: complete
+      required:
+      - id
   securitySchemes:
     Bearer:
       type: apiKey

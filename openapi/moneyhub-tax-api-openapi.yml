@@ -1,6 +1,8 @@
 openapi: 3.2.0
 info:
-  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  description: 'Documentation for the Moneyhub data API.
+
+    Authentication is via bearer token.'
   title: Moneyhub Data Tax API
   version: 2.0.0
   x-build-sha: 5d5191d
@@ -9,11 +11,11 @@ servers:
 security:
 - Bearer: []
 tags:
-- name: tax
+- name: Tax
 paths:
   /tax:
     get:
-      summary: Retrieve transactions to help answer SA105 - the Self Assessment questions for properties for HMRC
+      summary: Retrieve transactions to help answer SA105 - the Self Assessment questions for…
       description: Requires **tax:read** scope.
       parameters:
       - description: The date to get transactions from
@@ -71,7 +73,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - tax
+      - Tax
+      operationId: getTax
+      x-operation-id-source: derived
 components:
   schemas:
     Links:
@@ -91,27 +95,6 @@ components:
           type: string
       required:
       - self
-      type: object
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
       type: object
     Tax:
       additionalProperties: false
@@ -324,6 +307,27 @@ components:
                 majorUnits: 12000
                 minorUnits: 0
                 currency: GBP
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
   securitySchemes:
     Bearer:
       type: apiKey

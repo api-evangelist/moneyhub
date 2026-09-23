@@ -1,6 +1,8 @@
 openapi: 3.2.0
 info:
-  description: Documentation for the Moneyhub data API. <br/>Authentication is via bearer token. <br/>
+  description: 'Documentation for the Moneyhub data API.
+
+    Authentication is via bearer token.'
   title: Moneyhub Data Categories API
   version: 2.0.0
   x-build-sha: 5d5191d
@@ -9,7 +11,7 @@ servers:
 security:
 - Bearer: []
 tags:
-- name: categories
+- name: Categories
 paths:
   /categories:
     get:
@@ -70,7 +72,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - categories
+      - Categories
+      operationId: getCategories
+      x-operation-id-source: derived
     post:
       summary: Add a new custom category for a user
       description: Requires **categories:write** scope.
@@ -107,12 +111,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - categories
+      - Categories
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CategoryPost'
+      operationId: postCategories
+      x-operation-id-source: derived
   /categories/{categoryId}:
     get:
       summary: Retrieve a single category
@@ -170,7 +176,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - categories
+      - Categories
+      operationId: getCategoriesByCategoryId
+      x-operation-id-source: derived
   /category-groups:
     get:
       summary: Retrieve all category groups for a user
@@ -215,42 +223,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       tags:
-      - categories
+      - Categories
+      operationId: getCategoryGroups
+      x-operation-id-source: derived
 components:
   schemas:
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
-    CategoryGroup:
-      additionalProperties: false
-      properties:
-        id:
-          description: The id of the category group.
-          example: group-1
-          type: string
-        key:
-          description: A text key for the category group
-          example: bills
-          type: string
-      type: object
-      required:
-      - id
-      - key
     CategoryPost:
       properties:
         group:
@@ -267,6 +244,21 @@ components:
       - group
       - name
       type: object
+    CategoryGroup:
+      additionalProperties: false
+      properties:
+        id:
+          description: The id of the category group.
+          example: group-1
+          type: string
+        key:
+          description: A text key for the category group
+          example: bills
+          type: string
+      type: object
+      required:
+      - id
+      - key
     Category:
       additionalProperties: false
       properties:
@@ -311,6 +303,24 @@ components:
           type: string
       required:
       - code
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
       type: object
   securitySchemes:
     Bearer:
