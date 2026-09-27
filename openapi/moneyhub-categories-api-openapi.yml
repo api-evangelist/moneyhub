@@ -228,21 +228,26 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CategoryPost:
+    Error:
+      additionalProperties: false
       properties:
-        group:
-          description: The id of the category group that the custom category should be part of
+        code:
+          description: The error code
           type: string
-          pattern: ^group:\d+
-        name:
-          description: The name of the custom category
+        message:
+          description: The error message
           type: string
-      example:
-        group: group:1
-        name: Bus travel
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
       required:
-      - group
-      - name
+      - code
       type: object
     CategoryGroup:
       additionalProperties: false
@@ -283,27 +288,6 @@ components:
       required:
       - categoryId
       - group
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
-      type: object
     Links:
       additionalProperties: false
       properties:
@@ -321,6 +305,22 @@ components:
           type: string
       required:
       - self
+      type: object
+    CategoryPost:
+      properties:
+        group:
+          description: The id of the category group that the custom category should be part of
+          type: string
+          pattern: ^group:\d+
+        name:
+          description: The name of the custom category
+          type: string
+      example:
+        group: group:1
+        name: Bus travel
+      required:
+      - group
+      - name
       type: object
   securitySchemes:
     Bearer:

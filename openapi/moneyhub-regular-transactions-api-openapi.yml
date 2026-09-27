@@ -116,6 +116,24 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
     RegularTransactions:
       additionalProperties: false
       type: object
@@ -290,24 +308,6 @@ components:
       - predictedDate
       - predictedAmount
       - transactions
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
     Error:
       additionalProperties: false
       properties:

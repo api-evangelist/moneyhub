@@ -178,6 +178,44 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+    StandardFinancialStatementsPost:
+      additionalProperties: false
+      type: object
+      properties:
+        externalUserId:
+          description: Your reference ID for the user or individual standard financial statement. The same value could be assigned to all statements created as part of the same collections lifecycle, for example
+          type: string
+        name:
+          description: The full name of the user to whom the standard financial statement application applies
+          type: string
+        email:
+          description: The email address of the user to whom the standard financial statement applies
+          type: string
+      example:
+        externalUserId: AGENCYNAME-123
+        name: Joe Bloggs
+        email: joe.blogss@example.com
     StandardFinancialStatement:
       type: object
       additionalProperties: false
@@ -7059,44 +7097,6 @@ components:
                       majorUnits: 200
                       minorUnits: 0
                       currency: GBP
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
-      type: object
-    StandardFinancialStatementsPost:
-      additionalProperties: false
-      type: object
-      properties:
-        externalUserId:
-          description: Your reference ID for the user or individual standard financial statement. The same value could be assigned to all statements created as part of the same collections lifecycle, for example
-          type: string
-        name:
-          description: The full name of the user to whom the standard financial statement application applies
-          type: string
-        email:
-          description: The email address of the user to whom the standard financial statement applies
-          type: string
-      example:
-        externalUserId: AGENCYNAME-123
-        name: Joe Bloggs
-        email: joe.blogss@example.com
     Links:
       additionalProperties: false
       properties:

@@ -416,54 +416,6 @@ components:
         id: d372d09b-f50a-4114-9c83-687828fa8ac2
       required:
       - id
-    AffordabilityConfidence:
-      additionalProperties: false
-      type: object
-      properties:
-        confidence:
-          description: 'The confidence level of an affordability report '
-          type: string
-          enum:
-          - high
-          - low
-      example:
-        confidence: high
-      required:
-      - confidence
-    AffordabilityPost:
-      additionalProperties: false
-      type: object
-      properties:
-        externalUserId:
-          description: Your reference ID for the user or individual affordability application. The same value could be assigned to all reports created as part of the same affordability application's lifecycle, for example
-          type: string
-        name:
-          description: The full name of the user to whom the affordability application applies
-          type: string
-        email:
-          description: The email address of the user to whom the affordability application applies
-          type: string
-      example:
-        externalUserId: LENDERNAME-123
-        name: Joe Bloggs
-        email: joe.blogss@example.com
-    AffordabilityIncomePost:
-      additionalProperties: false
-      type: object
-      properties:
-        externalUserId:
-          description: Your reference ID for the user or individual affordability income check. The same value could be assigned to all reports created as part of the same affordability income check's lifecycle, for example
-          type: string
-        name:
-          description: The full name of the user to whom the affordability income check applies
-          type: string
-        email:
-          description: The email address of the user to whom the affordability income check applies
-          type: string
-      example:
-        externalUserId: LENDERNAME-123
-        name: Joe Bloggs
-        email: joe.blogss@example.com
     Error:
       additionalProperties: false
       properties:
@@ -485,6 +437,148 @@ components:
       required:
       - code
       type: object
+    AffordabilityIncome:
+      additionalProperties: false
+      type: object
+      properties:
+        createdAt:
+          description: The timestamp at which the report was generated
+          type: string
+        id:
+          description: The report id
+          type: string
+        income:
+          type: object
+          properties:
+            amountConsistency:
+              description: Consistency of monthly income, as a number between 0 and 1
+              type: number
+            longevity:
+              type: object
+              properties:
+                consecutiveIncomeMonths:
+                  description: Longevity of income detected in number of months
+                  type: number
+                incomePeriodLengthMonths:
+                  description: The number of months of transaction history available for the income detection process
+                  type: number
+            predicted:
+              description: The predicted monthly income amount
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            regularIncomeDetected:
+              description: Whether or not regular income was detected
+              type: boolean
+          required:
+          - amountConsistency
+          - longevity
+          - predicted
+          - regularIncomeDetected
+        overview:
+          type: object
+          properties:
+            income:
+              description: The median monthly income
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+            incomeIncludingTransfers:
+              description: The median monthly income including incoming transfers when incoming transfers exceed outgoing transfers
+              additionalProperties: false
+              type: object
+              properties:
+                value:
+                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
+                  example: -2323
+                  type: integer
+                majorUnits:
+                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
+                  example: 23
+                  type: integer
+                minorUnits:
+                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
+                  example: 23
+                  type: integer
+                currency:
+                  description: The currency of the amount
+                  example: GBP
+                  type: string
+              required:
+              - value
+              - currency
+          required:
+          - income
+        primaryIncomeAccountId:
+          description: The account id of the detected primary income account
+          type: string
+      example:
+        createdAt: '2022-01-01T00:00:00Z'
+        id: d372d09b-f50a-4114-9c83-687828fa8ac2
+        income:
+          amountConsistency: 1
+          longevity:
+            consecutiveIncomeMonths: 12
+            incomePeriodLengthMonths: 12
+          predicted:
+            value: 189900
+            majorUnits: 1899
+            minorUnits: 0
+            currency: GBP
+          regularIncomeDetected: true
+        overview:
+          income:
+            value: 189900
+            majorUnits: 1899
+            minorUnits: 0
+            currency: GBP
+          incomeIncludingTransfers:
+            value: 210000
+            majorUnits: 2100
+            minorUnits: 0
+            currency: GBP
+        primaryIncomeAccountId: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+      required:
+      - createdAt
+      - id
     AffordabilityMetadata:
       additionalProperties: false
       type: object
@@ -500,6 +594,72 @@ components:
         id: d372d09b-f50a-4114-9c83-687828fa8ac2
       required:
       - id
+    AffordabilityConfidence:
+      additionalProperties: false
+      type: object
+      properties:
+        confidence:
+          description: 'The confidence level of an affordability report '
+          type: string
+          enum:
+          - high
+          - low
+      example:
+        confidence: high
+      required:
+      - confidence
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    AffordabilityIncomePost:
+      additionalProperties: false
+      type: object
+      properties:
+        externalUserId:
+          description: Your reference ID for the user or individual affordability income check. The same value could be assigned to all reports created as part of the same affordability income check's lifecycle, for example
+          type: string
+        name:
+          description: The full name of the user to whom the affordability income check applies
+          type: string
+        email:
+          description: The email address of the user to whom the affordability income check applies
+          type: string
+      example:
+        externalUserId: LENDERNAME-123
+        name: Joe Bloggs
+        email: joe.blogss@example.com
+    AffordabilityPost:
+      additionalProperties: false
+      type: object
+      properties:
+        externalUserId:
+          description: Your reference ID for the user or individual affordability application. The same value could be assigned to all reports created as part of the same affordability application's lifecycle, for example
+          type: string
+        name:
+          description: The full name of the user to whom the affordability application applies
+          type: string
+        email:
+          description: The email address of the user to whom the affordability application applies
+          type: string
+      example:
+        externalUserId: LENDERNAME-123
+        name: Joe Bloggs
+        email: joe.blogss@example.com
     Affordability:
       additionalProperties: false
       type: object
@@ -2760,166 +2920,6 @@ components:
       required:
       - createdAt
       - id
-    AffordabilityIncome:
-      additionalProperties: false
-      type: object
-      properties:
-        createdAt:
-          description: The timestamp at which the report was generated
-          type: string
-        id:
-          description: The report id
-          type: string
-        income:
-          type: object
-          properties:
-            amountConsistency:
-              description: Consistency of monthly income, as a number between 0 and 1
-              type: number
-            longevity:
-              type: object
-              properties:
-                consecutiveIncomeMonths:
-                  description: Longevity of income detected in number of months
-                  type: number
-                incomePeriodLengthMonths:
-                  description: The number of months of transaction history available for the income detection process
-                  type: number
-            predicted:
-              description: The predicted monthly income amount
-              additionalProperties: false
-              type: object
-              properties:
-                value:
-                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
-                  example: -2323
-                  type: integer
-                majorUnits:
-                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
-                  example: 23
-                  type: integer
-                minorUnits:
-                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
-                  example: 23
-                  type: integer
-                currency:
-                  description: The currency of the amount
-                  example: GBP
-                  type: string
-              required:
-              - value
-              - currency
-            regularIncomeDetected:
-              description: Whether or not regular income was detected
-              type: boolean
-          required:
-          - amountConsistency
-          - longevity
-          - predicted
-          - regularIncomeDetected
-        overview:
-          type: object
-          properties:
-            income:
-              description: The median monthly income
-              additionalProperties: false
-              type: object
-              properties:
-                value:
-                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
-                  example: -2323
-                  type: integer
-                majorUnits:
-                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
-                  example: 23
-                  type: integer
-                minorUnits:
-                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
-                  example: 23
-                  type: integer
-                currency:
-                  description: The currency of the amount
-                  example: GBP
-                  type: string
-              required:
-              - value
-              - currency
-            incomeIncludingTransfers:
-              description: The median monthly income including incoming transfers when incoming transfers exceed outgoing transfers
-              additionalProperties: false
-              type: object
-              properties:
-                value:
-                  description: The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.
-                  example: -2323
-                  type: integer
-                majorUnits:
-                  description: The positive major units of the value, based on the values currency, eg. pounds for GBP.
-                  example: 23
-                  type: integer
-                minorUnits:
-                  description: The positive minor units of the value, based on the values currency, eg. pennies for GBP.
-                  example: 23
-                  type: integer
-                currency:
-                  description: The currency of the amount
-                  example: GBP
-                  type: string
-              required:
-              - value
-              - currency
-          required:
-          - income
-        primaryIncomeAccountId:
-          description: The account id of the detected primary income account
-          type: string
-      example:
-        createdAt: '2022-01-01T00:00:00Z'
-        id: d372d09b-f50a-4114-9c83-687828fa8ac2
-        income:
-          amountConsistency: 1
-          longevity:
-            consecutiveIncomeMonths: 12
-            incomePeriodLengthMonths: 12
-          predicted:
-            value: 189900
-            majorUnits: 1899
-            minorUnits: 0
-            currency: GBP
-          regularIncomeDetected: true
-        overview:
-          income:
-            value: 189900
-            majorUnits: 1899
-            minorUnits: 0
-            currency: GBP
-          incomeIncludingTransfers:
-            value: 210000
-            majorUnits: 2100
-            minorUnits: 0
-            currency: GBP
-        primaryIncomeAccountId: ac9bd177-d01e-449c-9f29-d3656d2edc2e
-      required:
-      - createdAt
-      - id
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
   securitySchemes:
     Bearer:
       type: apiKey

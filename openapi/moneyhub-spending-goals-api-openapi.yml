@@ -237,27 +237,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    SpendingGoalPatch:
-      properties:
-        categoryId:
-          description: The id of the category the spending goal should be created for
-          type: string
-          example: std:379c7ed2-27f3-401f-b581-f6507934f0f0
-        amount:
-          properties:
-            value:
-              description: The amount of the spending goal in minor units of the currency, eg. pennies for GBP.
-              example: 300
-              type: integer
-              exclusiveMinimum: 0
-          required:
-          - value
-          type: object
-      example:
-        categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
-        amount:
-          value: 300
-      type: object
     Error:
       additionalProperties: false
       properties:
@@ -278,6 +257,60 @@ components:
           type: string
       required:
       - code
+      type: object
+    SpendingGoalPost:
+      properties:
+        categoryId:
+          description: The id of the category for the spending goal, either from the /categories endpoint or **std:all**
+          type: string
+          example: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+        periodType:
+          description: The period type of the goal, can be annual or monthly
+          example: monthly
+          type: string
+          enum:
+          - monthly
+          - annual
+        periodStart:
+          description: You can set a goal period to start on a certain date. DD when periodType is monthly, DD-MM when periodType is annual
+          example: '01'
+          type: string
+          pattern: ^(0?[1-9]|[12][0-9]|3[01])(-(0?[1-9]|1[012]))?$
+        amount:
+          properties:
+            value:
+              description: The amount of the spending goal in minor units of the currency, eg. pennies for GBP.
+              example: 500000
+              type: integer
+              exclusiveMinimum: 0
+          required:
+          - value
+          type: object
+      example:
+        categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+        amount:
+          value: 50000
+      type: object
+      required:
+      - categoryId
+      - amount
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
       type: object
     SpendingGoal:
       additionalProperties: false
@@ -352,29 +385,17 @@ components:
       - periodStart
       - periodType
       - spending
-    SpendingGoalPost:
+    SpendingGoalPatch:
       properties:
         categoryId:
-          description: The id of the category for the spending goal, either from the /categories endpoint or **std:all**
+          description: The id of the category the spending goal should be created for
           type: string
           example: std:379c7ed2-27f3-401f-b581-f6507934f0f0
-        periodType:
-          description: The period type of the goal, can be annual or monthly
-          example: monthly
-          type: string
-          enum:
-          - monthly
-          - annual
-        periodStart:
-          description: You can set a goal period to start on a certain date. DD when periodType is monthly, DD-MM when periodType is annual
-          example: '01'
-          type: string
-          pattern: ^(0?[1-9]|[12][0-9]|3[01])(-(0?[1-9]|1[012]))?$
         amount:
           properties:
             value:
               description: The amount of the spending goal in minor units of the currency, eg. pennies for GBP.
-              example: 500000
+              example: 300
               type: integer
               exclusiveMinimum: 0
           required:
@@ -383,28 +404,7 @@ components:
       example:
         categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
         amount:
-          value: 50000
-      type: object
-      required:
-      - categoryId
-      - amount
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
+          value: 300
       type: object
   securitySchemes:
     Bearer:

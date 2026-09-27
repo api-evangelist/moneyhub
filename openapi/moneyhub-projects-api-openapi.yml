@@ -249,39 +249,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ProjectPatch:
-      additionalProperties: false
-      properties:
-        name:
-          description: The name of the project
-          type: string
-          example: Home Improvement
-        accountIds:
-          description: Account IDs that are associated with the project
-          type: array
-          items:
-            type: string
-          example:
-          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type:
-          description: The project type
-          type: string
-          enum:
-          - PropertyProject
-          - RentalProject
-          - GenericProject
-          example: PropertyProject
-        archived:
-          description: Flag to determine if project is archived or not
-          type: boolean
-          example: true
-      example:
-        name: Home Improvement
-        accountIds:
-        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type: RentalProject
-        archived: true
-      type: object
     Project:
       additionalProperties: false
       properties:
@@ -349,6 +316,57 @@ components:
       required:
       - code
       type: object
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    ProjectPatch:
+      additionalProperties: false
+      properties:
+        name:
+          description: The name of the project
+          type: string
+          example: Home Improvement
+        accountIds:
+          description: Account IDs that are associated with the project
+          type: array
+          items:
+            type: string
+          example:
+          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type:
+          description: The project type
+          type: string
+          enum:
+          - PropertyProject
+          - RentalProject
+          - GenericProject
+          example: PropertyProject
+        archived:
+          description: Flag to determine if project is archived or not
+          type: boolean
+          example: true
+      example:
+        name: Home Improvement
+        accountIds:
+        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type: RentalProject
+        archived: true
+      type: object
     ProjectPost:
       additionalProperties: false
       properties:
@@ -379,24 +397,6 @@ components:
       required:
       - name
       - type
-      type: object
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
       type: object
   securitySchemes:
     Bearer:
