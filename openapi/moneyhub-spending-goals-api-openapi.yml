@@ -237,27 +237,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
-      type: object
     SpendingGoalPost:
       properties:
         categoryId:
@@ -311,6 +290,27 @@ components:
           type: string
       required:
       - self
+      type: object
+    SpendingGoalPatch:
+      properties:
+        categoryId:
+          description: The id of the category the spending goal should be created for
+          type: string
+          example: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+        amount:
+          properties:
+            value:
+              description: The amount of the spending goal in minor units of the currency, eg. pennies for GBP.
+              example: 300
+              type: integer
+              exclusiveMinimum: 0
+          required:
+          - value
+          type: object
+      example:
+        categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+        amount:
+          value: 300
       type: object
     SpendingGoal:
       additionalProperties: false
@@ -385,26 +385,26 @@ components:
       - periodStart
       - periodType
       - spending
-    SpendingGoalPatch:
+    Error:
+      additionalProperties: false
       properties:
-        categoryId:
-          description: The id of the category the spending goal should be created for
+        code:
+          description: The error code
           type: string
-          example: std:379c7ed2-27f3-401f-b581-f6507934f0f0
-        amount:
-          properties:
-            value:
-              description: The amount of the spending goal in minor units of the currency, eg. pennies for GBP.
-              example: 300
-              type: integer
-              exclusiveMinimum: 0
-          required:
-          - value
-          type: object
-      example:
-        categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
-        amount:
-          value: 300
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
       type: object
   securitySchemes:
     Bearer:

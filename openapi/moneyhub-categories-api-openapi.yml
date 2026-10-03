@@ -228,6 +228,55 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    CategoryPost:
+      properties:
+        group:
+          description: The id of the category group that the custom category should be part of
+          type: string
+          pattern: ^group:\d+
+        name:
+          description: The name of the custom category
+          type: string
+      example:
+        group: group:1
+        name: Bus travel
+      required:
+      - group
+      - name
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    CategoryGroup:
+      additionalProperties: false
+      properties:
+        id:
+          description: The id of the category group.
+          example: group-1
+          type: string
+        key:
+          description: A text key for the category group
+          example: bills
+          type: string
+      type: object
+      required:
+      - id
+      - key
     Error:
       additionalProperties: false
       properties:
@@ -249,21 +298,6 @@ components:
       required:
       - code
       type: object
-    CategoryGroup:
-      additionalProperties: false
-      properties:
-        id:
-          description: The id of the category group.
-          example: group-1
-          type: string
-        key:
-          description: A text key for the category group
-          example: bills
-          type: string
-      type: object
-      required:
-      - id
-      - key
     Category:
       additionalProperties: false
       properties:
@@ -288,40 +322,6 @@ components:
       required:
       - categoryId
       - group
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
-    CategoryPost:
-      properties:
-        group:
-          description: The id of the category group that the custom category should be part of
-          type: string
-          pattern: ^group:\d+
-        name:
-          description: The name of the custom category
-          type: string
-      example:
-        group: group:1
-        name: Bus travel
-      required:
-      - group
-      - name
-      type: object
   securitySchemes:
     Bearer:
       type: apiKey

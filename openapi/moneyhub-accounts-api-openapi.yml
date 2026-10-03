@@ -939,324 +939,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
-      type: object
-    Balance:
-      additionalProperties: false
-      type: object
-      properties:
-        amount:
-          properties:
-            value:
-              description: The value of the balance in minor units of the currency, eg. pennies for GBP.
-              example: 300023
-              type: integer
-            majorUnits:
-              description: The major units of the value, based on the values currency, eg. pounds for GBP.
-              example: 3000
-              type: integer
-            minorUnits:
-              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
-              example: 23
-              type: integer
-            currency:
-              description: The currency of the balance taken from the account
-              example: GBP
-              type: string
-          required:
-          - value
-          - currency
-          type: object
-        date:
-          description: The date of the balance
-          example: '2018-08-12'
-          format: date
-          type: string
-        type:
-          description: The type of balance as returned by the banking provider. This field is only available for open banking connections. More information can be found [here](https://docs.moneyhubenterprise.com/docs/balance-types)
-          example: InterimAvailable
-          type: string
-          enum:
-          - ClosingAvailable
-          - ClosingBooked
-          - ClosingCleared
-          - Expected
-          - ForwardAvailable
-          - Information
-          - InterimAvailable
-          - InterimBooked
-          - InterimCleared
-          - OpeningAvailable
-          - OpeningBooked
-          - OpeningCleared
-          - PreviouslyClosedBooked
-      example:
-        date: '2018-08-12'
-        amount:
-          value: 300023
-          majorUnits: 3000
-          minorUnits: 23
-          currency: GBP
-        type: InterimAvailable
-      required:
-      - amount
-      - date
-    AccountPost:
-      properties:
-        accountName:
-          description: The name of the account
-          example: Account name
-          type: string
-        providerName:
-          description: The name of the provider of the account.
-          example: Provider name
-          type: string
-        currency:
-          description: The currency of the account. Defaults to GBP.
-          example: GBP
-          type: string
-        type:
-          description: The type of account - this will determine the data available in the details field
-          enum:
-          - cash:current
-          - savings
-          - card
-          - investment
-          - loan
-          - mortgage:repayment
-          - mortgage:interestOnly
-          - pension
-          - pension:definedBenefit
-          - pension:definedContribution
-          - asset
-          - properties:residential
-          - properties:buyToLet
-          - crypto
-          type: string
-          example: cash:current
-        accountType:
-          description: The type of account (personal/business)
-          enum:
-          - personal
-          - business
-          type: string
-          example: personal
-          default: personal
-        balance:
-          additionalProperties: false
-          type: object
-          properties:
-            amount:
-              properties:
-                value:
-                  description: The value of the balance in minor units of the currency, eg. pennies for GBP.
-                  example: 300023
-                  type: integer
-              required:
-              - value
-              type: object
-            date:
-              description: The date of the balance
-              example: '2018-08-12'
-              format: date
-              type: string
-          example:
-            date: '2018-08-12'
-            amount:
-              value: 300023
-          required:
-          - amount
-          - date
-        details:
-          additionalProperties: false
-          type: object
-          properties:
-            AER:
-              description: For cash and savings accounts. Interest rate expressed as a percentage 'Annual Equivalent Rate'.
-              example: 1.3
-              type: number
-              minimum: 0
-              maximum: 100
-            APR:
-              description: For credit cards, mortgages and loans. Interest rate expressed as a percentage 'Annual Percentage Rate'.
-              example: 13.1
-              type: number
-              minimum: 0
-              maximum: 100
-            creditLimit:
-              description: For credit cards. The agreed overdraft limit of the account in minor units of the currency.
-              example: 150000
-              minimum: 0
-              type: integer
-            endDate:
-              description: For Mortgages and loans. The date at which the loan/mortgage will finish.
-              format: date
-              example: '2020-01-01'
-              type: string
-            fixedDate:
-              description: For Mortgages. The date at which the current fixed rate ends
-              format: date
-              example: '2019-01-01'
-              type: string
-            interestFreePeriod:
-              type: integer
-              description: For loans. The length in months of the interest free period
-              example: 12
-              minimum: 0
-            interestType:
-              description: For mortgages. The interest type
-              enum:
-              - fixed
-              - variable
-              example: fixed
-              type: string
-            linkedProperty:
-              type: string
-              description: For Mortgages. The id of an associated property account
-              example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
-            monthlyRepayment:
-              type: integer
-              description: For mortgages and loans. The monthly amount due to the mortgage provider in minor units of the currency.
-              example: 60000
-              minimum: 0
-            overdraftLimit:
-              description: For cash accounts. The agreed overdraft limit of the account in minor units of the currency.
-              example: 150000
-              type: integer
-              minimum: 0
-            postcode:
-              description: For properties. The postcode of the property
-              example: bs1 1aa
-              type: string
-            runningCost:
-              description: For assets. The running cost in minor units of the currency.
-              example: 20000
-              type: integer
-              minimum: 0
-            runningCostPeriod:
-              type: string
-              description: For assets. The running cost period
-              enum:
-              - month
-              - year
-              example: month
-            term:
-              type: integer
-              description: For mortgages. The term of the mortgage in months.
-              example: 13
-              minimum: 0
-            yearlyAppreciation:
-              type: number
-              description: For assets. The rate of appreciation as a percentage, negative values indicate that the asset will depreciate
-              example: -10
-        providerAccountIdentifications:
-          type: array
-          description: List of provider specific account identifications
-          items:
-            type: object
-            additionalProperties: false
-            properties:
-              identification:
-                description: The account identification
-                example: SAVINGR12345678
-                type: string
-              type:
-                description: The type of account identification
-                example: savingsRollNumber
-                type: string
-                enum:
-                - accountNumber
-                - savingsRollNumber
-                - policyNumber
-            required:
-            - identification
-            - type
-      required:
-      - accountName
-      - providerName
-      - type
-      - balance
-      type: object
-    BalancePost:
-      additionalProperties: false
-      type: object
-      properties:
-        amount:
-          properties:
-            value:
-              description: The value of the balance in minor units of the currency, eg. pennies for GBP.
-              example: 300023
-              type: integer
-          required:
-          - value
-          type: object
-        date:
-          description: The date of the balance
-          example: '2018-08-12'
-          format: date
-          type: string
-      example:
-        date: '2018-08-12'
-        amount:
-          value: 300023
-      required:
-      - amount
-      - date
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
-    AccountSync:
-      additionalProperties: false
-      type: object
-      properties:
-        accountId:
-          description: The unique identity of the account.
-          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
-          type: string
-        lastSuccessfulSync:
-          description: The date at which the account was last synchronised successfully with the provider
-          example: '2018-07-10T11:39:44.000Z'
-          format: date-time
-          type:
-          - string
-          - 'null'
-      required:
-      - accountId
-      - lastSuccessfulSync
     AccountPatch:
       properties:
         accountName:
@@ -1836,6 +1518,221 @@ components:
       - type
       - balance
       - details
+    AccountPost:
+      properties:
+        accountName:
+          description: The name of the account
+          example: Account name
+          type: string
+        providerName:
+          description: The name of the provider of the account.
+          example: Provider name
+          type: string
+        currency:
+          description: The currency of the account. Defaults to GBP.
+          example: GBP
+          type: string
+        type:
+          description: The type of account - this will determine the data available in the details field
+          enum:
+          - cash:current
+          - savings
+          - card
+          - investment
+          - loan
+          - mortgage:repayment
+          - mortgage:interestOnly
+          - pension
+          - pension:definedBenefit
+          - pension:definedContribution
+          - asset
+          - properties:residential
+          - properties:buyToLet
+          - crypto
+          type: string
+          example: cash:current
+        accountType:
+          description: The type of account (personal/business)
+          enum:
+          - personal
+          - business
+          type: string
+          example: personal
+          default: personal
+        balance:
+          additionalProperties: false
+          type: object
+          properties:
+            amount:
+              properties:
+                value:
+                  description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+                  example: 300023
+                  type: integer
+              required:
+              - value
+              type: object
+            date:
+              description: The date of the balance
+              example: '2018-08-12'
+              format: date
+              type: string
+          example:
+            date: '2018-08-12'
+            amount:
+              value: 300023
+          required:
+          - amount
+          - date
+        details:
+          additionalProperties: false
+          type: object
+          properties:
+            AER:
+              description: For cash and savings accounts. Interest rate expressed as a percentage 'Annual Equivalent Rate'.
+              example: 1.3
+              type: number
+              minimum: 0
+              maximum: 100
+            APR:
+              description: For credit cards, mortgages and loans. Interest rate expressed as a percentage 'Annual Percentage Rate'.
+              example: 13.1
+              type: number
+              minimum: 0
+              maximum: 100
+            creditLimit:
+              description: For credit cards. The agreed overdraft limit of the account in minor units of the currency.
+              example: 150000
+              minimum: 0
+              type: integer
+            endDate:
+              description: For Mortgages and loans. The date at which the loan/mortgage will finish.
+              format: date
+              example: '2020-01-01'
+              type: string
+            fixedDate:
+              description: For Mortgages. The date at which the current fixed rate ends
+              format: date
+              example: '2019-01-01'
+              type: string
+            interestFreePeriod:
+              type: integer
+              description: For loans. The length in months of the interest free period
+              example: 12
+              minimum: 0
+            interestType:
+              description: For mortgages. The interest type
+              enum:
+              - fixed
+              - variable
+              example: fixed
+              type: string
+            linkedProperty:
+              type: string
+              description: For Mortgages. The id of an associated property account
+              example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+            monthlyRepayment:
+              type: integer
+              description: For mortgages and loans. The monthly amount due to the mortgage provider in minor units of the currency.
+              example: 60000
+              minimum: 0
+            overdraftLimit:
+              description: For cash accounts. The agreed overdraft limit of the account in minor units of the currency.
+              example: 150000
+              type: integer
+              minimum: 0
+            postcode:
+              description: For properties. The postcode of the property
+              example: bs1 1aa
+              type: string
+            runningCost:
+              description: For assets. The running cost in minor units of the currency.
+              example: 20000
+              type: integer
+              minimum: 0
+            runningCostPeriod:
+              type: string
+              description: For assets. The running cost period
+              enum:
+              - month
+              - year
+              example: month
+            term:
+              type: integer
+              description: For mortgages. The term of the mortgage in months.
+              example: 13
+              minimum: 0
+            yearlyAppreciation:
+              type: number
+              description: For assets. The rate of appreciation as a percentage, negative values indicate that the asset will depreciate
+              example: -10
+        providerAccountIdentifications:
+          type: array
+          description: List of provider specific account identifications
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              identification:
+                description: The account identification
+                example: SAVINGR12345678
+                type: string
+              type:
+                description: The type of account identification
+                example: savingsRollNumber
+                type: string
+                enum:
+                - accountNumber
+                - savingsRollNumber
+                - policyNumber
+            required:
+            - identification
+            - type
+      required:
+      - accountName
+      - providerName
+      - type
+      - balance
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
     RecurringTransactionEstimate:
       additionalProperties: false
       type: object
@@ -1930,6 +1827,109 @@ components:
           - '2019-03-07'
           - '2019-04-07'
           - '2019-05-07'
+    AccountSync:
+      additionalProperties: false
+      type: object
+      properties:
+        accountId:
+          description: The unique identity of the account.
+          example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+          type: string
+        lastSuccessfulSync:
+          description: The date at which the account was last synchronised successfully with the provider
+          example: '2018-07-10T11:39:44.000Z'
+          format: date-time
+          type:
+          - string
+          - 'null'
+      required:
+      - accountId
+      - lastSuccessfulSync
+    BalancePost:
+      additionalProperties: false
+      type: object
+      properties:
+        amount:
+          properties:
+            value:
+              description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+              example: 300023
+              type: integer
+          required:
+          - value
+          type: object
+        date:
+          description: The date of the balance
+          example: '2018-08-12'
+          format: date
+          type: string
+      example:
+        date: '2018-08-12'
+        amount:
+          value: 300023
+      required:
+      - amount
+      - date
+    Balance:
+      additionalProperties: false
+      type: object
+      properties:
+        amount:
+          properties:
+            value:
+              description: The value of the balance in minor units of the currency, eg. pennies for GBP.
+              example: 300023
+              type: integer
+            majorUnits:
+              description: The major units of the value, based on the values currency, eg. pounds for GBP.
+              example: 3000
+              type: integer
+            minorUnits:
+              description: The minor units of the value, based on the values currency, eg. pennies for GBP.
+              example: 23
+              type: integer
+            currency:
+              description: The currency of the balance taken from the account
+              example: GBP
+              type: string
+          required:
+          - value
+          - currency
+          type: object
+        date:
+          description: The date of the balance
+          example: '2018-08-12'
+          format: date
+          type: string
+        type:
+          description: The type of balance as returned by the banking provider. This field is only available for open banking connections. More information can be found [here](https://docs.moneyhubenterprise.com/docs/balance-types)
+          example: InterimAvailable
+          type: string
+          enum:
+          - ClosingAvailable
+          - ClosingBooked
+          - ClosingCleared
+          - Expected
+          - ForwardAvailable
+          - Information
+          - InterimAvailable
+          - InterimBooked
+          - InterimCleared
+          - OpeningAvailable
+          - OpeningBooked
+          - OpeningCleared
+          - PreviouslyClosedBooked
+      example:
+        date: '2018-08-12'
+        amount:
+          value: 300023
+          majorUnits: 3000
+          minorUnits: 23
+          currency: GBP
+        type: InterimAvailable
+      required:
+      - amount
+      - date
   securitySchemes:
     Bearer:
       type: apiKey

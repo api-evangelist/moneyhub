@@ -249,6 +249,55 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
+    ProjectPost:
+      additionalProperties: false
+      properties:
+        name:
+          description: The name of the project
+          type: string
+          example: Home Improvement
+        accountIds:
+          description: Account IDs that are associated with the project
+          type: array
+          items:
+            type: string
+          example:
+          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type:
+          description: The project type
+          type: string
+          enum:
+          - PropertyProject
+          - RentalProject
+          - GenericProject
+          example: RentalProject
+      example:
+        name: Home Improvement
+        accountIds:
+        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type: RentalProject
+      required:
+      - name
+      - type
+      type: object
     Project:
       additionalProperties: false
       properties:
@@ -295,45 +344,6 @@ components:
       - accountIds
       - type
       type: object
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
-      type: object
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
     ProjectPatch:
       additionalProperties: false
       properties:
@@ -367,36 +377,26 @@ components:
         type: RentalProject
         archived: true
       type: object
-    ProjectPost:
+    Error:
       additionalProperties: false
       properties:
-        name:
-          description: The name of the project
+        code:
+          description: The error code
           type: string
-          example: Home Improvement
-        accountIds:
-          description: Account IDs that are associated with the project
-          type: array
-          items:
-            type: string
-          example:
-          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type:
-          description: The project type
+        message:
+          description: The error message
           type: string
-          enum:
-          - PropertyProject
-          - RentalProject
-          - GenericProject
-          example: RentalProject
-      example:
-        name: Home Improvement
-        accountIds:
-        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type: RentalProject
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
       required:
-      - name
-      - type
+      - code
       type: object
   securitySchemes:
     Bearer:
