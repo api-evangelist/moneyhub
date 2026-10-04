@@ -78,6 +78,45 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
     Tax:
       additionalProperties: false
       type: object
@@ -289,45 +328,6 @@ components:
                 majorUnits: 12000
                 minorUnits: 0
                 currency: GBP
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
-      type: object
   securitySchemes:
     Bearer:
       type: apiKey

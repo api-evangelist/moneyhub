@@ -249,6 +249,106 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ProjectPatch:
+      additionalProperties: false
+      properties:
+        name:
+          description: The name of the project
+          type: string
+          example: Home Improvement
+        accountIds:
+          description: Account IDs that are associated with the project
+          type: array
+          items:
+            type: string
+          example:
+          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type:
+          description: The project type
+          type: string
+          enum:
+          - PropertyProject
+          - RentalProject
+          - GenericProject
+          example: PropertyProject
+        archived:
+          description: Flag to determine if project is archived or not
+          type: boolean
+          example: true
+      example:
+        name: Home Improvement
+        accountIds:
+        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type: RentalProject
+        archived: true
+      type: object
+    Project:
+      additionalProperties: false
+      properties:
+        id:
+          description: The unique identifier for the project
+        name:
+          description: The name of the project
+          type: string
+          example: Home Improvement
+        accountIds:
+          description: Account IDs that are associated with the project
+          type: array
+          items:
+            type: string
+          example:
+          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type:
+          description: The project type
+          type: string
+          enum:
+          - PropertyProject
+          - RentalProject
+          - GenericProject
+          example: PropertyProject
+        dateCreated:
+          description: The date the project was created
+          format: date-time
+          type: string
+          example: '2018-07-11T03:51:08.000Z'
+        archived:
+          description: Flag to show if project is archived or not
+          type: boolean
+          example: false
+      example:
+        name: Home Improvement
+        accountIds:
+        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
+        type: RentalProject
+        dateCreated: '2018-07-11T03:51:08.000Z'
+        archived: false
+      required:
+      - id
+      - name
+      - accountIds
+      - type
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
     Links:
       additionalProperties: false
       properties:
@@ -297,106 +397,6 @@ components:
       required:
       - name
       - type
-      type: object
-    Project:
-      additionalProperties: false
-      properties:
-        id:
-          description: The unique identifier for the project
-        name:
-          description: The name of the project
-          type: string
-          example: Home Improvement
-        accountIds:
-          description: Account IDs that are associated with the project
-          type: array
-          items:
-            type: string
-          example:
-          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type:
-          description: The project type
-          type: string
-          enum:
-          - PropertyProject
-          - RentalProject
-          - GenericProject
-          example: PropertyProject
-        dateCreated:
-          description: The date the project was created
-          format: date-time
-          type: string
-          example: '2018-07-11T03:51:08.000Z'
-        archived:
-          description: Flag to show if project is archived or not
-          type: boolean
-          example: false
-      example:
-        name: Home Improvement
-        accountIds:
-        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type: RentalProject
-        dateCreated: '2018-07-11T03:51:08.000Z'
-        archived: false
-      required:
-      - id
-      - name
-      - accountIds
-      - type
-      type: object
-    ProjectPatch:
-      additionalProperties: false
-      properties:
-        name:
-          description: The name of the project
-          type: string
-          example: Home Improvement
-        accountIds:
-          description: Account IDs that are associated with the project
-          type: array
-          items:
-            type: string
-          example:
-          - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type:
-          description: The project type
-          type: string
-          enum:
-          - PropertyProject
-          - RentalProject
-          - GenericProject
-          example: PropertyProject
-        archived:
-          description: Flag to determine if project is archived or not
-          type: boolean
-          example: true
-      example:
-        name: Home Improvement
-        accountIds:
-        - c390a94f-2309-4cdf-8d02-b0c5304d9f66
-        type: RentalProject
-        archived: true
-      type: object
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
       type: object
   securitySchemes:
     Bearer:

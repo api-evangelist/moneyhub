@@ -232,24 +232,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    NotificationThresholdPost:
-      additionalProperties: false
-      type: object
-      properties:
-        value:
-          description: The value of the threshold in minor units of the currency, eg. pennies for GBP. This can also be a negative value e.g. -10000.
-          example: 10000
-          type: integer
-        type:
-          description: The type of threshold, either great than or less than
-          enum:
-          - gt
-          - lt
-          example: lt
-          type: string
-      required:
-      - value
-      - type
     Error:
       additionalProperties: false
       properties:
@@ -271,6 +253,24 @@ components:
       required:
       - code
       type: object
+    NotificationThresholdPost:
+      additionalProperties: false
+      type: object
+      properties:
+        value:
+          description: The value of the threshold in minor units of the currency, eg. pennies for GBP. This can also be a negative value e.g. -10000.
+          example: 10000
+          type: integer
+        type:
+          description: The type of threshold, either great than or less than
+          enum:
+          - gt
+          - lt
+          example: lt
+          type: string
+      required:
+      - value
+      - type
     NotificationThreshold:
       additionalProperties: false
       type: object

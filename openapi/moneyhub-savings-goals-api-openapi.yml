@@ -249,78 +249,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
-    SavingsGoalsPatch:
-      type: object
-      additionalProperties: false
-      properties:
-        name:
-          description: Name for the savings goal.
-          type: string
-          example: House deposit
-        amount:
-          properties:
-            value:
-              description: The target amount in minor unit in minor units of the currency, eg. pennies for GBP.
-              example: 500000
-              type: integer
-              exclusiveMinimum: 0
-          required:
-          - value
-          additionalProperties: false
-          type: object
-        imageUrl:
-          type: string
-          example: Image url
-        notes:
-          description: Arbitrary text that a user can add about a savings goal.
-          type: string
-          example: Notes
-        targetDate:
-          description: The target date for the savings goal. Format YYYY-MM-DD. It must be today or in the future.
-          type: string
-          format: date
-          example: '2026-12-21'
-        accounts:
-          type: array
-          description: Accounts that will be taken into account towards the target amount.
-          items:
-            type: object
-            additionalProperties: false
-            properties:
-              id:
-                description: Id of the account
-                type: string
-                example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
-            required:
-            - id
-          minItems: 1
-      example:
-        name: New name
-        amount:
-          value: 1800000
-        imageUrl: New Image url
-        notes: New Notes
-        targetDate: '2026-12-24'
-        accounts:
-        - id: ac9bd177-d01e-449c-9f29-d3656d2edc2e
     SavingsGoalsPost:
       type: object
       additionalProperties: false
@@ -383,6 +311,60 @@ components:
         targetDate: '2026-12-24'
         accounts:
         - id: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+    SavingsGoalsPatch:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          description: Name for the savings goal.
+          type: string
+          example: House deposit
+        amount:
+          properties:
+            value:
+              description: The target amount in minor unit in minor units of the currency, eg. pennies for GBP.
+              example: 500000
+              type: integer
+              exclusiveMinimum: 0
+          required:
+          - value
+          additionalProperties: false
+          type: object
+        imageUrl:
+          type: string
+          example: Image url
+        notes:
+          description: Arbitrary text that a user can add about a savings goal.
+          type: string
+          example: Notes
+        targetDate:
+          description: The target date for the savings goal. Format YYYY-MM-DD. It must be today or in the future.
+          type: string
+          format: date
+          example: '2026-12-21'
+        accounts:
+          type: array
+          description: Accounts that will be taken into account towards the target amount.
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              id:
+                description: Id of the account
+                type: string
+                example: ac9bd177-d01e-449c-9f29-d3656d2edc2e
+            required:
+            - id
+          minItems: 1
+      example:
+        name: New name
+        amount:
+          value: 1800000
+        imageUrl: New Image url
+        notes: New Notes
+        targetDate: '2026-12-24'
+        accounts:
+        - id: ac9bd177-d01e-449c-9f29-d3656d2edc2e
     Error:
       additionalProperties: false
       properties:
@@ -403,6 +385,24 @@ components:
           type: string
       required:
       - code
+      type: object
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
       type: object
     SavingsGoals:
       type: object

@@ -160,24 +160,6 @@ components:
       required:
       - code
       type: object
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
     Beneficiary:
       additionalProperties: false
       properties:
@@ -248,6 +230,24 @@ components:
       - accountId
       - createdAt
       - modifiedAt
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
   securitySchemes:
     Bearer:
       type: apiKey

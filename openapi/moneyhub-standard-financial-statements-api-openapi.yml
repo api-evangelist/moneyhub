@@ -178,61 +178,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
-    StandardFinancialStatementsMetadata:
-      additionalProperties: false
-      type: object
-      properties:
-        createdAt:
-          description: The timestamp at which the standard financial statement was generated
-          type: string
-        requestedAt:
-          description: The timestamp at which the standard financial statement was requested
-          type:
-          - string
-          - 'null'
-        id:
-          description: The standard financial statement ID
-          type: string
-        status:
-          description: Whether the standard financial statement is 'complete', 'pending' or 'failed'.
-          type: string
-          enum:
-          - pending
-          - complete
-          - failed
-        statusDetails:
-          description: Additional information about the status of the standard financial statement (if applicable)
-          type: object
-          additionalProperties: true
-          properties:
-            message:
-              description: A message describing the status of the standard financial statement, e.g. an error if the standard financial statement status is 'failed'
-              type: string
-      example:
-        createdAt: '2022-01-01T00:00:00Z'
-        requestedAt: '2021-12-31T23:00:00Z'
-        id: d372d09b-f50a-4114-9c83-687828fa8ac2
-        status: complete
-      required:
-      - id
     StandardFinancialStatement:
       type: object
       additionalProperties: false
@@ -7135,6 +7080,24 @@ components:
       required:
       - code
       type: object
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
     StandardFinancialStatementsPost:
       additionalProperties: false
       type: object
@@ -7152,6 +7115,43 @@ components:
         externalUserId: AGENCYNAME-123
         name: Joe Bloggs
         email: joe.blogss@example.com
+    StandardFinancialStatementsMetadata:
+      additionalProperties: false
+      type: object
+      properties:
+        createdAt:
+          description: The timestamp at which the standard financial statement was generated
+          type: string
+        requestedAt:
+          description: The timestamp at which the standard financial statement was requested
+          type:
+          - string
+          - 'null'
+        id:
+          description: The standard financial statement ID
+          type: string
+        status:
+          description: Whether the standard financial statement is 'complete', 'pending' or 'failed'.
+          type: string
+          enum:
+          - pending
+          - complete
+          - failed
+        statusDetails:
+          description: Additional information about the status of the standard financial statement (if applicable)
+          type: object
+          additionalProperties: true
+          properties:
+            message:
+              description: A message describing the status of the standard financial statement, e.g. an error if the standard financial statement status is 'failed'
+              type: string
+      example:
+        createdAt: '2022-01-01T00:00:00Z'
+        requestedAt: '2021-12-31T23:00:00Z'
+        id: d372d09b-f50a-4114-9c83-687828fa8ac2
+        status: complete
+      required:
+      - id
   securitySchemes:
     Bearer:
       type: apiKey

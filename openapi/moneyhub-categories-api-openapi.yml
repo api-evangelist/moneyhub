@@ -228,6 +228,27 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
     CategoryPost:
       properties:
         group:
@@ -262,42 +283,6 @@ components:
       required:
       - self
       type: object
-    CategoryGroup:
-      additionalProperties: false
-      properties:
-        id:
-          description: The id of the category group.
-          example: group-1
-          type: string
-        key:
-          description: A text key for the category group
-          example: bills
-          type: string
-      type: object
-      required:
-      - id
-      - key
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
-      type: object
     Category:
       additionalProperties: false
       properties:
@@ -322,6 +307,21 @@ components:
       required:
       - categoryId
       - group
+    CategoryGroup:
+      additionalProperties: false
+      properties:
+        id:
+          description: The id of the category group.
+          example: group-1
+          type: string
+        key:
+          description: A text key for the category group
+          example: bills
+          type: string
+      type: object
+      required:
+      - id
+      - key
   securitySchemes:
     Bearer:
       type: apiKey

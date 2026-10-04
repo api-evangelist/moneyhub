@@ -111,6 +111,49 @@ components:
       required:
       - self
       type: object
+    SpendingAnalysis:
+      type: object
+      properties:
+        categories:
+          type: array
+          description: Array of categories showing the outgoing expenditure for the given period requested
+          items:
+            type: object
+            properties:
+              categoryId:
+                type: string
+                example: std:338d2636-7f88-491d-8129-255c98da1eb8
+                description: Category Id
+              categoryGroup:
+                type: string
+                example: group:2
+                description: Category group where the category group belongs to
+            additionalProperties: true
+          required:
+          - categoryId
+          - categoryGroup
+          additionalProperties: false
+          example:
+          - categoryId: std:65ebdcdb-c46b-478f-bbbc-feabeb0b4342
+            categoryGroup: group:2
+            currentMonth: -2000
+            previousMonth: -1000
+          - categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
+            categoryGroup: group:3
+            currentMonth: -1500
+            previousMonth: -500
+        total:
+          type: object
+          description: Total outgoing expenditure for the given periods. This calculation do not include income and transfers
+          properties: {}
+          additionalProperties: true
+          example:
+            currentMonth: -3500
+            previousMonth: -1500
+      required:
+      - categories
+      - total
+      additionalProperties: false
     SpendingAnalysisPost:
       type: object
       properties:
@@ -174,49 +217,6 @@ components:
         - std:338d2636-7f88-491d-8129-255c98da1eb8
       required:
       - dates
-      additionalProperties: false
-    SpendingAnalysis:
-      type: object
-      properties:
-        categories:
-          type: array
-          description: Array of categories showing the outgoing expenditure for the given period requested
-          items:
-            type: object
-            properties:
-              categoryId:
-                type: string
-                example: std:338d2636-7f88-491d-8129-255c98da1eb8
-                description: Category Id
-              categoryGroup:
-                type: string
-                example: group:2
-                description: Category group where the category group belongs to
-            additionalProperties: true
-          required:
-          - categoryId
-          - categoryGroup
-          additionalProperties: false
-          example:
-          - categoryId: std:65ebdcdb-c46b-478f-bbbc-feabeb0b4342
-            categoryGroup: group:2
-            currentMonth: -2000
-            previousMonth: -1000
-          - categoryId: std:379c7ed2-27f3-401f-b581-f6507934f0f0
-            categoryGroup: group:3
-            currentMonth: -1500
-            previousMonth: -500
-        total:
-          type: object
-          description: Total outgoing expenditure for the given periods. This calculation do not include income and transfers
-          properties: {}
-          additionalProperties: true
-          example:
-            currentMonth: -3500
-            previousMonth: -1500
-      required:
-      - categories
-      - total
       additionalProperties: false
   securitySchemes:
     Bearer:
