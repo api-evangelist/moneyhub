@@ -1,0 +1,12 @@
+{
+ "url": "https://api.moneyhub.co.uk/swagger.json",
+ "requested_url": "https://api.moneyhub.co.uk/swagger.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 498856,
+ "sha256": "b59f6f07f01e4380648fb1dd95c11fd9054cb55d8b340238f87e95ed9843a644",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
