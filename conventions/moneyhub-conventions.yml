@@ -11,6 +11,7 @@ authentication:
     identity.moneyhub.co.uk/oidc. See authentication/moneyhub-authentication.yml
     and scopes/moneyhub-scopes.yml.
 idempotency:
+  coverage: none
   supported: false
   note: >-
     Moneyhub does not document an idempotency-key header for the Data or Payments
@@ -55,3 +56,10 @@ security_features:
   mutual_tls: true
   pushed_authorisation_requests: true
   ip_allowlisting: https://docs.moneyhubenterprise.com/docs/ip-addresses-of-moneyhub-services
+reversibility:
+  surfaces:
+  - surface: Open Banking payments
+    reversal: reverse payment (mh:reverse_payment scope, Payments API)
+    window: null
+    grade: documented
+    note: The docs describe reverse payments as a consent scope; no reversal window is stated and the Payments API publishes no OpenAPI operationId.

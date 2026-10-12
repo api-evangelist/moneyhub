@@ -1,0 +1,121 @@
+generated: '2026-10-12'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 9
+  own: 2
+  other_domain: 3
+  platform: 4
+  roles:
+  - api
+  - docs
+  - identity
+  - marketing
+  - other
+  - portal
+  - source
+  - website
+hosts:
+- host: api.moneyhub.co.uk
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: moneyhub.co.uk
+  role: api
+  relation: other-domain
+- host: docs.moneyhubenterprise.com
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - StatusPage
+  - Deprecation
+  - DeveloperPortal
+  - Documentation
+  - GettingStarted
+  serves:
+  - docs
+  registrable_domain: moneyhubenterprise.com
+  role: portal
+  relation: other-domain
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: identity.moneyhub.co.uk
+  found_by:
+  - pointer
+  - apis[]
+  types:
+  - Authentication
+  serves:
+  - api
+  registrable_domain: moneyhub.co.uk
+  role: identity
+  relation: other-domain
+- host: moneyhub.com
+  found_by:
+  - pointer
+  types:
+  - Pricing
+  - Blog
+  - BlogRSS
+  - Compliance
+  - Security
+  - TermsOfService
+  serves: []
+  registrable_domain: moneyhub.com
+  role: marketing
+  relation: own
+- host: moneyhub.github.io
+  found_by:
+  - pointer
+  types:
+  - APIReference
+  serves: []
+  registrable_domain: github.io
+  role: docs
+  relation: platform
+- host: www.linkedin.com
+  found_by:
+  - pointer
+  types:
+  - LinkedIn
+  serves: []
+  registrable_domain: linkedin.com
+  role: other
+  relation: platform
+- host: www.moneyhub.com
+  found_by:
+  - pointer
+  - apis[]
+  - vendor-detect
+  types:
+  - Website
+  - Blog
+  - SignUp
+  - PrivacyPolicy
+  serves:
+  - docs
+  - cdn
+  vendor: cloudflare
+  registrable_domain: moneyhub.com
+  role: website
+  relation: own
+- host: www.postman.com
+  found_by:
+  - pointer
+  types:
+  - PostmanWorkspace
+  serves: []
+  registrable_domain: postman.com
+  role: other
+  relation: platform

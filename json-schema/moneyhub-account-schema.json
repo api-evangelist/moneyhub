@@ -1,0 +1,523 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-account-schema.json",
+  "title": "Account",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/Account",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "accountName": {
+      "description": "The name of the account",
+      "type": "string"
+    },
+    "currency": {
+      "description": "The currency of the account. It uses the ISO 4217 currency codes.",
+      "type": "string"
+    },
+    "balance": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "amount": {
+          "properties": {
+            "value": {
+              "description": "The value of the balance in minor units of the currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the balance taken from the account",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ],
+          "type": "object"
+        },
+        "date": {
+          "description": "The date of the balance",
+          "format": "date",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of balance as returned by the banking provider. This field is only available for open banking connections. More information can be found [here](https://docs.moneyhubenterprise.com/docs/balance-types)",
+          "type": "string",
+          "enum": [
+            "ClosingAvailable",
+            "ClosingBooked",
+            "ClosingCleared",
+            "Expected",
+            "ForwardAvailable",
+            "Information",
+            "InterimAvailable",
+            "InterimBooked",
+            "InterimCleared",
+            "OpeningAvailable",
+            "OpeningBooked",
+            "OpeningCleared",
+            "PreviouslyClosedBooked"
+          ]
+        }
+      },
+      "required": [
+        "amount",
+        "date"
+      ]
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "AER": {
+          "description": "For cash and savings accounts. Interest rate expressed as a percentage 'Annual Equivalent Rate'.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "APR": {
+          "description": "For credit cards, mortgages and loans. Interest rate expressed as a percentage 'Annual Percentage Rate'.",
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "sortCodeAccountNumber": {
+          "description": "For cash and saving accounts. Populated with the 6 digit Sort Code and 8 digit Account Number. It requires the `accounts_details:read` scope.",
+          "type": "string",
+          "maxLength": 20,
+          "minLength": 14
+        },
+        "iban": {
+          "description": "For cash and savings accounts. Populated with the full IBAN number. It requires the `accounts_details:read` scope.",
+          "type": "string",
+          "maxLength": 34,
+          "minLength": 18
+        },
+        "pan": {
+          "description": "For card accounts. Populated with the full Primary Account Number of the credit card. It requires the `accounts_details:read` scope.",
+          "type": "string",
+          "maxLength": 16,
+          "minLength": 16
+        },
+        "creditLimit": {
+          "description": "For credit cards. The agreed overdraft limit of the account in minor units of the currency.",
+          "minimum": 0,
+          "type": "integer"
+        },
+        "endDate": {
+          "description": "For Mortgages and loans. The date at which the loan/mortgage will finish.",
+          "format": "date",
+          "type": "string"
+        },
+        "fixedDate": {
+          "description": "For Mortgages. The date at which the current fixed rate ends",
+          "format": "date",
+          "type": "string"
+        },
+        "interestFreePeriod": {
+          "type": "integer",
+          "description": "For loans. The length in months of the interest free period",
+          "minimum": 0
+        },
+        "interestType": {
+          "description": "For mortgages. The interest type",
+          "enum": [
+            "fixed",
+            "variable"
+          ],
+          "type": "string"
+        },
+        "linkedProperty": {
+          "type": "string",
+          "description": "For Mortgages. The id of an associated property account"
+        },
+        "monthlyRepayment": {
+          "type": "integer",
+          "description": "For mortgages and loans. The monthly amount due to the mortgage provider in minor units of the currency.",
+          "minimum": 0
+        },
+        "overdraftLimit": {
+          "description": "For cash accounts. The agreed overdraft limit of the account in minor units of the currency.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "postcode": {
+          "description": "For properties. The postcode of the property",
+          "type": "string"
+        },
+        "runningCost": {
+          "description": "For assets. The running cost in minor units of the currency.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "runningCostPeriod": {
+          "type": "string",
+          "description": "For assets. The running cost period",
+          "enum": [
+            "month",
+            "year"
+          ]
+        },
+        "term": {
+          "type": "integer",
+          "description": "For mortgages. The term of the mortgage in months.",
+          "minimum": 0
+        },
+        "yearlyAppreciation": {
+          "type": "number",
+          "description": "For assets. The rate of appreciation as a percentage, negative values indicate that the asset will depreciate"
+        }
+      }
+    },
+    "transactionData": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "count",
+        "earliestDate",
+        "lastDate"
+      ],
+      "properties": {
+        "count": {
+          "type": "integer"
+        },
+        "earliestDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastDate": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "dateAdded": {
+      "description": "The date at which the account was added.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "dateModified": {
+      "description": "The date at which the account was last modified",
+      "format": "date-time",
+      "type": "string"
+    },
+    "id": {
+      "description": "The unique identity of the account.",
+      "type": "string"
+    },
+    "providerName": {
+      "description": "The name of the provider of the account.",
+      "type": "string"
+    },
+    "providerReference": {
+      "description": "Reference that uniquely identifies a set of connections as being part of the same institution (e.g. HSBC Open banking and HSBC credit cards). It is used to group a set of connections by the banking institution they refer to. It can also be used to retrieve the bank icon.",
+      "type": "string"
+    },
+    "connectionId": {
+      "description": "The id of the connection of the account. This value is not present for accounts created manually by the user.",
+      "pattern": "(API|DEMO|.{32}):(.{32}|.{36})",
+      "type": "string"
+    },
+    "providerId": {
+      "description": "The id of the provider of the account. Accounts created using the api have a value of 'API'. Accounts crated for a Test user have a value of 'DEMO'. This value is not present for accounts created manually by the user.",
+      "pattern": "API|DEMO|.{32}",
+      "type": "string"
+    },
+    "providerAccountId": {
+      "description": "The id of the account given by the provider. This can be used to uniquely identify accounts across different connections.",
+      "type": "string"
+    },
+    "providerParentAccountId": {
+      "description": "The id of the parent account given by the provider. This can be used to uniquely identify accounts across different connections. Only supports Monzo pots currently",
+      "type": "string"
+    },
+    "providerAccountName": {
+      "description": "The name of the account given by the provider. Allows to keep track of the provider's name if the account name has been manually updated",
+      "type": "string"
+    },
+    "accountReference": {
+      "description": "A reference number for the account which consists of the last 4 digits of the account identification number (Account Number, IBAN or PAN). It requires the `accounts_details:read` scope",
+      "type": "string"
+    },
+    "accountHolderName": {
+      "description": "Account Holder name. It requires the `accounts_details:read` scope.",
+      "type": "string"
+    },
+    "accountOpeningDate": {
+      "description": "The date the account was opened as reported by the account provider.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "accountType": {
+      "description": "The type of account (personal/business)",
+      "enum": [
+        "personal",
+        "business"
+      ],
+      "type": "string",
+      "default": "personal"
+    },
+    "productName": {
+      "description": "The name of the product sold / provided from the account provider.",
+      "type": "string"
+    },
+    "providerAccountIdentifications": {
+      "type": "array",
+      "description": "List of specific account identifications when there is no sort code/account number, iban or pan available.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "identification": {
+            "description": "The account identification",
+            "type": "string"
+          },
+          "type": {
+            "description": "The type of account identification",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identification",
+          "type"
+        ]
+      }
+    },
+    "type": {
+      "description": "The type of account - this will determine the data available in the details field",
+      "enum": [
+        "cash:current",
+        "savings",
+        "card",
+        "investment",
+        "loan",
+        "mortgage:repayment",
+        "mortgage:interestOnly",
+        "pension",
+        "pension:definedBenefit",
+        "pension:definedContribution",
+        "asset",
+        "properties:residential",
+        "properties:buyToLet",
+        "crypto"
+      ],
+      "type": "string"
+    },
+    "performanceScore": {
+      "type": "object",
+      "description": "Performance score of investment and pension accounts. Once that an account has at least 3 balances the score will be provided. Please note that this is an experimental feature.",
+      "additionalProperties": false,
+      "properties": {
+        "totals": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "openingBalance": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "date": {
+                  "format": "date",
+                  "type": "string"
+                },
+                "amount": {
+                  "additionalProperties": false,
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "description": "The opening balance in minor units of the currency, eg. pennies for GBP",
+                      "type": "integer"
+                    },
+                    "majorUnits": {
+                      "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+                      "type": "integer"
+                    },
+                    "minorUnits": {
+                      "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+                      "type": "integer"
+                    },
+                    "currency": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "currency"
+                  ]
+                }
+              }
+            },
+            "currentBalance": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "date": {
+                  "format": "date",
+                  "type": "string"
+                },
+                "amount": {
+                  "additionalProperties": false,
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "description": "The current balance in minor units of the currency, eg. pennies for GBP",
+                      "type": "integer"
+                    },
+                    "majorUnits": {
+                      "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+                      "type": "integer"
+                    },
+                    "minorUnits": {
+                      "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+                      "type": "integer"
+                    },
+                    "currency": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "currency"
+                  ]
+                }
+              }
+            },
+            "contributions": {
+              "description": "The contributions in minor units of the currency, eg. pennies for GBP",
+              "type": "integer"
+            },
+            "withdrawals": {
+              "description": "The withdrawals in minor units of the currency, eg. pennies for GBP",
+              "type": "integer"
+            },
+            "nonContributionGrowth": {
+              "description": "The non contribution growth in minor units of the currency, eg. pennies for GBP",
+              "type": "integer"
+            },
+            "growthRate": {
+              "description": "The growth rate expressed in percentage",
+              "type": "number"
+            },
+            "annualisedGrowthRate": {
+              "description": "The annualised growth rate expressed in percentage",
+              "type": "number"
+            }
+          }
+        },
+        "months": {
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "date": {
+                "description": "Date in the format YYYY-MM",
+                "pattern": "^(\\d{4})(-(0[1-9]|1[012]))?$",
+                "type": "string"
+              },
+              "openingBalance": {
+                "description": "The opening balance in minor units of the currency, eg. pennies for GBP",
+                "type": "integer"
+              },
+              "nonContributionGrowth": {
+                "description": "The non contribution growth in minor units of the currency, eg. pennies for GBP",
+                "type": "integer"
+              },
+              "aer": {
+                "description": "The aer expressed in percentage",
+                "type": "number"
+              }
+            }
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "totals",
+        "months"
+      ]
+    },
+    "additionalBalances": {
+      "description": "(BETA) Additional balance types for the account. The balances will be the latest for each type retrieved from the bank. Will only appear for cash:current, card and savings account types. Please note not all banking providers will return additional balance types, and the types returned will vary. It is recommended to fall back to the main account balance in this case.",
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "amount": {
+            "properties": {
+              "value": {
+                "description": "The value of the balance in minor units of the currency, eg. pennies for GBP.",
+                "type": "integer"
+              },
+              "majorUnits": {
+                "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+                "type": "integer"
+              },
+              "minorUnits": {
+                "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+                "type": "integer"
+              },
+              "currency": {
+                "description": "The currency of the balance taken from the account",
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "currency"
+            ],
+            "type": "object"
+          },
+          "date": {
+            "description": "The date of the balance",
+            "format": "date",
+            "type": "string"
+          },
+          "type": {
+            "description": "The type of balance as returned by the banking provider. This field is only available for open banking connections. More information can be found [here](https://docs.moneyhubenterprise.com/docs/balance-types)",
+            "type": "string",
+            "enum": [
+              "ClosingAvailable",
+              "ClosingBooked",
+              "ClosingCleared",
+              "Expected",
+              "ForwardAvailable",
+              "Information",
+              "InterimAvailable",
+              "InterimBooked",
+              "InterimCleared",
+              "OpeningAvailable",
+              "OpeningBooked",
+              "OpeningCleared",
+              "PreviouslyClosedBooked"
+            ]
+          }
+        },
+        "required": [
+          "amount",
+          "date"
+        ]
+      }
+    }
+  },
+  "required": [
+    "id",
+    "dateAdded",
+    "dateModified",
+    "accountName",
+    "type",
+    "balance",
+    "details"
+  ]
+}

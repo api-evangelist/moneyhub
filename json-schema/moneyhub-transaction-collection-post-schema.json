@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-transaction-collection-post-schema.json",
+  "title": "TransactionCollectionPost",
+  "description": "List of transactions to be created or updated. Minimum 1 item required. Maximum 50 items allowed.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionCollectionPost",
+  "items": {
+    "additionalProperties": false,
+    "type": "object",
+    "properties": {
+      "accountId": {
+        "description": "The id of the account the transaction belongs to",
+        "type": "string"
+      },
+      "amount": {
+        "properties": {
+          "value": {
+            "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "value"
+        ],
+        "type": "object"
+      },
+      "categoryId": {
+        "description": "The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'",
+        "type": "string",
+        "pattern": "^(std|cus):(\\w|-)+$"
+      },
+      "categoryIdConfirmed": {
+        "description": "Flag indicating whether the user has confirmed the category id as correct",
+        "type": "boolean"
+      },
+      "date": {
+        "description": "The date that the transaction occurred. Where available this will contain an accurate time, where the time is not available it will default to midday.",
+        "format": "date-time",
+        "type": "string"
+      },
+      "longDescription": {
+        "description": "The full text description of the transactions - often as it is represented on the users bank statement",
+        "type": "string"
+      },
+      "shortDescription": {
+        "description": "A cleaned up and shorter description of the transaction, this can be edited",
+        "type": "string"
+      },
+      "notes": {
+        "default": "",
+        "description": "Arbitrary text that a user can add about a transaction",
+        "type": "string",
+        "maxLength": 500
+      },
+      "status": {
+        "description": "Whether the transaction has been posted (booked) or is still a pending transaction. During the transition from pending to posted the description will normally change.",
+        "enum": [
+          "posted",
+          "pending"
+        ],
+        "type": "string"
+      },
+      "projectId": {
+        "description": "The project ID the transaction is associated with",
+        "type": "string"
+      },
+      "enhancedCategories": {
+        "additionalProperties": false,
+        "type": "object",
+        "description": "Categories to enrich a transaction with",
+        "properties": {
+          "uk-tax-hmrc": {
+            "description": "The UK HMRC Tax category to aid in tax return queries",
+            "type": "string",
+            "pattern": "^(income|expenditure)\\.([a-zA-Z-]+)$"
+          }
+        }
+      }
+    },
+    "required": [
+      "accountId",
+      "amount",
+      "categoryId",
+      "date",
+      "longDescription"
+    ]
+  },
+  "type": "array"
+}

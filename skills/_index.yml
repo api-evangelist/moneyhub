@@ -1,0 +1,20 @@
+generated: '2026-10-12'
+method: generated
+generator: finish-artifacts.py (index from skill frontmatter)
+source: skills/*.md frontmatter; every operationId checked against openapi/
+skills:
+- file: skills/moneyhub-annotate-transaction.md
+  name: moneyhub-annotate-transaction
+  api: moneyhub:moneyhub-data-api
+  operations:
+  - getTransactionsByTransactionId
+  - postTransactionsByTransactionIdSplits
+  - postTransactionsByTransactionIdFiles
+- file: skills/moneyhub-sync-and-read-transactions.md
+  name: moneyhub-sync-and-read-transactions
+  api: moneyhub:moneyhub-data-api
+  operations:
+  - postSyncByConnectionId
+  - getAccounts
+  - getAccountsByAccountIdBalances
+  - getTransactions

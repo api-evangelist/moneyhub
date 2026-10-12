@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-holding-with-matches-schema.json",
+  "title": "HoldingWithMatches",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-holdings-api-openapi.yml#/components/schemas/HoldingWithMatches",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "date": {
+      "description": "Date of the valuation",
+      "format": "date",
+      "type": "string"
+    },
+    "id": {
+      "description": "The id of the holding",
+      "type": "string"
+    },
+    "matched": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "isin": {
+            "description": "The ISIN code of the match",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the match",
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          },
+          "priceGBP": {
+            "description": "The unit price of the holding match converted to GBP. The unitPrice is converted from the local currency (e.g. USD) to GBP on a daily basis during our import of holdings data.",
+            "type": "number"
+          },
+          "price": {
+            "properties": {
+              "value": {
+                "description": "The unit price in minor units of the currency (e.g. pence for GBP)",
+                "type": "number"
+              },
+              "currency": {
+                "description": "The currency of the matched holding",
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "currency"
+            ],
+            "type": "object"
+          },
+          "date": {
+            "description": "Date of the valuation",
+            "format": "date",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "codes": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "ISIN",
+              "SEDOL",
+              "MEX"
+            ],
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "name": {
+      "type": "string"
+    },
+    "quantity": {
+      "description": "The total number of units. This value reflects the quantity of the holding in its local currency context and is used to calculate the total value as unitPrice * quantity.",
+      "type": "number"
+    },
+    "total": {
+      "properties": {
+        "value": {
+          "description": "The value of the total in minor units of the currency, eg. pennies for GBP.",
+          "type": "number"
+        },
+        "currency": {
+          "description": "The currency of the total.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "unitPrice": {
+      "properties": {
+        "value": {
+          "description": "The price per unit of the holding. Provided by the holdings data source in its original currency.",
+          "type": "number"
+        },
+        "currency": {
+          "description": "The currency of the unit price.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "costBasis": {
+      "description": "In a one-off security purchase, the cost basis is the quantity acquired multiplied by the price paid per unit plus any commission. In the event the same position is acquired in different lots on different days at different prices, the sum total of the cost incurred is divided by the total units acquired to arrive at the average cost basis.",
+      "type": "number"
+    },
+    "currency": {
+      "description": "The currency of the holding",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "quantity",
+    "unitPrice",
+    "total",
+    "codes",
+    "id",
+    "matched"
+  ]
+}

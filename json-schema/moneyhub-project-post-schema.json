@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-project-post-schema.json",
+  "title": "ProjectPost",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-projects-api-openapi.yml#/components/schemas/ProjectPost",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "description": "The name of the project",
+      "type": "string"
+    },
+    "accountIds": {
+      "description": "Account IDs that are associated with the project",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "type": {
+      "description": "The project type",
+      "type": "string",
+      "enum": [
+        "PropertyProject",
+        "RentalProject",
+        "GenericProject"
+      ]
+    }
+  },
+  "required": [
+    "name",
+    "type"
+  ],
+  "type": "object"
+}

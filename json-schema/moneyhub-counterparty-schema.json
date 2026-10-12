@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-counterparty-schema.json",
+  "title": "Counterparty",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-counterparties-api-openapi.yml#/components/schemas/Counterparty",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique identifier for the counterparty.",
+      "type": "string"
+    },
+    "label": {
+      "description": "A label describing the counterparty",
+      "type": "string"
+    },
+    "type": {
+      "description": "The type of counterparty (specific to an account, or globally recognised across all users)",
+      "type": "string",
+      "enum": [
+        "global",
+        "local"
+      ]
+    },
+    "companyName": {
+      "description": "The full name of the company (only for global counterparties)",
+      "type": "string"
+    },
+    "logo": {
+      "description": "The url to the company logo (only for global counterparties)",
+      "type": "string"
+    },
+    "website": {
+      "description": "The url to the company website (only for global counterparties)",
+      "type": "string"
+    },
+    "mcc": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "The merchant category code (only for global counterparties)",
+          "type": "string"
+        },
+        "name": {
+          "description": "The merchant category code name (only for global counterparties)",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "id",
+    "label",
+    "type"
+  ]
+}

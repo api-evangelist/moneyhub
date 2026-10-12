@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-beneficiary-schema.json",
+  "title": "Beneficiary",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-beneficiaries-api-openapi.yml#/components/schemas/Beneficiary",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The unique identifier for the beneficiary",
+      "type": "string"
+    },
+    "active": {
+      "description": "Shows whether the payee is currently active or not",
+      "type": "boolean"
+    },
+    "name": {
+      "description": "The name for the beneficiary",
+      "type": "string"
+    },
+    "reference": {
+      "description": "The reference attached to the beneficiary",
+      "type": "string"
+    },
+    "accountNumber": {
+      "description": "The beneficiary's account number",
+      "type": "string",
+      "pattern": "^\\d{8}$"
+    },
+    "sortCode": {
+      "description": "The beneficiary's sort code",
+      "type": "string",
+      "pattern": "^\\d{6}$"
+    },
+    "iban": {
+      "description": "For cash accounts. Populated with the full IBAN number.",
+      "type": "string",
+      "maxLength": 34,
+      "minLength": 18
+    },
+    "pan": {
+      "description": "For card accounts. Populated with the Primary Account Number.",
+      "type": "string"
+    },
+    "providerAccountId": {
+      "description": "The provider account ID the beneficiary belongs to",
+      "type": "string"
+    },
+    "providerBeneficiaryId": {
+      "description": "The provider beneficiary ID for the beneficiary",
+      "type": "string"
+    },
+    "accountId": {
+      "description": "The Moneyhub account ID that the beneficiary belongs to",
+      "type": "string"
+    },
+    "postalAddress": {
+      "description": "Additional postal address information for the beneficiary agent, only retrieved using **beneficiaries_detail:read** scope",
+      "type": "object"
+    },
+    "createdAt": {
+      "description": "The date at which the beneficiary was added.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "modifiedAt": {
+      "description": "The date at which the beneficiary was added.",
+      "format": "date-time",
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "active",
+    "providerAccountId",
+    "providerBeneficiaryId",
+    "accountId",
+    "createdAt",
+    "modifiedAt"
+  ]
+}

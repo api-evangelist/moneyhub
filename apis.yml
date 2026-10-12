@@ -1,22 +1,20 @@
 aid: moneyhub
+
 url: https://raw.githubusercontent.com/api-evangelist/moneyhub/refs/heads/main/apis.yml
+
 name: Moneyhub
+
 kind: company
-description: >-
-  Moneyhub is a UK open banking and open finance platform, headquartered in
-  London with offices in Bristol and Ljubljana, that lets banks, pension
-  providers, wealth managers, insurers and fintechs embed account aggregation,
-  transaction data enrichment, financial insight and account-to-account payment
-  initiation into their own products. Regulated by the FCA as an Account
-  Information Service Provider (AISP), Payment Initiation Service Provider (PISP)
-  and Credit Information Services Provider (CISP), Moneyhub ships a genuinely
-  API-first surface: a RESTful, Swagger/OpenAPI-documented Data & Intelligence
-  API for AIS aggregation, enrichment and affordability, and an Open Banking
-  Payments API that initiates instant Faster Payments over the UK's Open Banking
-  rails as a cheaper alternative to cards and direct debits. Authentication and
-  payment consent run entirely through an OpenID Connect / OAuth2 identity layer
-  at identity.moneyhub.co.uk, with client-credentials, authorization-code and
-  jwt-bearer grants and fine-grained scopes for data and payment initiation.
+
+description: 'Moneyhub is a UK open banking and open finance platform, headquartered in London with offices in Bristol and Ljubljana, that lets
+  banks, pension providers, wealth managers, insurers and fintechs embed account aggregation, transaction data enrichment, financial insight and
+  account-to-account payment initiation into their own products. Regulated by the FCA as an Account Information Service Provider (AISP), Payment
+  Initiation Service Provider (PISP) and Credit Information Services Provider (CISP), Moneyhub ships a genuinely API-first surface: a RESTful,
+  Swagger/OpenAPI-documented Data & Intelligence API for AIS aggregation, enrichment and affordability, and an Open Banking Payments API that
+  initiates instant Faster Payments over the UK''s Open Banking rails as a cheaper alternative to cards and direct debits. Authentication and
+  payment consent run entirely through an OpenID Connect / OAuth2 identity layer at identity.moneyhub.co.uk, with client-credentials, authorization-code
+  and jwt-bearer grants and fine-grained scopes for data and payment initiation.'
+
 deliveryModel:
   model: saas
   open_source: false
@@ -28,6 +26,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -43,7 +42,9 @@ accessModel:
   - sandbox
   generated: '2026-09-02'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+
 tags:
 - Payments
 - United Kingdom
@@ -55,426 +56,34 @@ tags:
 - AISP
 - PISP
 - Fintech
+
 created: '2026-07-24'
+
 modified: '2026-10-06'
+
 specificationVersion: '0.23'
-apis:
-- aid: moneyhub:moneyhub-open-banking-payments-api
-  name: Moneyhub Open Banking Payments API
-  description: >-
-    Moneyhub's Open Banking Payments API initiates account-to-account payments (Payment Initiation Service)
-    over the UK Faster Payments rails as a cheaper, near-instant alternative to cards, direct debits and
-    standing orders. Payments, standing orders, recurring and reverse payments are authorised through
-    Moneyhub's OpenID Connect / OAuth2 identity layer using dedicated payment scopes (mh:payment, mh:standing_order,
-    mh:recurring_payment, mh:reverse_payment); the flow is documented but no standalone downloadable OpenAPI
-    is published for the payment-initiation surface.
-  humanURL: https://www.moneyhub.com/apis/open-banking-payments
-  baseURL: https://identity.moneyhub.co.uk/oidc
-  tags:
-  - Payments
-  - Payment Initiation
-  - Account-to-Account
-  - Faster Payments
-  - PISP
-  properties:
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/open-banking-payments
-  - type: Documentation
-    url: https://www.moneyhub.com/payments-open-payment-api
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: Authentication
-    url: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
-- aid: moneyhub:moneyhub-accounts-api
-  name: Moneyhub Accounts API
-  description: The accounts API from Moneyhub — 6 operation(s) for accounts.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Account
-  tags_raw:
-  - accounts
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-accounts-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-affordability-api
-  name: Moneyhub Affordability API
-  description: The affordability API from Moneyhub — 5 operation(s) for affordability.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Affordability
-  tags_raw:
-  - affordability
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-affordability-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-beneficiaries-api
-  name: Moneyhub Beneficiaries API
-  description: The beneficiaries API from Moneyhub — 2 operation(s) for beneficiaries.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Beneficiaries
-  tags_raw:
-  - beneficiaries
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-beneficiaries-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-categories-api
-  name: Moneyhub Categories API
-  description: The categories API from Moneyhub — 3 operation(s) for categories.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Categories
-  tags_raw:
-  - categories
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-categories-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-categorise-transactions-api
-  name: Moneyhub categorise transactions API
-  description: >-
-    The categorise transactions API from Moneyhub — 1 operation(s) for categorise transactions.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - categorise transactions
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-categorise-transactions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-counterparties-api
-  name: Moneyhub Counterparties API
-  description: The counterparties API from Moneyhub — 2 operation(s) for counterparties.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Counterparties
-  tags_raw:
-  - counterparties
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-counterparties-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-holdings-api
-  name: Moneyhub Holdings API
-  description: The holdings API from Moneyhub — 3 operation(s) for holdings.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Holdings
-  tags_raw:
-  - holdings
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-holdings-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-notification-thresholds-api
-  name: Moneyhub notification thresholds API
-  description: >-
-    The notification thresholds API from Moneyhub — 2 operation(s) for notification thresholds.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - notification thresholds
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-notification-thresholds-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-projects-api
-  name: Moneyhub Projects API
-  description: The projects API from Moneyhub — 2 operation(s) for projects.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Project
-  tags_raw:
-  - projects
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-projects-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-regular-transactions-api
-  name: Moneyhub regular transactions API
-  description: The regular transactions API from Moneyhub — 2 operation(s) for regular transactions.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - regular transactions
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-regular-transactions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-rental-records-api
-  name: Moneyhub rental records API
-  description: The rental records API from Moneyhub — 2 operation(s) for rental records.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - rental records
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-rental-records-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-savings-goals-api
-  name: Moneyhub savings goals API
-  description: The savings goals API from Moneyhub — 2 operation(s) for savings goals.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Savings Goals
-  tags_raw:
-  - savings goals
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-savings-goals-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-spending-analysis-api
-  name: Moneyhub spending analysis API
-  description: The spending analysis API from Moneyhub — 1 operation(s) for spending analysis.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - spending analysis
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-spending-analysis-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-spending-goals-api
-  name: Moneyhub spending goals API
-  description: The spending goals API from Moneyhub — 2 operation(s) for spending goals.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - spending goals
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-spending-goals-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-standard-financial-statements-api
-  name: Moneyhub Standard Financial Statements API
-  description: >-
-    The standard-financial-statements API from Moneyhub — 2 operation(s) for standard-financial-statements.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - standard-financial-statements
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-standard-financial-statements-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-standing-orders-api
-  name: Moneyhub standing orders API
-  description: The standing orders API from Moneyhub — 1 operation(s) for standing orders.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Standing Orders
-  tags_raw:
-  - standing orders
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-standing-orders-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-statements-api
-  name: Moneyhub Statements API
-  description: The statements API from Moneyhub — 1 operation(s) for statements.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Statements
-  tags_raw:
-  - statements
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-statements-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-sync-api
-  name: Moneyhub Sync API
-  description: The sync API from Moneyhub — 1 operation(s) for sync.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Sync
-  tags_raw:
-  - sync
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-sync-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-tax-api
-  name: Moneyhub Tax API
-  description: The tax API from Moneyhub — 1 operation(s) for tax.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Tax
-  tags_raw:
-  - tax
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-tax-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
-- aid: moneyhub:moneyhub-transactions-api
-  name: Moneyhub Transactions API
-  description: The transactions API from Moneyhub — 9 operation(s) for transactions.
-  humanURL: https://docs.moneyhubenterprise.com/reference
-  baseURL: https://api.moneyhub.co.uk/v2.0
-  tags:
-  - Transaction
-  tags_raw:
-  - transactions
-  properties:
-  - type: OpenAPI
-    url: openapi/moneyhub-transactions-api-openapi.yml
-  - type: Documentation
-    url: https://docs.moneyhubenterprise.com/docs/introduction
-  - type: APIReference
-    url: https://moneyhub.github.io/api-docs/
-  - type: GettingStarted
-    url: https://docs.moneyhubenterprise.com/docs/getting-started
-  - type: Documentation
-    url: https://www.moneyhub.com/apis/data-intelligence
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
 common:
+- type: RateLimits
+  url: rate-limits/moneyhub-rate-limits.yml
+- type: Spectral
+  url: rules/moneyhub-rules.yml
+- type: JSONLD
+  url: json-ld/moneyhub-context.jsonld
+- type: Vocabulary
+  url: vocabulary/moneyhub-vocabulary.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Hosts
+  url: hosts/moneyhub-hosts.yml
+- type: Vendors
+  url: vendors/moneyhub-vendors.yml
+- type: Pricing
+  url: https://moneyhub.com/articles/price-and-value-in-the-era-of-consumer-duty/
 - url: https://moneyhub.com/articles/
   type: Blog
 - url: https://moneyhub.com/articles/feed/
@@ -522,7 +131,9 @@ common:
   url: data-model/moneyhub-data-model.yml
 - type: X-MCPServerCandidate
   url: mcp/moneyhub-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published
+    API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting
+    the artifact-type surfaces with a server that does not exist.'
 - type: Packages
   url: packages/moneyhub-packages.yml
 - type: SDKs
@@ -559,6 +170,554 @@ common:
   url: https://moneyhub.com/policies/global-terms-of-use/
 - type: PrivacyPolicy
   url: https://www.moneyhub.com/privacy-policy/
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+
+apis:
+- aid: moneyhub:moneyhub-open-banking-payments-api
+  name: Moneyhub Open Banking Payments API
+  description: Moneyhub's Open Banking Payments API initiates account-to-account payments (Payment Initiation Service) over the UK Faster Payments
+    rails as a cheaper, near-instant alternative to cards, direct debits and standing orders. Payments, standing orders, recurring and reverse
+    payments are authorised through Moneyhub's OpenID Connect / OAuth2 identity layer using dedicated payment scopes (mh:payment, mh:standing_order,
+    mh:recurring_payment, mh:reverse_payment); the flow is documented but no standalone downloadable OpenAPI is published for the payment-initiation
+    surface.
+  humanURL: https://www.moneyhub.com/apis/open-banking-payments
+  baseURL: https://identity.moneyhub.co.uk/oidc
+  tags:
+  - Payments
+  - Payment Initiation
+  - Account-to-Account
+  - Faster Payments
+  - PISP
+  properties:
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/open-banking-payments
+  - type: Documentation
+    url: https://www.moneyhub.com/payments-open-payment-api
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: Authentication
+    url: https://identity.moneyhub.co.uk/oidc/.well-known/openid-configuration
+- aid: moneyhub:moneyhub-accounts-api
+  name: Moneyhub Accounts API
+  description: The accounts API from Moneyhub — 6 operation(s) for accounts.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Account
+  tags_raw:
+  - accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-account-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-account-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-recurring-transaction-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-account-patch-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-balance-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-balance-post-schema.json
+- aid: moneyhub:moneyhub-affordability-api
+  name: Moneyhub Affordability API
+  description: The affordability API from Moneyhub — 5 operation(s) for affordability.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Affordability
+  tags_raw:
+  - affordability
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-affordability-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-affordability-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-affordability-income-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-affordability-income-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-affordability-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-affordability-income-metadata-schema.json
+- aid: moneyhub:moneyhub-beneficiaries-api
+  name: Moneyhub Beneficiaries API
+  description: The beneficiaries API from Moneyhub — 2 operation(s) for beneficiaries.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Beneficiaries
+  tags_raw:
+  - beneficiaries
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-beneficiaries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-beneficiary-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-categories-api
+  name: Moneyhub Categories API
+  description: The categories API from Moneyhub — 3 operation(s) for categories.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Categories
+  tags_raw:
+  - categories
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-categories-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-category-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-category-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-category-group-schema.json
+- aid: moneyhub:moneyhub-categorise-transactions-api
+  name: Moneyhub categorise transactions API
+  description: The categorise transactions API from Moneyhub — 1 operation(s) for categorise transactions.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - categorise transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-categorise-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-categorise-transactions-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-categorise-transactions-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-counterparties-api
+  name: Moneyhub Counterparties API
+  description: The counterparties API from Moneyhub — 2 operation(s) for counterparties.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Counterparties
+  tags_raw:
+  - counterparties
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-counterparties-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-global-counterparty-v3-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-counterparty-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-holdings-api
+  name: Moneyhub Holdings API
+  description: The holdings API from Moneyhub — 3 operation(s) for holdings.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Holdings
+  tags_raw:
+  - holdings
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-holdings-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-holding-with-matches-and-history-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-holding-with-matches-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-holdings-valuation-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-notification-thresholds-api
+  name: Moneyhub notification thresholds API
+  description: The notification thresholds API from Moneyhub — 2 operation(s) for notification thresholds.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - notification thresholds
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-notification-thresholds-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-notification-threshold-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-notification-threshold-post-schema.json
+- aid: moneyhub:moneyhub-projects-api
+  name: Moneyhub Projects API
+  description: The projects API from Moneyhub — 2 operation(s) for projects.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Project
+  tags_raw:
+  - projects
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-project-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-project-patch-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-project-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-regular-transactions-api
+  name: Moneyhub regular transactions API
+  description: The regular transactions API from Moneyhub — 2 operation(s) for regular transactions.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - regular transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-regular-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-regular-transactions-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-rental-records-api
+  name: Moneyhub rental records API
+  description: The rental records API from Moneyhub — 2 operation(s) for rental records.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - rental records
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-rental-records-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-rental-records-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-rental-records-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-savings-goals-api
+  name: Moneyhub savings goals API
+  description: The savings goals API from Moneyhub — 2 operation(s) for savings goals.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Savings Goals
+  tags_raw:
+  - savings goals
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-savings-goals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-savings-goals-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-savings-goals-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-savings-goals-patch-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-spending-analysis-api
+  name: Moneyhub spending analysis API
+  description: The spending analysis API from Moneyhub — 1 operation(s) for spending analysis.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - spending analysis
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-spending-analysis-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-spending-analysis-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-spending-analysis-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-spending-goals-api
+  name: Moneyhub spending goals API
+  description: The spending goals API from Moneyhub — 2 operation(s) for spending goals.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - spending goals
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-spending-goals-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-spending-goal-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-spending-goal-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-spending-goal-patch-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-standard-financial-statements-api
+  name: Moneyhub Standard Financial Statements API
+  description: The standard-financial-statements API from Moneyhub — 2 operation(s) for standard-financial-statements.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - standard-financial-statements
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-standard-financial-statements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-standard-financial-statement-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-standard-financial-statements-metadata-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-standard-financial-statements-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-standing-orders-api
+  name: Moneyhub standing orders API
+  description: The standing orders API from Moneyhub — 1 operation(s) for standing orders.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Standing Orders
+  tags_raw:
+  - standing orders
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-standing-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-standing-order-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-statements-api
+  name: Moneyhub Statements API
+  description: The statements API from Moneyhub — 1 operation(s) for statements.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Statements
+  tags_raw:
+  - statements
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-statements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-statement-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-sync-api
+  name: Moneyhub Sync API
+  description: The sync API from Moneyhub — 1 operation(s) for sync.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Sync
+  tags_raw:
+  - sync
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-sync-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-sync-post-schema.json
+- aid: moneyhub:moneyhub-tax-api
+  name: Moneyhub Tax API
+  description: The tax API from Moneyhub — 1 operation(s) for tax.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Tax
+  tags_raw:
+  - tax
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-tax-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-tax-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-links-schema.json
+- aid: moneyhub:moneyhub-transactions-api
+  name: Moneyhub Transactions API
+  description: The transactions API from Moneyhub — 9 operation(s) for transactions.
+  humanURL: https://docs.moneyhubenterprise.com/reference
+  baseURL: https://api.moneyhub.co.uk/v2.0
+  tags:
+  - Transaction
+  tags_raw:
+  - transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/moneyhub-transactions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.moneyhubenterprise.com/docs/introduction
+  - type: APIReference
+    url: https://moneyhub.github.io/api-docs/
+  - type: GettingStarted
+    url: https://docs.moneyhubenterprise.com/docs/getting-started
+  - type: Documentation
+    url: https://www.moneyhub.com/apis/data-intelligence
+  - type: JSONSchema
+    url: json-schema/moneyhub-transaction-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-transaction-unenriched-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-transaction-collection-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-transaction-patch-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-transaction-post-schema.json
+  - type: JSONSchema
+    url: json-schema/moneyhub-transaction-split-schema.json
+x-enrichment:
+  date: '2026-10-12'
+  status: enriched
+  artifacts_added: 6
+  pass: local-v5

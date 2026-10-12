@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-recurring-transaction-estimate-schema.json",
+  "title": "RecurringTransactionEstimate",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/RecurringTransactionEstimate",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "counterpartyId": {
+      "description": "The id of the counterparty that the estimate is for",
+      "type": "string"
+    },
+    "amount": {
+      "properties": {
+        "value": {
+          "description": "The average predicted amount of the recurring transaction in minor units of the currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the predicted amount taken from the account",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "amountRange": {
+      "properties": {
+        "value": {
+          "description": "The predicted range of the recurring transaction in minor units of the currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the predicted range taken from the account",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "monthlyAmount": {
+      "properties": {
+        "value": {
+          "description": "The predicted monthly amount for this counterparty, regardless of how many transactions in minor units of the currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the monthly amount taken from the account",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "predictionSource": {
+      "description": "The source of the prediction",
+      "enum": [
+        "moneyhub"
+      ],
+      "type": "string"
+    },
+    "monthlyAverageOnly": {
+      "description": "A flag indicating whether the predictions are based only on a monthly average or not. If the predictions are based solely on monthly averages then the dates array will be defaulted to the end of the month for the next 3 motnhs.",
+      "type": "boolean"
+    },
+    "dates": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "date"
+      }
+    }
+  }
+}

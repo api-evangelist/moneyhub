@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-links-schema.json",
+  "title": "Links",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/Links",
+  "additionalProperties": false,
+  "properties": {
+    "next": {
+      "description": "The url to retrieve the next page of results from",
+      "format": "uri",
+      "type": "string"
+    },
+    "prev": {
+      "description": "The url to retrieve the previous page of results from",
+      "format": "uri",
+      "type": "string"
+    },
+    "self": {
+      "description": "The url of the current resource(s)",
+      "format": "uri",
+      "type": "string"
+    }
+  },
+  "required": [
+    "self"
+  ],
+  "type": "object"
+}

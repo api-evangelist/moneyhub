@@ -1,0 +1,27 @@
+name: Moneyhub Rate Limits
+generated: '2026-10-12'
+method: searched
+source: https://docs.moneyhubenterprise.com/docs/rate-limit.md
+docs: https://docs.moneyhubenterprise.com/docs/rate-limit
+limit_count: 2
+exhaustion_status: 429
+headers:
+- Retry-After
+- X-RateLimit-Limit
+- X-RateLimit-Remaining
+- X-RateLimit-Reset
+limits:
+- name: Per API client requests per minute
+  limit_text: Current values are 1000 requests per minute.
+  max: 1000
+  limit: 1000
+  window: minute
+  scope: per-api-client
+  note: Applies only to the Data API; there is currently no limit when initiating a connection or a payment.
+- name: Connection sync frequency
+  limit_text: Current value is once every 5 seconds.
+  max: 1
+  limit: 1
+  window: 5 seconds
+  scope: per-user-connection
+  endpoint: POST /sync

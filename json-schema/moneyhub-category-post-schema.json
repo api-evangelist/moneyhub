@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-category-post-schema.json",
+  "title": "CategoryPost",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-categories-api-openapi.yml#/components/schemas/CategoryPost",
+  "properties": {
+    "group": {
+      "description": "The id of the category group that the custom category should be part of",
+      "type": "string",
+      "pattern": "^group:\\d+"
+    },
+    "name": {
+      "description": "The name of the custom category",
+      "type": "string"
+    }
+  },
+  "required": [
+    "group",
+    "name"
+  ],
+  "type": "object"
+}

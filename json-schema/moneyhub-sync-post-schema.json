@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-sync-post-schema.json",
+  "title": "SyncPost",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-sync-api-openapi.yml#/components/schemas/SyncPost",
+  "additionalProperties": false,
+  "properties": {
+    "customerIpAddress": {
+      "type": "string",
+      "description": "The customer ip address if it is currently logged in"
+    },
+    "customerLastLoggedTime": {
+      "type": "string",
+      "description": "The time when the customer last logged in represented as an ISO 8601 date-time format including timezone"
+    },
+    "enableAsync": {
+      "type": "boolean",
+      "description": "If set to true, the sync for data will happen in the background"
+    }
+  },
+  "type": "object"
+}

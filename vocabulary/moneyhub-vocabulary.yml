@@ -1,0 +1,331 @@
+generated: '2026-10-12'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/moneyhub-accounts-api-openapi.yml
+- openapi/moneyhub-affordability-api-openapi.yml
+- openapi/moneyhub-beneficiaries-api-openapi.yml
+- openapi/moneyhub-categories-api-openapi.yml
+- openapi/moneyhub-categorise-transactions-api-openapi.yml
+vocabulary:
+  name: Moneyhub Domain Vocabulary
+  description: 'Terms declared by Moneyhub''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-12'
+  terms:
+  - term: AccountPatch
+    definition: 'Object declared by the contract with fields: accountName, providerName, details.'
+    tags:
+    - Object
+    source: openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/AccountPatch
+  - term: Error
+    definition: 'Object declared by the contract with fields: code, message, correlationId, id, userId.'
+    tags:
+    - Object
+    source: openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/Error
+  - term: Links
+    definition: 'Object declared by the contract with fields: next, prev, self.'
+    tags:
+    - Object
+    source: openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/Links
+  - term: AccountPost
+    definition: 'Object declared by the contract with fields: accountName, providerName, currency, type, accountType, balance, details, providerAccountIdentifications.'
+    tags:
+    - Object
+    source: openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/AccountPost
+  - term: Account
+    definition: 'Object declared by the contract with fields: accountName, currency, balance, details, transactionData, dateAdded, dateModified,
+      id, providerName, providerReference, connectionId, providerId. (12 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/Account
+  - term: RecurringTransactionEstimate
+    definition: 'Object declared by the contract with fields: counterpartyId, amount, amountRange, monthlyAmount, predictionSource, monthlyAverageOnly,
+      dates.'
+    tags:
+    - Object
+    source: openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/RecurringTransactionEstimate
+  - term: BalancePost
+    definition: 'Object declared by the contract with fields: amount, date.'
+    tags:
+    - Object
+    source: openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/BalancePost
+  - term: Balance
+    definition: 'Object declared by the contract with fields: amount, date, type.'
+    tags:
+    - Object
+    source: openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/Balance
+  - term: AccountSync
+    definition: 'Object declared by the contract with fields: accountId, lastSuccessfulSync.'
+    tags:
+    - Object
+    source: openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/AccountSync
+  - term: AffordabilityPost
+    definition: 'Object declared by the contract with fields: externalUserId, name, email.'
+    tags:
+    - Object
+    source: openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/AffordabilityPost
+  - term: Affordability
+    definition: 'Object declared by the contract with fields: createdAt, id, income, overdraftUseByAccount, overview, primaryIncomeAccountId,
+      riskIndicators.'
+    tags:
+    - Object
+    source: openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/Affordability
+  - term: AffordabilityConfidence
+    definition: 'Object declared by the contract with fields: confidence.'
+    tags:
+    - Object
+    source: openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/AffordabilityConfidence
+  - term: AffordabilityIncome
+    definition: 'Object declared by the contract with fields: createdAt, id, income, overview, primaryIncomeAccountId.'
+    tags:
+    - Object
+    source: openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/AffordabilityIncome
+  - term: AffordabilityIncomeMetadata
+    definition: 'Object declared by the contract with fields: createdAt, id.'
+    tags:
+    - Object
+    source: openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/AffordabilityIncomeMetadata
+  - term: AffordabilityMetadata
+    definition: 'Object declared by the contract with fields: createdAt, id.'
+    tags:
+    - Object
+    source: openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/AffordabilityMetadata
+  - term: AffordabilityIncomePost
+    definition: 'Object declared by the contract with fields: externalUserId, name, email.'
+    tags:
+    - Object
+    source: openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/AffordabilityIncomePost
+  - term: Beneficiary
+    definition: 'Object declared by the contract with fields: id, active, name, reference, accountNumber, sortCode, iban, pan, providerAccountId,
+      providerBeneficiaryId, accountId, postalAddress. (2 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-beneficiaries-api-openapi.yml#/components/schemas/Beneficiary
+  - term: CategoryPost
+    definition: 'Object declared by the contract with fields: group, name.'
+    tags:
+    - Object
+    source: openapi/moneyhub-categories-api-openapi.yml#/components/schemas/CategoryPost
+  - term: Category
+    definition: 'Object declared by the contract with fields: categoryId, name, key, group.'
+    tags:
+    - Object
+    source: openapi/moneyhub-categories-api-openapi.yml#/components/schemas/Category
+  - term: CategoryGroup
+    definition: 'Object declared by the contract with fields: id, key.'
+    tags:
+    - Object
+    source: openapi/moneyhub-categories-api-openapi.yml#/components/schemas/CategoryGroup
+  - term: CategoriseTransactions
+    definition: 'Object declared by the contract with fields: accountType, accountId, transactions, failedCategorisationIds.'
+    tags:
+    - Object
+    source: openapi/moneyhub-categorise-transactions-api-openapi.yml#/components/schemas/CategoriseTransactions
+  - term: CategoriseTransactionsPost
+    definition: Transactions to categorised for a given account.
+    tags:
+    - Object
+    source: openapi/moneyhub-categorise-transactions-api-openapi.yml#/components/schemas/CategoriseTransactionsPost
+  - term: GlobalCounterpartyV3
+    definition: 'Object declared by the contract with fields: id, name, parentId, parentName, fullCompanyName, logoUrl, website, merchantCategoryCode,
+      merchantCategoryDescription, registeredLocation, categoryId, analyticalCategory. (2 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-counterparties-api-openapi.yml#/components/schemas/GlobalCounterpartyV3
+  - term: Counterparty
+    definition: 'Object declared by the contract with fields: id, label, type, companyName, logo, website, mcc.'
+    tags:
+    - Object
+    source: openapi/moneyhub-counterparties-api-openapi.yml#/components/schemas/Counterparty
+  - term: HoldingWithMatchesAndHistory
+    definition: 'Object declared by the contract with fields: id, date, history, matched, codes, name, quantity, total, unitPrice, costBasis,
+      currency.'
+    tags:
+    - Object
+    source: openapi/moneyhub-holdings-api-openapi.yml#/components/schemas/HoldingWithMatchesAndHistory
+  - term: HoldingWithMatches
+    definition: 'Object declared by the contract with fields: date, id, matched, codes, name, quantity, total, unitPrice, costBasis, currency.'
+    tags:
+    - Object
+    source: openapi/moneyhub-holdings-api-openapi.yml#/components/schemas/HoldingWithMatches
+  - term: HoldingsValuation
+    definition: 'Object declared by the contract with fields: date, items.'
+    tags:
+    - Object
+    source: openapi/moneyhub-holdings-api-openapi.yml#/components/schemas/HoldingsValuation
+  - term: NotificationThresholdPost
+    definition: 'Object declared by the contract with fields: value, type.'
+    tags:
+    - Object
+    source: openapi/moneyhub-notification-thresholds-api-openapi.yml#/components/schemas/NotificationThresholdPost
+  - term: NotificationThreshold
+    definition: 'Object declared by the contract with fields: id, value, type.'
+    tags:
+    - Object
+    source: openapi/moneyhub-notification-thresholds-api-openapi.yml#/components/schemas/NotificationThreshold
+  - term: ProjectPatch
+    definition: 'Object declared by the contract with fields: name, accountIds, type, archived.'
+    tags:
+    - Object
+    source: openapi/moneyhub-projects-api-openapi.yml#/components/schemas/ProjectPatch
+  - term: Project
+    definition: 'Object declared by the contract with fields: id, name, accountIds, type, dateCreated, archived.'
+    tags:
+    - Object
+    source: openapi/moneyhub-projects-api-openapi.yml#/components/schemas/Project
+  - term: ProjectPost
+    definition: 'Object declared by the contract with fields: name, accountIds, type.'
+    tags:
+    - Object
+    source: openapi/moneyhub-projects-api-openapi.yml#/components/schemas/ProjectPost
+  - term: RegularTransactions
+    definition: 'Object declared by the contract with fields: seriesId, accountId, type, description, cleanedDescription, counterpartyId, frequency,
+      numTxMatchedInSeries, gapLengthInFreqUnits, dateAnomaliesCount, numReturnedTxs, lastDate. (9 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-regular-transactions-api-openapi.yml#/components/schemas/RegularTransactions
+  - term: RentalRecordsPost
+    definition: 'Object declared by the contract with fields: title, firstName, lastName, birthdate, addressLine1, addressLine2, addressLine3,
+      addressLine4, postalCode, tenancyStartDate, rentalAmount, rentalFrequency. (1 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-rental-records-api-openapi.yml#/components/schemas/RentalRecordsPost
+  - term: RentalRecords
+    definition: 'Object declared by the contract with fields: id, userId, title, firstName, lastName, birthdate, addressLine1, addressLine2, addressLine3,
+      addressLine4, postalCode, tenancyStartDate. (7 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-rental-records-api-openapi.yml#/components/schemas/RentalRecords
+  - term: SavingsGoalsPost
+    definition: 'Object declared by the contract with fields: name, amount, imageUrl, notes, targetDate, accounts.'
+    tags:
+    - Object
+    source: openapi/moneyhub-savings-goals-api-openapi.yml#/components/schemas/SavingsGoalsPost
+  - term: SavingsGoalsPatch
+    definition: 'Object declared by the contract with fields: name, amount, imageUrl, notes, targetDate, accounts.'
+    tags:
+    - Object
+    source: openapi/moneyhub-savings-goals-api-openapi.yml#/components/schemas/SavingsGoalsPatch
+  - term: SavingsGoals
+    definition: 'Object declared by the contract with fields: id, name, amount, targetDate, dateCreated, imageUrl, notes, progressPercentage,
+      progressAmount, accounts.'
+    tags:
+    - Object
+    source: openapi/moneyhub-savings-goals-api-openapi.yml#/components/schemas/SavingsGoals
+  - term: SpendingAnalysis
+    definition: 'Object declared by the contract with fields: categories, total.'
+    tags:
+    - Object
+    source: openapi/moneyhub-spending-analysis-api-openapi.yml#/components/schemas/SpendingAnalysis
+  - term: SpendingAnalysisPost
+    definition: 'Object declared by the contract with fields: dates, accountIds, categoryIds, projectIds.'
+    tags:
+    - Object
+    source: openapi/moneyhub-spending-analysis-api-openapi.yml#/components/schemas/SpendingAnalysisPost
+  - term: SpendingGoalPost
+    definition: 'Object declared by the contract with fields: categoryId, periodType, periodStart, amount.'
+    tags:
+    - Object
+    source: openapi/moneyhub-spending-goals-api-openapi.yml#/components/schemas/SpendingGoalPost
+  - term: SpendingGoalPatch
+    definition: 'Object declared by the contract with fields: categoryId, amount.'
+    tags:
+    - Object
+    source: openapi/moneyhub-spending-goals-api-openapi.yml#/components/schemas/SpendingGoalPatch
+  - term: SpendingGoal
+    definition: 'Object declared by the contract with fields: categoryId, dateCreated, periodType, periodStart, id, amount, spending.'
+    tags:
+    - Object
+    source: openapi/moneyhub-spending-goals-api-openapi.yml#/components/schemas/SpendingGoal
+  - term: StandardFinancialStatement
+    definition: 'Object declared by the contract with fields: createdAt, id, version, currency, 2.1.'
+    tags:
+    - Object
+    source: openapi/moneyhub-standard-financial-statements-api-openapi.yml#/components/schemas/StandardFinancialStatement
+  - term: StandardFinancialStatementsPost
+    definition: 'Object declared by the contract with fields: externalUserId, name, email.'
+    tags:
+    - Object
+    source: openapi/moneyhub-standard-financial-statements-api-openapi.yml#/components/schemas/StandardFinancialStatementsPost
+  - term: StandardFinancialStatementsMetadata
+    definition: 'Object declared by the contract with fields: createdAt, requestedAt, id, status, statusDetails.'
+    tags:
+    - Object
+    source: openapi/moneyhub-standard-financial-statements-api-openapi.yml#/components/schemas/StandardFinancialStatementsMetadata
+  - term: StandingOrder
+    definition: 'Object declared by the contract with fields: id, status, reference, frequency, numberOfPayments, firstPaymentDate, nextPaymentDate,
+      finalPaymentDate, firstPaymentAmount, nextPaymentAmount, finalPaymentAmount, currency. (1 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-standing-orders-api-openapi.yml#/components/schemas/StandingOrder
+  - term: Statement
+    definition: 'Object declared by the contract with fields: id, accountId, userId, providerStatementId, providerAccountId, reference, type,
+      startDate, endDate, creationDate, description, benefits. (8 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-statements-api-openapi.yml#/components/schemas/Statement
+  - term: SyncPost
+    definition: 'Object declared by the contract with fields: customerIpAddress, customerLastLoggedTime, enableAsync.'
+    tags:
+    - Object
+    source: openapi/moneyhub-sync-api-openapi.yml#/components/schemas/SyncPost
+  - term: InternalError
+    definition: 'Object declared by the contract with fields: code, message, correlationId, statusCode.'
+    tags:
+    - Object
+    source: openapi/moneyhub-sync-api-openapi.yml#/components/schemas/InternalError
+  - term: Tax
+    definition: 'Object declared by the contract with fields: dateFrom, dateTo, taxReturn.'
+    tags:
+    - Object
+    source: openapi/moneyhub-tax-api-openapi.yml#/components/schemas/Tax
+  - term: Transaction
+    definition: 'Object declared by the contract with fields: accountId, amount, categoryId, categoryIdConfirmed, date, dateModified, dateCreated,
+      valueDate, id, longDescription, providerId, notes. (20 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/Transaction
+  - term: TransactionUnenriched
+    definition: 'Object declared by the contract with fields: accountId, amount, date, dateModified, dateCreated, valueDate, id, longDescription,
+      providerId, status, transactionCode, proprietaryTransactionCode. (12 more)'
+    tags:
+    - Object
+    source: openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionUnenriched
+  - term: TransactionPatch
+    definition: 'Object declared by the contract with fields: accountId, amount, categoryId, categoryIdConfirmed, date, longDescription, shortDescription,
+      notes, status, projectId, enhancedCategories.'
+    tags:
+    - Object
+    source: openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionPatch
+  - term: TransactionSplitPost
+    definition: 'Object declared by the contract with fields: amount, categoryId, description, projectId.'
+    tags:
+    - Object
+    source: openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionSplitPost
+  - term: TransactionFile
+    definition: 'Object declared by the contract with fields: id, fileType, fileName, url.'
+    tags:
+    - Object
+    source: openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionFile
+  - term: TransactionPost
+    definition: 'Object declared by the contract with fields: accountId, amount, categoryId, categoryIdConfirmed, date, longDescription, shortDescription,
+      notes, status, projectId, enhancedCategories.'
+    tags:
+    - Object
+    source: openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionPost
+  - term: TransactionSplitPatch
+    definition: 'Object declared by the contract with fields: categoryId, description, projectId.'
+    tags:
+    - Object
+    source: openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionSplitPatch
+  - term: TransactionSplit
+    definition: 'Object declared by the contract with fields: amount, categoryId, description, id, projectId.'
+    tags:
+    - Object
+    source: openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionSplit
+  - term: TransactionCollectionPost
+    definition: List of transactions to be created or updated. Minimum 1 item required. Maximum 50 items allowed.
+    tags:
+    - Object
+    source: openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionCollectionPost

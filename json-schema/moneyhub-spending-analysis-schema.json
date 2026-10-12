@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-spending-analysis-schema.json",
+  "title": "SpendingAnalysis",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-spending-analysis-api-openapi.yml#/components/schemas/SpendingAnalysis",
+  "type": "object",
+  "properties": {
+    "categories": {
+      "type": "array",
+      "description": "Array of categories showing the outgoing expenditure for the given period requested",
+      "items": {
+        "type": "object",
+        "properties": {
+          "categoryId": {
+            "type": "string",
+            "description": "Category Id"
+          },
+          "categoryGroup": {
+            "type": "string",
+            "description": "Category group where the category group belongs to"
+          }
+        },
+        "additionalProperties": true
+      },
+      "required": [
+        "categoryId",
+        "categoryGroup"
+      ],
+      "additionalProperties": false
+    },
+    "total": {
+      "type": "object",
+      "description": "Total outgoing expenditure for the given periods. This calculation do not include income and transfers",
+      "properties": {},
+      "additionalProperties": true
+    }
+  },
+  "required": [
+    "categories",
+    "total"
+  ],
+  "additionalProperties": false
+}

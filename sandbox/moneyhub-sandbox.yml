@@ -1,5 +1,7 @@
 generated: '2026-07-24'
 method: searched
+description: Sandbox built on mock financial institutions and test API users, with payment behaviour driven by magic payment-reference values.
+docs: https://docs.moneyhubenterprise.com/docs/test-our-api
 source: https://docs.moneyhubenterprise.com/docs/test-our-api
 note: >-
   Moneyhub ships a full sandbox built on mock financial institutions (API/Open

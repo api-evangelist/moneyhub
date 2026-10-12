@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-affordability-income-schema.json",
+  "title": "AffordabilityIncome",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/AffordabilityIncome",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "description": "The timestamp at which the report was generated",
+      "type": "string"
+    },
+    "id": {
+      "description": "The report id",
+      "type": "string"
+    },
+    "income": {
+      "type": "object",
+      "properties": {
+        "amountConsistency": {
+          "description": "Consistency of monthly income, as a number between 0 and 1",
+          "type": "number"
+        },
+        "longevity": {
+          "type": "object",
+          "properties": {
+            "consecutiveIncomeMonths": {
+              "description": "Longevity of income detected in number of months",
+              "type": "number"
+            },
+            "incomePeriodLengthMonths": {
+              "description": "The number of months of transaction history available for the income detection process",
+              "type": "number"
+            }
+          }
+        },
+        "predicted": {
+          "description": "The predicted monthly income amount",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "regularIncomeDetected": {
+          "description": "Whether or not regular income was detected",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "amountConsistency",
+        "longevity",
+        "predicted",
+        "regularIncomeDetected"
+      ]
+    },
+    "overview": {
+      "type": "object",
+      "properties": {
+        "income": {
+          "description": "The median monthly income",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "incomeIncludingTransfers": {
+          "description": "The median monthly income including incoming transfers when incoming transfers exceed outgoing transfers",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        }
+      },
+      "required": [
+        "income"
+      ]
+    },
+    "primaryIncomeAccountId": {
+      "description": "The account id of the detected primary income account",
+      "type": "string"
+    }
+  },
+  "required": [
+    "createdAt",
+    "id"
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-rental-records-post-schema.json",
+  "title": "RentalRecordsPost",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-rental-records-api-openapi.yml#/components/schemas/RentalRecordsPost",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title of the user the rental record belongs to.",
+      "maxLength": 5
+    },
+    "firstName": {
+      "type": "string",
+      "description": "First name of the user the rental record belongs to."
+    },
+    "lastName": {
+      "type": "string",
+      "description": "Last name of the user the rental record belongs to."
+    },
+    "birthdate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of birth of the user the rental record belongs to.",
+      "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}$"
+    },
+    "addressLine1": {
+      "type": "string",
+      "description": "First line of the rented address."
+    },
+    "addressLine2": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Second line of the rented address."
+    },
+    "addressLine3": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Third line of the rented address."
+    },
+    "addressLine4": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Fourth line of the rented address."
+    },
+    "postalCode": {
+      "type": "string",
+      "description": "Postal code of rented address.",
+      "maxLength": 8,
+      "pattern": "^[a-zA-Z0-9- ]+$"
+    },
+    "tenancyStartDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Start date of the tenancy agreement.",
+      "pattern": "^\\d{4}-\\d{1,2}-\\d{1,2}$"
+    },
+    "rentalAmount": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number",
+          "description": "The amount of the regular rental transactions in minor units of the currency e.g. pennies for GBP."
+        }
+      },
+      "description": "The value of the balance in minor units of the currency, eg. pennies for GBP."
+    },
+    "rentalFrequency": {
+      "type": "string",
+      "enum": [
+        "weekly",
+        "fortnightly",
+        "monthly"
+      ],
+      "description": "Frequency of the rental payments e.g. monthly."
+    },
+    "seriesId": {
+      "type": "string",
+      "description": "The unique identity of the regular transaction series."
+    }
+  },
+  "required": [
+    "firstName",
+    "lastName",
+    "birthdate",
+    "addressLine1",
+    "postalCode",
+    "tenancyStartDate",
+    "rentalAmount",
+    "rentalFrequency",
+    "seriesId"
+  ]
+}

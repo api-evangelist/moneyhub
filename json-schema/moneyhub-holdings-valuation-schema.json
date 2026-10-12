@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-holdings-valuation-schema.json",
+  "title": "HoldingsValuation",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-holdings-api-openapi.yml#/components/schemas/HoldingsValuation",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "date": {
+      "description": "Date of the valuation",
+      "format": "date",
+      "type": "string"
+    },
+    "items": {
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique identity of the holding.",
+            "type": "string"
+          },
+          "codes": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "type": {
+                  "enum": [
+                    "ISIN",
+                    "SEDOL",
+                    "MEX"
+                  ],
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "description": {
+            "type": "string"
+          },
+          "quantity": {
+            "description": "The total number of units. This value reflects the quantity of the holding in its local currency context and is used to calculate the total value as unitPrice * quantity.",
+            "type": "number"
+          },
+          "total": {
+            "properties": {
+              "value": {
+                "description": "The total value of the holding in minor units of the currency (e.g. pence for GBP).",
+                "type": "number"
+              },
+              "currency": {
+                "description": "The currency of the total.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "currency"
+            ],
+            "type": "object"
+          },
+          "unitPrice": {
+            "properties": {
+              "value": {
+                "description": "The price per unit in minor units of the holding. Provided by the holdings data source in its original currency.",
+                "type": "number"
+              },
+              "currency": {
+                "description": "The currency of the unit price.",
+                "type": "string"
+              }
+            },
+            "required": [
+              "value",
+              "currency"
+            ],
+            "type": "object"
+          },
+          "costBasis": {
+            "description": "In a one-off security purchase, the cost basis is the quantity acquired multiplied by the price paid per unit plus any commission. In the event the same position is acquired in different lots on different days at different prices, the sum total of the cost incurred is divided by the total units acquired to arrive at the average cost basis.",
+            "type": "number"
+          },
+          "currency": {
+            "description": "The currency of the holding",
+            "type": "string"
+          }
+        },
+        "required": [
+          "description",
+          "quantity",
+          "unitPrice",
+          "total",
+          "codes"
+        ]
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "date",
+    "items"
+  ]
+}

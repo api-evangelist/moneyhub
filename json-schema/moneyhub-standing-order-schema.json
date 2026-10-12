@@ -1,0 +1,186 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-standing-order-schema.json",
+  "title": "StandingOrder",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-standing-orders-api-openapi.yml#/components/schemas/StandingOrder",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique identity of the standing order",
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "Active",
+        "Inactive"
+      ],
+      "type": "string"
+    },
+    "reference": {
+      "description": "The name or description given to the standing order",
+      "type": "string"
+    },
+    "frequency": {
+      "additionalProperties": false,
+      "properties": {
+        "repeat": {
+          "enum": [
+            "Daily",
+            "Weekly",
+            "Monthly",
+            "Quarterly",
+            "Yearly"
+          ],
+          "type": "string"
+        },
+        "day": {
+          "description": "The number of the day on which to repeat the payment",
+          "type": "number"
+        },
+        "week": {
+          "description": "The number of the week on which to repeat the payment",
+          "type": "number"
+        },
+        "month": {
+          "description": "The number of the month on which to repeat the payment",
+          "type": "number"
+        },
+        "onlyWorkDays": {
+          "description": "Specifies whether the payment should only be made on working days",
+          "type": "boolean"
+        },
+        "region": {
+          "description": "The region for dates of quarterly payments",
+          "enum": [
+            "ENGLISH",
+            "SCOTTISH",
+            "RECEIVED"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "repeat"
+      ],
+      "type": "object"
+    },
+    "numberOfPayments": {
+      "description": "The number of recurring payments to complete the standing order",
+      "type": "number"
+    },
+    "firstPaymentDate": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "nextPaymentDate": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "finalPaymentDate": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "firstPaymentAmount": {
+      "description": "The value of the first payment in minor units of the currency, eg. pennies for GBP.",
+      "properties": {
+        "value": {
+          "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the amount",
+          "type": "string"
+        }
+      }
+    },
+    "nextPaymentAmount": {
+      "description": "The value of the next payment in minor units of the currency, eg. pennies for GBP.",
+      "properties": {
+        "value": {
+          "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the amount",
+          "type": "string"
+        }
+      }
+    },
+    "finalPaymentAmount": {
+      "description": "The value of the final payment in minor units of the currency, eg. pennies for GBP.",
+      "properties": {
+        "value": {
+          "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the amount",
+          "type": "string"
+        }
+      }
+    },
+    "currency": {
+      "description": "The currency of the standing order",
+      "type": "string"
+    },
+    "payee": {
+      "additionalProperties": false,
+      "description": "The details to identify the beneficiary account. It requires the **standing_orders_detail:read** scope.",
+      "properties": {
+        "name": {
+          "description": "The name or names of the account owner(s)",
+          "type": "string"
+        },
+        "sortCodeAccountNumber": {
+          "description": "For cash accounts. Populated with the 6 digit Sort Code and 8 digit Account Number.",
+          "type": "string",
+          "maxLength": 20,
+          "minLength": 14
+        },
+        "iban": {
+          "description": "For cash accounts. Populated with the full IBAN number.",
+          "type": "string",
+          "maxLength": 34,
+          "minLength": 18
+        },
+        "pan": {
+          "description": "For card accounts. Populated with the Primary Account Number.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "id",
+    "frequency"
+  ]
+}

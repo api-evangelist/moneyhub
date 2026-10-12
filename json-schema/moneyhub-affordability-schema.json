@@ -1,0 +1,2202 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-affordability-schema.json",
+  "title": "Affordability",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/Affordability",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "description": "The timestamp at which the report was generated",
+      "type": "string"
+    },
+    "id": {
+      "description": "The report id",
+      "type": "string"
+    },
+    "income": {
+      "type": "object",
+      "properties": {
+        "amountConsistency": {
+          "description": "Consistency of monthly income, as a number between 0 and 1",
+          "type": "number"
+        },
+        "longevity": {
+          "type": "object",
+          "properties": {
+            "consecutiveIncomeMonths": {
+              "description": "Longevity of income detected in number of months",
+              "type": "number"
+            },
+            "incomePeriodLengthMonths": {
+              "description": "The number of months of transaction history available for the income detection process",
+              "type": "number"
+            }
+          }
+        },
+        "predicted": {
+          "description": "The predicted monthly income amount",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "regularIncomeDetected": {
+          "description": "Whether or not regular income was detected",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "amountConsistency",
+        "longevity",
+        "predicted",
+        "regularIncomeDetected"
+      ]
+    },
+    "overdraftUseByAccount": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The account id",
+            "type": "string"
+          },
+          "daysInOverdraft": {
+            "description": "The total number of days the account was overdrawn according to the account balance",
+            "type": "number"
+          },
+          "daysInUnarrangedOverdraft": {
+            "description": "The total number of days the account was in unarranged overdraft according to the account balance. If we were not provided with an overdraft limit by the account provider, we assume any negative balance is unarranged overdraft",
+            "type": "number"
+          },
+          "earliestBalanceDate": {
+            "description": "The earliest available balance date for the account",
+            "type": "string"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "days": {
+                  "description": "The number of days the account was overdrawn during the period",
+                  "type": "number"
+                },
+                "start": {
+                  "description": "The start date of the period",
+                  "type": "string"
+                },
+                "end": {
+                  "description": "The end date of the period",
+                  "type": "string"
+                },
+                "minimumBalance": {
+                  "description": "The minimum balance of the account during the period",
+                  "additionalProperties": false,
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                      "type": "integer"
+                    },
+                    "majorUnits": {
+                      "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                      "type": "integer"
+                    },
+                    "minorUnits": {
+                      "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                      "type": "integer"
+                    },
+                    "currency": {
+                      "description": "The currency of the amount",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "currency"
+                  ]
+                },
+                "unarrangedOverdraft": {
+                  "type": "object",
+                  "properties": {
+                    "days": {
+                      "description": "The total number of days the account was in unarranged overdraft according to the account balance during the period",
+                      "type": "number"
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "days": {
+                            "description": "The number of days the account was in unarranged overdraft during the unarranged overdraft period",
+                            "type": "number"
+                          },
+                          "start": {
+                            "description": "The start date of the unarranged overdraft period",
+                            "type": "string"
+                          },
+                          "end": {
+                            "description": "The end date of the unarranged overdraft period",
+                            "type": "string"
+                          },
+                          "minimumBalance": {
+                            "description": "The minimum balance of the account during the unarranged overdraft period",
+                            "additionalProperties": false,
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                "type": "integer"
+                              },
+                              "majorUnits": {
+                                "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                "type": "integer"
+                              },
+                              "minorUnits": {
+                                "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                "type": "integer"
+                              },
+                              "currency": {
+                                "description": "The currency of the amount",
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "value",
+                              "currency"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "days",
+                          "start",
+                          "end",
+                          "minimumBalance"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "days",
+                    "details"
+                  ]
+                }
+              },
+              "required": [
+                "days",
+                "end",
+                "minimumBalance",
+                "start"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "daysInOverdraft",
+          "earliestBalanceDate"
+        ]
+      }
+    },
+    "overview": {
+      "type": "object",
+      "properties": {
+        "discretionaryExpenses": {
+          "description": "The median monthly discretionary spend",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "fixedExpenses": {
+          "description": "The median monthly fixed spend",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "flexibleExpenses": {
+          "description": "The median monthly flexible spend",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "income": {
+          "description": "The median monthly income",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "incomeIncludingTransfers": {
+          "description": "The median monthly income including incoming transfers when incoming transfers exceed outgoing transfers",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "nonDiscretionaryExpenses": {
+          "description": "The median monthly non-discretionary spend",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        }
+      },
+      "required": [
+        "discretionaryExpenses",
+        "fixedExpenses",
+        "flexibleExpenses",
+        "income",
+        "nonDiscretionaryExpenses"
+      ]
+    },
+    "primaryIncomeAccountId": {
+      "description": "The account id of the detected primary income account",
+      "type": "string"
+    },
+    "riskIndicators": {
+      "type": "object",
+      "properties": {
+        "cashWithdrawals": {
+          "description": "The median monthly cash withdrawal amount",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "gambling": {
+          "description": "The median monthly gambling spend",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "loansOpened": {
+          "type": "object",
+          "properties": {
+            "byPeriod": {
+              "type": "object",
+              "properties": {
+                "30days": {
+                  "type": "object",
+                  "properties": {
+                    "byType": {
+                      "type": "object",
+                      "properties": {
+                        "bnpl": {
+                          "description": "Total number of Buy Now Pay Later loans opened within the period",
+                          "type": "number"
+                        },
+                        "hcstc": {
+                          "description": "Total number of high cost short term credit loans opened within the period",
+                          "type": "number"
+                        },
+                        "dca/dmp": {
+                          "description": "Total number of debt collection agency and debt management plan loans opened within the period",
+                          "type": "number"
+                        },
+                        "secured": {
+                          "description": "Total number of secured loans opened within the period",
+                          "type": "number"
+                        },
+                        "unknown": {
+                          "description": "Total number of loans with an unknown type opened within the period",
+                          "type": "number"
+                        },
+                        "unsecured": {
+                          "description": "Total number of unsecured loans opened within the period",
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "totalByType": {
+                      "type": "object",
+                      "properties": {
+                        "bnpl": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using Buy Now Pay Later loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on Buy Now Pay Later loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "hcstc": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using high cost short term credit loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on high cost short term credit loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "dca/dmp": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using debt collection agency and debt management plans loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on debt collection agency and debt management plans loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "secured": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using secured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on secured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "unknown": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using loans of unknown type within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on loans of unknown type within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "unsecured": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using unsecured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on unsecured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "90days": {
+                  "type": "object",
+                  "properties": {
+                    "byType": {
+                      "type": "object",
+                      "properties": {
+                        "bnpl": {
+                          "description": "Total number of Buy Now Pay Later loans opened within the period",
+                          "type": "number"
+                        },
+                        "hcstc": {
+                          "description": "Total number of high cost short term credit loans opened within the period",
+                          "type": "number"
+                        },
+                        "dca/dmp": {
+                          "description": "Total number of debt collection agency and debt management plan loans opened within the period",
+                          "type": "number"
+                        },
+                        "secured": {
+                          "description": "Total number of secured loans opened within the period",
+                          "type": "number"
+                        },
+                        "unknown": {
+                          "description": "Total number of loans with an unknown type opened within the period",
+                          "type": "number"
+                        },
+                        "unsecured": {
+                          "description": "Total number of unsecured loans opened within the period",
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "totalByType": {
+                      "type": "object",
+                      "properties": {
+                        "bnpl": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using Buy Now Pay Later loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on Buy Now Pay Later loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "hcstc": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using high cost short term credit loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on high cost short term credit loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "dca/dmp": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using debt collection agency and debt management plans loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on debt collection agency and debt management plans loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "secured": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using secured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on secured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "unknown": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using loans of unknown type within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on loans of unknown type within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "unsecured": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using unsecured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on unsecured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "180days": {
+                  "type": "object",
+                  "properties": {
+                    "byType": {
+                      "type": "object",
+                      "properties": {
+                        "bnpl": {
+                          "description": "Total number of Buy Now Pay Later loans opened within the period",
+                          "type": "number"
+                        },
+                        "hcstc": {
+                          "description": "Total number of high cost short term credit loans opened within the period",
+                          "type": "number"
+                        },
+                        "dca/dmp": {
+                          "description": "Total number of debt collection agency and debt management plan loans opened within the period",
+                          "type": "number"
+                        },
+                        "secured": {
+                          "description": "Total number of secured loans opened within the period",
+                          "type": "number"
+                        },
+                        "unknown": {
+                          "description": "Total number of loans with an unknown type opened within the period",
+                          "type": "number"
+                        },
+                        "unsecured": {
+                          "description": "Total number of unsecured loans opened within the period",
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "totalByType": {
+                      "type": "object",
+                      "properties": {
+                        "bnpl": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using Buy Now Pay Later loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on Buy Now Pay Later loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "hcstc": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using high cost short term credit loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on high cost short term credit loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "dca/dmp": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using debt collection agency and debt management plans loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on debt collection agency and debt management plans loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "secured": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using secured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on secured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "unknown": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using loans of unknown type within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on loans of unknown type within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "unsecured": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using unsecured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on unsecured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "365days": {
+                  "type": "object",
+                  "properties": {
+                    "byType": {
+                      "type": "object",
+                      "properties": {
+                        "bnpl": {
+                          "description": "Total number of Buy Now Pay Later loans opened within the period",
+                          "type": "number"
+                        },
+                        "hcstc": {
+                          "description": "Total number of high cost short term credit loans opened within the period",
+                          "type": "number"
+                        },
+                        "dca/dmp": {
+                          "description": "Total number of debt collection agency and debt management plan loans opened within the period",
+                          "type": "number"
+                        },
+                        "secured": {
+                          "description": "Total number of secured loans opened within the period",
+                          "type": "number"
+                        },
+                        "unknown": {
+                          "description": "Total number of loans with an unknown type opened within the period",
+                          "type": "number"
+                        },
+                        "unsecured": {
+                          "description": "Total number of unsecured loans opened within the period",
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "totalByType": {
+                      "type": "object",
+                      "properties": {
+                        "bnpl": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using Buy Now Pay Later loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on Buy Now Pay Later loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "hcstc": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using high cost short term credit loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on high cost short term credit loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "dca/dmp": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using debt collection agency and debt management plans loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on debt collection agency and debt management plans loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "secured": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using secured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on secured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "unknown": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using loans of unknown type within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on loans of unknown type within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        },
+                        "unsecured": {
+                          "type": "object",
+                          "properties": {
+                            "borrowed": {
+                              "description": "Total amount borrowed using unsecured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            },
+                            "repaid": {
+                              "description": "Total amount repaid on unsecured loans within the period",
+                              "additionalProperties": false,
+                              "type": "object",
+                              "properties": {
+                                "value": {
+                                  "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                                  "type": "integer"
+                                },
+                                "majorUnits": {
+                                  "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                                  "type": "integer"
+                                },
+                                "minorUnits": {
+                                  "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                                  "type": "integer"
+                                },
+                                "currency": {
+                                  "description": "The currency of the amount",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "value",
+                                "currency"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "loanRepayments": {
+          "description": "The median monthly loan repayment amount",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "outgoingTransfers": {
+          "description": "The median monthly outgoing transfer amount",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "value": {
+              "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+              "type": "integer"
+            },
+            "majorUnits": {
+              "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+              "type": "integer"
+            },
+            "minorUnits": {
+              "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+              "type": "integer"
+            },
+            "currency": {
+              "description": "The currency of the amount",
+              "type": "string"
+            }
+          },
+          "required": [
+            "value",
+            "currency"
+          ]
+        },
+        "returnedDirectDebits": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "description": "The number of times a direct debit payment has been detected as returned",
+              "type": "number"
+            },
+            "details": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "category": {
+                    "type": "string",
+                    "description": "The category of the returned payments"
+                  },
+                  "count": {
+                    "description": "The number of returned payment transactions detected for the specified category and time period",
+                    "type": "number"
+                  },
+                  "period": {
+                    "type": "object",
+                    "properties": {
+                      "unit": {
+                        "type": "string",
+                        "description": "The type of time unit over which the returned payments were detected",
+                        "enum": [
+                          "days"
+                        ]
+                      },
+                      "value": {
+                        "description": "The number of time units over which the returned payments were detected",
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "unit",
+                      "value"
+                    ]
+                  },
+                  "total": {
+                    "type": "object",
+                    "properties": {
+                      "returned": {
+                        "description": "The total sum of the returned payments for the specified category and time period",
+                        "additionalProperties": false,
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "description": "The amount in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                            "type": "integer"
+                          },
+                          "majorUnits": {
+                            "description": "The positive major units of the value, based on the values currency, eg. pounds for GBP.",
+                            "type": "integer"
+                          },
+                          "minorUnits": {
+                            "description": "The positive minor units of the value, based on the values currency, eg. pennies for GBP.",
+                            "type": "integer"
+                          },
+                          "currency": {
+                            "description": "The currency of the amount",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "currency"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "returned"
+                    ]
+                  }
+                },
+                "required": [
+                  "category",
+                  "count",
+                  "period",
+                  "total"
+                ]
+              }
+            },
+            "periodMonths": {
+              "description": "The number of months of regular payment history detected",
+              "type": "number"
+            }
+          }
+        }
+      },
+      "required": [
+        "cashWithdrawals",
+        "gambling",
+        "loanRepayments",
+        "outgoingTransfers",
+        "returnedDirectDebits"
+      ]
+    }
+  },
+  "required": [
+    "createdAt",
+    "id"
+  ]
+}

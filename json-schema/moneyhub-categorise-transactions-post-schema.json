@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-categorise-transactions-post-schema.json",
+  "title": "CategoriseTransactionsPost",
+  "description": "Transactions to categorised for a given account.",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-categorise-transactions-api-openapi.yml#/components/schemas/CategoriseTransactionsPost",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "accountType": {
+      "description": "Type of account, defaults to 'cash' if no value is provided",
+      "type": "string",
+      "enum": [
+        "cash",
+        "card",
+        "savings",
+        "pension",
+        "investment"
+      ],
+      "default": "cash"
+    },
+    "accountId": {
+      "description": "The id of the account the transaction belongs to. Defaults to random uuid if no value is provided",
+      "type": "string",
+      "maxLength": 64
+    },
+    "transactions": {
+      "type": "array",
+      "items": {
+        "additionalProperties": false,
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The unique id of the transaction (can be any unique identifier). Defaults to random uuid if no value is provided",
+            "type": "string",
+            "maxLength": 64
+          },
+          "description": {
+            "description": "The full text description of the transactions - often as it is represented on the users bank statement",
+            "type": "string",
+            "maxLength": 512
+          },
+          "amount": {
+            "properties": {
+              "value": {
+                "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "value"
+            ],
+            "type": "object"
+          },
+          "date": {
+            "description": "Date of the transaction in ISO 8601 format (YYYY-MM-DDTHH:MM:SSZ)",
+            "type": "string",
+            "format": "date-time"
+          },
+          "proprietaryTransactionCode": {
+            "description": "Unique identifier used by the financial institution to categorize a given transaction",
+            "type": "string",
+            "maxLength": 64
+          },
+          "merchantCategoryCode": {
+            "description": "A 4-digit Merchant Category Code (MCC) defined by ISO 18245. This code identifies the type of business or service provided by the merchant. Examples include '5411' (Grocery Stores), '5812' (Eating Places and Restaurants), and '5999' (Miscellaneous Retail Stores).",
+            "type": "string",
+            "maxLength": 4
+          }
+        },
+        "required": [
+          "description",
+          "amount",
+          "date"
+        ]
+      }
+    }
+  },
+  "required": [
+    "transactions"
+  ]
+}

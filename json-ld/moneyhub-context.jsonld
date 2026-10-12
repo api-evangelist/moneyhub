@@ -1,0 +1,793 @@
+{
+  "@context": {
+    "@vocab": "https://moneyhub.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "moneyhub": "https://moneyhub.com/schema#",
+    "AccountPatch": "moneyhub:AccountPatch",
+    "accountName": {
+      "@id": "moneyhub:accountName",
+      "@type": "xsd:string"
+    },
+    "providerName": {
+      "@id": "moneyhub:providerName",
+      "@type": "xsd:string"
+    },
+    "details": {
+      "@id": "moneyhub:details"
+    },
+    "Error": "moneyhub:Error",
+    "code": {
+      "@id": "moneyhub:code",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "moneyhub:message",
+      "@type": "xsd:string"
+    },
+    "correlationId": {
+      "@id": "moneyhub:correlationId",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "moneyhub:id",
+      "@type": "xsd:string"
+    },
+    "userId": {
+      "@id": "moneyhub:userId",
+      "@type": "xsd:string"
+    },
+    "Links": "moneyhub:Links",
+    "next": {
+      "@id": "moneyhub:next",
+      "@type": "@id"
+    },
+    "prev": {
+      "@id": "moneyhub:prev",
+      "@type": "@id"
+    },
+    "self": {
+      "@id": "moneyhub:self",
+      "@type": "@id"
+    },
+    "AccountPost": "moneyhub:AccountPost",
+    "currency": {
+      "@id": "moneyhub:currency",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "moneyhub:type",
+      "@type": "xsd:string"
+    },
+    "accountType": {
+      "@id": "moneyhub:accountType",
+      "@type": "xsd:string"
+    },
+    "balance": {
+      "@id": "moneyhub:balance"
+    },
+    "providerAccountIdentifications": {
+      "@id": "moneyhub:providerAccountIdentifications",
+      "@container": "@list"
+    },
+    "Account": "moneyhub:Account",
+    "transactionData": {
+      "@id": "moneyhub:transactionData"
+    },
+    "dateAdded": {
+      "@id": "moneyhub:dateAdded",
+      "@type": "xsd:dateTime"
+    },
+    "dateModified": {
+      "@id": "moneyhub:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "providerReference": {
+      "@id": "moneyhub:providerReference",
+      "@type": "xsd:string"
+    },
+    "connectionId": {
+      "@id": "moneyhub:connectionId",
+      "@type": "xsd:string"
+    },
+    "providerId": {
+      "@id": "moneyhub:providerId",
+      "@type": "xsd:string"
+    },
+    "providerAccountId": {
+      "@id": "moneyhub:providerAccountId",
+      "@type": "xsd:string"
+    },
+    "providerParentAccountId": {
+      "@id": "moneyhub:providerParentAccountId",
+      "@type": "xsd:string"
+    },
+    "providerAccountName": {
+      "@id": "moneyhub:providerAccountName",
+      "@type": "xsd:string"
+    },
+    "accountReference": {
+      "@id": "moneyhub:accountReference",
+      "@type": "xsd:string"
+    },
+    "accountHolderName": {
+      "@id": "moneyhub:accountHolderName",
+      "@type": "xsd:string"
+    },
+    "accountOpeningDate": {
+      "@id": "moneyhub:accountOpeningDate",
+      "@type": "xsd:dateTime"
+    },
+    "productName": {
+      "@id": "moneyhub:productName",
+      "@type": "xsd:string"
+    },
+    "performanceScore": {
+      "@id": "moneyhub:performanceScore"
+    },
+    "additionalBalances": {
+      "@id": "moneyhub:additionalBalances",
+      "@container": "@list"
+    },
+    "RecurringTransactionEstimate": "moneyhub:RecurringTransactionEstimate",
+    "counterpartyId": {
+      "@id": "moneyhub:counterpartyId",
+      "@type": "xsd:string"
+    },
+    "amount": {
+      "@id": "moneyhub:amount"
+    },
+    "amountRange": {
+      "@id": "moneyhub:amountRange"
+    },
+    "monthlyAmount": {
+      "@id": "moneyhub:monthlyAmount"
+    },
+    "predictionSource": {
+      "@id": "moneyhub:predictionSource",
+      "@type": "xsd:string"
+    },
+    "monthlyAverageOnly": {
+      "@id": "moneyhub:monthlyAverageOnly",
+      "@type": "xsd:boolean"
+    },
+    "dates": {
+      "@id": "moneyhub:dates",
+      "@container": "@list"
+    },
+    "BalancePost": "moneyhub:BalancePost",
+    "date": {
+      "@id": "moneyhub:date",
+      "@type": "xsd:date"
+    },
+    "Balance": "moneyhub:Balance",
+    "AccountSync": "moneyhub:AccountSync",
+    "accountId": {
+      "@id": "moneyhub:accountId",
+      "@type": "xsd:string"
+    },
+    "lastSuccessfulSync": {
+      "@id": "moneyhub:lastSuccessfulSync",
+      "@type": "xsd:dateTime"
+    },
+    "AffordabilityPost": "moneyhub:AffordabilityPost",
+    "externalUserId": {
+      "@id": "moneyhub:externalUserId",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "moneyhub:name",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "moneyhub:email",
+      "@type": "xsd:string"
+    },
+    "Affordability": "moneyhub:Affordability",
+    "createdAt": {
+      "@id": "moneyhub:createdAt",
+      "@type": "xsd:string"
+    },
+    "income": {
+      "@id": "moneyhub:income"
+    },
+    "overdraftUseByAccount": {
+      "@id": "moneyhub:overdraftUseByAccount",
+      "@container": "@list"
+    },
+    "overview": {
+      "@id": "moneyhub:overview"
+    },
+    "primaryIncomeAccountId": {
+      "@id": "moneyhub:primaryIncomeAccountId",
+      "@type": "xsd:string"
+    },
+    "riskIndicators": {
+      "@id": "moneyhub:riskIndicators"
+    },
+    "AffordabilityConfidence": "moneyhub:AffordabilityConfidence",
+    "confidence": {
+      "@id": "moneyhub:confidence",
+      "@type": "xsd:string"
+    },
+    "AffordabilityIncome": "moneyhub:AffordabilityIncome",
+    "AffordabilityIncomeMetadata": "moneyhub:AffordabilityIncomeMetadata",
+    "AffordabilityMetadata": "moneyhub:AffordabilityMetadata",
+    "AffordabilityIncomePost": "moneyhub:AffordabilityIncomePost",
+    "Beneficiary": "moneyhub:Beneficiary",
+    "active": {
+      "@id": "moneyhub:active",
+      "@type": "xsd:boolean"
+    },
+    "reference": {
+      "@id": "moneyhub:reference",
+      "@type": "xsd:string"
+    },
+    "accountNumber": {
+      "@id": "moneyhub:accountNumber",
+      "@type": "xsd:string"
+    },
+    "sortCode": {
+      "@id": "moneyhub:sortCode",
+      "@type": "xsd:string"
+    },
+    "iban": {
+      "@id": "moneyhub:iban",
+      "@type": "xsd:string"
+    },
+    "pan": {
+      "@id": "moneyhub:pan",
+      "@type": "xsd:string"
+    },
+    "providerBeneficiaryId": {
+      "@id": "moneyhub:providerBeneficiaryId",
+      "@type": "xsd:string"
+    },
+    "postalAddress": {
+      "@id": "moneyhub:postalAddress"
+    },
+    "modifiedAt": {
+      "@id": "moneyhub:modifiedAt",
+      "@type": "xsd:dateTime"
+    },
+    "CategoryPost": "moneyhub:CategoryPost",
+    "group": {
+      "@id": "moneyhub:group",
+      "@type": "xsd:string"
+    },
+    "Category": "moneyhub:Category",
+    "categoryId": {
+      "@id": "moneyhub:categoryId",
+      "@type": "xsd:string"
+    },
+    "key": {
+      "@id": "moneyhub:key",
+      "@type": "xsd:string"
+    },
+    "CategoryGroup": "moneyhub:CategoryGroup",
+    "CategoriseTransactions": "moneyhub:CategoriseTransactions",
+    "transactions": {
+      "@id": "moneyhub:transactions",
+      "@container": "@list"
+    },
+    "failedCategorisationIds": {
+      "@id": "moneyhub:failedCategorisationIds",
+      "@container": "@list"
+    },
+    "CategoriseTransactionsPost": "moneyhub:CategoriseTransactionsPost",
+    "GlobalCounterpartyV3": "moneyhub:GlobalCounterpartyV3",
+    "parentId": {
+      "@id": "moneyhub:parentId",
+      "@type": "xsd:string"
+    },
+    "parentName": {
+      "@id": "moneyhub:parentName",
+      "@type": "xsd:string"
+    },
+    "fullCompanyName": {
+      "@id": "moneyhub:fullCompanyName",
+      "@type": "xsd:string"
+    },
+    "logoUrl": {
+      "@id": "moneyhub:logoUrl",
+      "@type": "xsd:string"
+    },
+    "website": {
+      "@id": "moneyhub:website",
+      "@type": "xsd:string"
+    },
+    "merchantCategoryCode": {
+      "@id": "moneyhub:merchantCategoryCode",
+      "@type": "xsd:string"
+    },
+    "merchantCategoryDescription": {
+      "@id": "moneyhub:merchantCategoryDescription",
+      "@type": "xsd:string"
+    },
+    "registeredLocation": {
+      "@id": "moneyhub:registeredLocation",
+      "@type": "xsd:string"
+    },
+    "analyticalCategory": {
+      "@id": "moneyhub:analyticalCategory",
+      "@type": "xsd:string"
+    },
+    "transactionCategoryId": {
+      "@id": "moneyhub:transactionCategoryId",
+      "@type": "xsd:string"
+    },
+    "transactionCategory": {
+      "@id": "moneyhub:transactionCategory",
+      "@type": "xsd:string"
+    },
+    "Counterparty": "moneyhub:Counterparty",
+    "label": {
+      "@id": "moneyhub:label",
+      "@type": "xsd:string"
+    },
+    "companyName": {
+      "@id": "moneyhub:companyName",
+      "@type": "xsd:string"
+    },
+    "logo": {
+      "@id": "moneyhub:logo",
+      "@type": "xsd:string"
+    },
+    "mcc": {
+      "@id": "moneyhub:mcc"
+    },
+    "HoldingWithMatchesAndHistory": "moneyhub:HoldingWithMatchesAndHistory",
+    "history": {
+      "@id": "moneyhub:history",
+      "@container": "@list"
+    },
+    "matched": {
+      "@id": "moneyhub:matched",
+      "@container": "@list"
+    },
+    "codes": {
+      "@id": "moneyhub:codes",
+      "@container": "@list"
+    },
+    "quantity": {
+      "@id": "moneyhub:quantity",
+      "@type": "xsd:decimal"
+    },
+    "total": {
+      "@id": "moneyhub:total"
+    },
+    "unitPrice": {
+      "@id": "moneyhub:unitPrice"
+    },
+    "costBasis": {
+      "@id": "moneyhub:costBasis",
+      "@type": "xsd:decimal"
+    },
+    "HoldingWithMatches": "moneyhub:HoldingWithMatches",
+    "HoldingsValuation": "moneyhub:HoldingsValuation",
+    "items": {
+      "@id": "moneyhub:items",
+      "@container": "@list"
+    },
+    "NotificationThresholdPost": "moneyhub:NotificationThresholdPost",
+    "value": {
+      "@id": "moneyhub:value",
+      "@type": "xsd:integer"
+    },
+    "NotificationThreshold": "moneyhub:NotificationThreshold",
+    "ProjectPatch": "moneyhub:ProjectPatch",
+    "accountIds": {
+      "@id": "moneyhub:accountIds",
+      "@container": "@list"
+    },
+    "archived": {
+      "@id": "moneyhub:archived",
+      "@type": "xsd:boolean"
+    },
+    "Project": "moneyhub:Project",
+    "dateCreated": {
+      "@id": "moneyhub:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "ProjectPost": "moneyhub:ProjectPost",
+    "RegularTransactions": "moneyhub:RegularTransactions",
+    "seriesId": {
+      "@id": "moneyhub:seriesId",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "moneyhub:description",
+      "@type": "xsd:string"
+    },
+    "cleanedDescription": {
+      "@id": "moneyhub:cleanedDescription",
+      "@type": "xsd:string"
+    },
+    "frequency": {
+      "@id": "moneyhub:frequency",
+      "@type": "xsd:string"
+    },
+    "numTxMatchedInSeries": {
+      "@id": "moneyhub:numTxMatchedInSeries",
+      "@type": "xsd:integer"
+    },
+    "gapLengthInFreqUnits": {
+      "@id": "moneyhub:gapLengthInFreqUnits",
+      "@type": "xsd:integer"
+    },
+    "dateAnomaliesCount": {
+      "@id": "moneyhub:dateAnomaliesCount",
+      "@type": "xsd:integer"
+    },
+    "numReturnedTxs": {
+      "@id": "moneyhub:numReturnedTxs",
+      "@type": "xsd:integer"
+    },
+    "lastDate": {
+      "@id": "moneyhub:lastDate",
+      "@type": "xsd:date"
+    },
+    "predictedDate": {
+      "@id": "moneyhub:predictedDate",
+      "@type": "xsd:date"
+    },
+    "predictedDateEarliest": {
+      "@id": "moneyhub:predictedDateEarliest",
+      "@type": "xsd:date"
+    },
+    "predictedDateLatest": {
+      "@id": "moneyhub:predictedDateLatest",
+      "@type": "xsd:date"
+    },
+    "predictedTxLateOrNotDetected": {
+      "@id": "moneyhub:predictedTxLateOrNotDetected",
+      "@type": "xsd:boolean"
+    },
+    "predictedAmount": {
+      "@id": "moneyhub:predictedAmount"
+    },
+    "predictedAmountLower": {
+      "@id": "moneyhub:predictedAmountLower"
+    },
+    "predictedAmountUpper": {
+      "@id": "moneyhub:predictedAmountUpper"
+    },
+    "predictedCategoryId": {
+      "@id": "moneyhub:predictedCategoryId",
+      "@type": "xsd:string"
+    },
+    "RentalRecordsPost": "moneyhub:RentalRecordsPost",
+    "title": {
+      "@id": "moneyhub:title",
+      "@type": "xsd:string"
+    },
+    "firstName": {
+      "@id": "moneyhub:firstName",
+      "@type": "xsd:string"
+    },
+    "lastName": {
+      "@id": "moneyhub:lastName",
+      "@type": "xsd:string"
+    },
+    "birthdate": {
+      "@id": "moneyhub:birthdate",
+      "@type": "xsd:date"
+    },
+    "addressLine1": {
+      "@id": "moneyhub:addressLine1",
+      "@type": "xsd:string"
+    },
+    "addressLine2": {
+      "@id": "moneyhub:addressLine2",
+      "@type": "xsd:string"
+    },
+    "addressLine3": {
+      "@id": "moneyhub:addressLine3",
+      "@type": "xsd:string"
+    },
+    "addressLine4": {
+      "@id": "moneyhub:addressLine4",
+      "@type": "xsd:string"
+    },
+    "postalCode": {
+      "@id": "moneyhub:postalCode",
+      "@type": "xsd:string"
+    },
+    "tenancyStartDate": {
+      "@id": "moneyhub:tenancyStartDate",
+      "@type": "xsd:date"
+    },
+    "rentalAmount": {
+      "@id": "moneyhub:rentalAmount"
+    },
+    "rentalFrequency": {
+      "@id": "moneyhub:rentalFrequency",
+      "@type": "xsd:string"
+    },
+    "RentalRecords": "moneyhub:RentalRecords",
+    "lastSubmittedDate": {
+      "@id": "moneyhub:lastSubmittedDate",
+      "@type": "xsd:date"
+    },
+    "consentApprovedAt": {
+      "@id": "moneyhub:consentApprovedAt",
+      "@type": "xsd:dateTime"
+    },
+    "SavingsGoalsPost": "moneyhub:SavingsGoalsPost",
+    "imageUrl": {
+      "@id": "moneyhub:imageUrl",
+      "@type": "xsd:string"
+    },
+    "notes": {
+      "@id": "moneyhub:notes",
+      "@type": "xsd:string"
+    },
+    "targetDate": {
+      "@id": "moneyhub:targetDate",
+      "@type": "xsd:date"
+    },
+    "accounts": {
+      "@id": "moneyhub:accounts",
+      "@container": "@list"
+    },
+    "SavingsGoalsPatch": "moneyhub:SavingsGoalsPatch",
+    "SavingsGoals": "moneyhub:SavingsGoals",
+    "progressPercentage": {
+      "@id": "moneyhub:progressPercentage",
+      "@type": "xsd:decimal"
+    },
+    "progressAmount": {
+      "@id": "moneyhub:progressAmount"
+    },
+    "SpendingAnalysis": "moneyhub:SpendingAnalysis",
+    "categories": {
+      "@id": "moneyhub:categories",
+      "@container": "@list"
+    },
+    "SpendingAnalysisPost": "moneyhub:SpendingAnalysisPost",
+    "categoryIds": {
+      "@id": "moneyhub:categoryIds",
+      "@container": "@list"
+    },
+    "projectIds": {
+      "@id": "moneyhub:projectIds",
+      "@container": "@list"
+    },
+    "SpendingGoalPost": "moneyhub:SpendingGoalPost",
+    "periodType": {
+      "@id": "moneyhub:periodType",
+      "@type": "xsd:string"
+    },
+    "periodStart": {
+      "@id": "moneyhub:periodStart",
+      "@type": "xsd:string"
+    },
+    "SpendingGoalPatch": "moneyhub:SpendingGoalPatch",
+    "SpendingGoal": "moneyhub:SpendingGoal",
+    "spending": {
+      "@id": "moneyhub:spending",
+      "@container": "@list"
+    },
+    "StandardFinancialStatement": "moneyhub:StandardFinancialStatement",
+    "version": {
+      "@id": "moneyhub:version",
+      "@type": "xsd:string"
+    },
+    "StandardFinancialStatementsPost": "moneyhub:StandardFinancialStatementsPost",
+    "StandardFinancialStatementsMetadata": "moneyhub:StandardFinancialStatementsMetadata",
+    "requestedAt": {
+      "@id": "moneyhub:requestedAt",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "moneyhub:status",
+      "@type": "xsd:string"
+    },
+    "statusDetails": {
+      "@id": "moneyhub:statusDetails"
+    },
+    "StandingOrder": "moneyhub:StandingOrder",
+    "numberOfPayments": {
+      "@id": "moneyhub:numberOfPayments",
+      "@type": "xsd:decimal"
+    },
+    "firstPaymentDate": {
+      "@id": "moneyhub:firstPaymentDate",
+      "@type": "xsd:dateTime"
+    },
+    "nextPaymentDate": {
+      "@id": "moneyhub:nextPaymentDate",
+      "@type": "xsd:dateTime"
+    },
+    "finalPaymentDate": {
+      "@id": "moneyhub:finalPaymentDate",
+      "@type": "xsd:dateTime"
+    },
+    "firstPaymentAmount": {
+      "@id": "moneyhub:firstPaymentAmount"
+    },
+    "nextPaymentAmount": {
+      "@id": "moneyhub:nextPaymentAmount"
+    },
+    "finalPaymentAmount": {
+      "@id": "moneyhub:finalPaymentAmount"
+    },
+    "payee": {
+      "@id": "moneyhub:payee"
+    },
+    "Statement": "moneyhub:Statement",
+    "providerStatementId": {
+      "@id": "moneyhub:providerStatementId",
+      "@type": "xsd:string"
+    },
+    "startDate": {
+      "@id": "moneyhub:startDate",
+      "@type": "xsd:dateTime"
+    },
+    "endDate": {
+      "@id": "moneyhub:endDate",
+      "@type": "xsd:dateTime"
+    },
+    "creationDate": {
+      "@id": "moneyhub:creationDate",
+      "@type": "xsd:dateTime"
+    },
+    "benefits": {
+      "@id": "moneyhub:benefits",
+      "@container": "@list"
+    },
+    "fees": {
+      "@id": "moneyhub:fees",
+      "@container": "@list"
+    },
+    "interest": {
+      "@id": "moneyhub:interest",
+      "@container": "@list"
+    },
+    "amounts": {
+      "@id": "moneyhub:amounts",
+      "@container": "@list"
+    },
+    "rates": {
+      "@id": "moneyhub:rates",
+      "@container": "@list"
+    },
+    "values": {
+      "@id": "moneyhub:values",
+      "@container": "@list"
+    },
+    "totalValue": {
+      "@id": "moneyhub:totalValue"
+    },
+    "SyncPost": "moneyhub:SyncPost",
+    "customerIpAddress": {
+      "@id": "moneyhub:customerIpAddress",
+      "@type": "xsd:string"
+    },
+    "customerLastLoggedTime": {
+      "@id": "moneyhub:customerLastLoggedTime",
+      "@type": "xsd:string"
+    },
+    "enableAsync": {
+      "@id": "moneyhub:enableAsync",
+      "@type": "xsd:boolean"
+    },
+    "InternalError": "moneyhub:InternalError",
+    "statusCode": {
+      "@id": "moneyhub:statusCode",
+      "@type": "xsd:integer"
+    },
+    "Tax": "moneyhub:Tax",
+    "dateFrom": {
+      "@id": "moneyhub:dateFrom",
+      "@type": "xsd:date"
+    },
+    "dateTo": {
+      "@id": "moneyhub:dateTo",
+      "@type": "xsd:date"
+    },
+    "taxReturn": {
+      "@id": "moneyhub:taxReturn"
+    },
+    "Transaction": "moneyhub:Transaction",
+    "categoryIdConfirmed": {
+      "@id": "moneyhub:categoryIdConfirmed",
+      "@type": "xsd:boolean"
+    },
+    "valueDate": {
+      "@id": "moneyhub:valueDate",
+      "@type": "xsd:dateTime"
+    },
+    "longDescription": {
+      "@id": "moneyhub:longDescription",
+      "@type": "xsd:string"
+    },
+    "shortDescription": {
+      "@id": "moneyhub:shortDescription",
+      "@type": "xsd:string"
+    },
+    "projectId": {
+      "@id": "moneyhub:projectId",
+      "@type": "xsd:string"
+    },
+    "enhancedCategories": {
+      "@id": "moneyhub:enhancedCategories"
+    },
+    "splits": {
+      "@id": "moneyhub:splits",
+      "@container": "@list"
+    },
+    "transactionCode": {
+      "@id": "moneyhub:transactionCode"
+    },
+    "proprietaryTransactionCode": {
+      "@id": "moneyhub:proprietaryTransactionCode"
+    },
+    "balanceType": {
+      "@id": "moneyhub:balanceType",
+      "@type": "xsd:string"
+    },
+    "statementReference": {
+      "@id": "moneyhub:statementReference",
+      "@type": "xsd:string"
+    },
+    "merchantName": {
+      "@id": "moneyhub:merchantName",
+      "@type": "xsd:string"
+    },
+    "cardInstrument": {
+      "@id": "moneyhub:cardInstrument"
+    },
+    "creditorAccount": {
+      "@id": "moneyhub:creditorAccount"
+    },
+    "creditorAgent": {
+      "@id": "moneyhub:creditorAgent"
+    },
+    "debtorAccount": {
+      "@id": "moneyhub:debtorAccount"
+    },
+    "debtorAgent": {
+      "@id": "moneyhub:debtorAgent"
+    },
+    "transactionReference": {
+      "@id": "moneyhub:transactionReference",
+      "@type": "xsd:string"
+    },
+    "transactionInformation": {
+      "@id": "moneyhub:transactionInformation",
+      "@type": "xsd:string"
+    },
+    "TransactionUnenriched": "moneyhub:TransactionUnenriched",
+    "TransactionPatch": "moneyhub:TransactionPatch",
+    "TransactionSplitPost": "moneyhub:TransactionSplitPost",
+    "TransactionFile": "moneyhub:TransactionFile",
+    "fileType": {
+      "@id": "moneyhub:fileType",
+      "@type": "xsd:string"
+    },
+    "fileName": {
+      "@id": "moneyhub:fileName",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "moneyhub:url",
+      "@type": "xsd:string"
+    },
+    "TransactionPost": "moneyhub:TransactionPost",
+    "TransactionSplitPatch": "moneyhub:TransactionSplitPatch",
+    "TransactionSplit": "moneyhub:TransactionSplit"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Moneyhub API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Moneyhub's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-12) from openapi/moneyhub-accounts-api-openapi.yml, openapi/moneyhub-affordability-api-openapi.yml, openapi/moneyhub-beneficiaries-api-openapi.yml.",
+  "dcterms:created": "2026-10-12",
+  "dcterms:source": [
+    "openapi/moneyhub-accounts-api-openapi.yml",
+    "openapi/moneyhub-affordability-api-openapi.yml",
+    "openapi/moneyhub-beneficiaries-api-openapi.yml",
+    "openapi/moneyhub-categories-api-openapi.yml",
+    "openapi/moneyhub-categorise-transactions-api-openapi.yml"
+  ]
+}

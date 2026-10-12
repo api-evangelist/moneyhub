@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-regular-transactions-schema.json",
+  "title": "RegularTransactions",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-regular-transactions-api-openapi.yml#/components/schemas/RegularTransactions",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "seriesId": {
+      "description": "The unique identity of the series.",
+      "type": "string"
+    },
+    "accountId": {
+      "description": "The unique identity of the account.",
+      "type": "string"
+    },
+    "type": {
+      "description": "Whether the transaction is income or payment",
+      "type": "string",
+      "enum": [
+        "payment",
+        "income"
+      ]
+    },
+    "description": {
+      "description": "The full text description of the transactions - often as it is represented on the users bank statement",
+      "type": "string"
+    },
+    "cleanedDescription": {
+      "description": "A cleaned up and shorter description of the transaction, this can be edited",
+      "type": "string"
+    },
+    "counterpartyId": {
+      "description": "A matching id of the counterparty of the series",
+      "type": "string"
+    },
+    "frequency": {
+      "description": "The time between payments in the series",
+      "type": "string",
+      "enum": [
+        "weekly",
+        "fortnightly",
+        "monthly",
+        "quarterly",
+        "yearly"
+      ]
+    },
+    "numTxMatchedInSeries": {
+      "description": "The count of the transactions in the series",
+      "type": "integer"
+    },
+    "gapLengthInFreqUnits": {
+      "description": "The count of expected dates with no corresponding transactions",
+      "type": "integer"
+    },
+    "dateAnomaliesCount": {
+      "description": "The count of transactions which occurred outside the predicted date range",
+      "type": "integer"
+    },
+    "numReturnedTxs": {
+      "description": "The count of transactions we have detected were returned (reversed/declined)",
+      "type": "integer"
+    },
+    "lastDate": {
+      "description": "Date on which the most recent transaction in the series occured",
+      "format": "date",
+      "type": "string"
+    },
+    "predictedDate": {
+      "description": "Predicted date the next transactions is most likely to occur",
+      "format": "date",
+      "type": "string"
+    },
+    "predictedDateEarliest": {
+      "description": "Earliest predicted date of the next transaction in the series",
+      "format": "date",
+      "type": "string"
+    },
+    "predictedDateLatest": {
+      "description": "Lastest predicted date of the next transaction in the series",
+      "format": "date",
+      "type": "string"
+    },
+    "predictedTxLateOrNotDetected": {
+      "description": "Is the predicted payment late or not detected?",
+      "type": "boolean"
+    },
+    "predictedAmount": {
+      "description": "Predicted amount of the next transaction",
+      "properties": {
+        "value": {
+          "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the amount",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "predictedAmountLower": {
+      "description": "The smallest amount predicted for the next transaction",
+      "properties": {
+        "value": {
+          "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the amount",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "predictedAmountUpper": {
+      "description": "The largest amount predicted for the next transaction",
+      "properties": {
+        "value": {
+          "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the amount",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "predictedCategoryId": {
+      "description": "The category id. Standard categories are prefixed with 'std', custom categories are prefixed with 'cus'",
+      "type": "string",
+      "pattern": "^(std|cus):(\\w|-)+$"
+    },
+    "transactions": {
+      "description": "An array of transaction IDs",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "seriesId",
+    "accountId",
+    "type",
+    "cleanedDescription",
+    "frequency",
+    "numTxMatchedInSeries",
+    "lastDate",
+    "predictedDate",
+    "predictedAmount",
+    "transactions"
+  ]
+}

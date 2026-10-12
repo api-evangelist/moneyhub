@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-category-schema.json",
+  "title": "Category",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-categories-api-openapi.yml#/components/schemas/Category",
+  "additionalProperties": false,
+  "properties": {
+    "categoryId": {
+      "description": "The id of the category. Custom categories are prefixed with 'cus:'",
+      "type": "string",
+      "pattern": "^(std|cus):(\\w|-)+$"
+    },
+    "name": {
+      "description": "The name of the category - only applicable for custom categories",
+      "type": "string"
+    },
+    "key": {
+      "description": "A text key for standard categories",
+      "type": "string"
+    },
+    "group": {
+      "description": "The category group to which the category belongs",
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [
+    "categoryId",
+    "group"
+  ]
+}

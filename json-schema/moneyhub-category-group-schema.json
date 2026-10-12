@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-category-group-schema.json",
+  "title": "CategoryGroup",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-categories-api-openapi.yml#/components/schemas/CategoryGroup",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "The id of the category group.",
+      "type": "string"
+    },
+    "key": {
+      "description": "A text key for the category group",
+      "type": "string"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "key"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-balance-post-schema.json",
+  "title": "BalancePost",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-accounts-api-openapi.yml#/components/schemas/BalancePost",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "amount": {
+      "properties": {
+        "value": {
+          "description": "The value of the balance in minor units of the currency, eg. pennies for GBP.",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    },
+    "date": {
+      "description": "The date of the balance",
+      "format": "date",
+      "type": "string"
+    }
+  },
+  "required": [
+    "amount",
+    "date"
+  ]
+}

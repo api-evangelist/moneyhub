@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-affordability-income-post-schema.json",
+  "title": "AffordabilityIncomePost",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-affordability-api-openapi.yml#/components/schemas/AffordabilityIncomePost",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "externalUserId": {
+      "description": "Your reference ID for the user or individual affordability income check. The same value could be assigned to all reports created as part of the same affordability income check's lifecycle, for example",
+      "type": "string"
+    },
+    "name": {
+      "description": "The full name of the user to whom the affordability income check applies",
+      "type": "string"
+    },
+    "email": {
+      "description": "The email address of the user to whom the affordability income check applies",
+      "type": "string"
+    }
+  }
+}

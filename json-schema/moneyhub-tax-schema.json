@@ -1,0 +1,215 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-tax-schema.json",
+  "title": "Tax",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-tax-api-openapi.yml#/components/schemas/Tax",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "dateFrom": {
+      "description": "The date the transactions are from",
+      "format": "date",
+      "type": "string"
+    },
+    "dateTo": {
+      "description": "The date the transactions are to",
+      "format": "date",
+      "type": "string"
+    },
+    "taxReturn": {
+      "description": "The calculated tax return amounts.",
+      "type": "object",
+      "properties": {
+        "sa105": {
+          "properties": {
+            "income": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "additionalProperties": false,
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "description": "The opening balance in minor units of the currency, eg. pennies for GBP",
+                      "type": "integer"
+                    },
+                    "majorUnits": {
+                      "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+                      "type": "integer"
+                    },
+                    "minorUnits": {
+                      "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+                      "type": "integer"
+                    },
+                    "currency": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "currency"
+                  ]
+                },
+                "details": {
+                  "type": "array",
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "category": {
+                        "description": "The category the detail belongs to",
+                        "type": "string",
+                        "pattern": "^(income|expenditure)\\.([a-zA-Z-]+)$"
+                      },
+                      "amount": {
+                        "additionalProperties": false,
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "description": "The opening balance in minor units of the currency, eg. pennies for GBP",
+                            "type": "integer"
+                          },
+                          "currency": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "currency"
+                        ]
+                      }
+                    },
+                    "type": "object",
+                    "required": [
+                      "category",
+                      "amount"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "total",
+                "details"
+              ]
+            },
+            "expenditure": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "additionalProperties": false,
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "description": "The opening balance in minor units of the currency, eg. pennies for GBP",
+                      "type": "integer"
+                    },
+                    "majorUnits": {
+                      "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+                      "type": "integer"
+                    },
+                    "minorUnits": {
+                      "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+                      "type": "integer"
+                    },
+                    "currency": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "currency"
+                  ]
+                },
+                "details": {
+                  "type": "array",
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "category": {
+                        "description": "The category the detail belongs to",
+                        "type": "string",
+                        "pattern": "^(income|expenditure)\\.([a-zA-Z-]+)$"
+                      },
+                      "amount": {
+                        "additionalProperties": false,
+                        "type": "object",
+                        "properties": {
+                          "value": {
+                            "description": "The opening balance in minor units of the currency, eg. pennies for GBP",
+                            "type": "integer"
+                          },
+                          "currency": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "value",
+                          "currency"
+                        ]
+                      }
+                    },
+                    "type": "object",
+                    "required": [
+                      "category",
+                      "amount"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "total",
+                "details"
+              ]
+            },
+            "taxableIncome": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "additionalProperties": false,
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "description": "The opening balance in minor units of the currency, eg. pennies for GBP",
+                      "type": "integer"
+                    },
+                    "majorUnits": {
+                      "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+                      "type": "integer"
+                    },
+                    "minorUnits": {
+                      "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+                      "type": "integer"
+                    },
+                    "currency": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "currency"
+                  ]
+                }
+              },
+              "required": [
+                "total"
+              ]
+            }
+          },
+          "required": [
+            "income",
+            "expenditure",
+            "taxableIncome"
+          ],
+          "type": "object"
+        }
+      }
+    }
+  },
+  "required": [
+    "dateFrom",
+    "dateTo",
+    "taxReturn"
+  ]
+}

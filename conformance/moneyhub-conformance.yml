@@ -1,11 +1,8 @@
 generated: '2026-07-24'
 method: searched
 source: https://docs.moneyhubenterprise.com/docs
-note: >-
-  Standards conformance asserted from the OIDC discovery document, the docs
-  (authentication, webhooks, mTLS, PAR) and Moneyhub's FCA regulatory status as a
-  UK Open Banking AISP/PISP/CISP. Compliance certifications (ISO 27001) are
-  captured in security/moneyhub-trust-center.yml.
+note: Standards conformance asserted from the OIDC discovery document, the docs (authentication, webhooks, mTLS, PAR) and Moneyhub's FCA regulatory
+  status as a UK Open Banking AISP/PISP/CISP. Compliance certifications (ISO 27001) are captured in security/moneyhub-trust-center.yml.
 standards:
 - id: oauth2
   conforms: true
@@ -37,3 +34,15 @@ standards:
 - id: scim
   conforms: true
   evidence: SCIM user scopes present (scim_user:read/write, scim_user:subtenants:assign).
+- id: openapi-3.2
+  conforms: true
+  evidence: the document declares 3.2.0
+- id: rfc9457
+  conforms: false
+  evidence: no response declares application/problem+json
+- id: idempotency
+  conforms: false
+  evidence: no idempotency key parameter on mutating operations
+- id: pagination
+  conforms: true
+  evidence: list operations take limit, offset

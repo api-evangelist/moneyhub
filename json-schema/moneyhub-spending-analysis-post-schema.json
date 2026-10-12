@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-spending-analysis-post-schema.json",
+  "title": "SpendingAnalysisPost",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-spending-analysis-api-openapi.yml#/components/schemas/SpendingAnalysisPost",
+  "type": "object",
+  "properties": {
+    "dates": {
+      "type": "array",
+      "description": "List of date ranges to calculate spending analysis for. This allows retrieving spending analysis of up to three different date ranges in one request.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "format": "[a-zA-Z0-9_-]{1,50}",
+            "description": "Descriptive name for the date range. The name will be used in the response payload to identify it."
+          },
+          "from": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date to perform spending analysis."
+          },
+          "to": {
+            "type": "string",
+            "format": "date",
+            "description": "End date to perform spending analysis."
+          }
+        },
+        "required": [
+          "name",
+          "from",
+          "to"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1,
+      "maxItems": 3
+    },
+    "accountIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Account ids to be included in the spending analysis. If none are given the analysis will include all accounts."
+      }
+    },
+    "categoryIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Category ids to be included in the spending analysis. If none are given the analysis will include all categories."
+      }
+    },
+    "projectIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "Project ids to be included in the spending analysis. If none are given the analysis will include all projects."
+      }
+    }
+  },
+  "required": [
+    "dates"
+  ],
+  "additionalProperties": false
+}

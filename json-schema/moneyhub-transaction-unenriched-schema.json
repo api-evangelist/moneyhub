@@ -1,0 +1,281 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-transaction-unenriched-schema.json",
+  "title": "TransactionUnenriched",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-transactions-api-openapi.yml#/components/schemas/TransactionUnenriched",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "accountId": {
+      "description": "The id of the account the transaction belongs to",
+      "type": "string"
+    },
+    "amount": {
+      "properties": {
+        "value": {
+          "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the amount. It uses the ISO 4217 currency codes.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value",
+        "currency"
+      ],
+      "type": "object"
+    },
+    "date": {
+      "description": "The date that the transaction occurred. Where available this will contain an accurate time, where the time is not available it will default to midday.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "dateModified": {
+      "description": "The date the transaction was modified - this could be when it was added, or a category changed, or when notes were added",
+      "format": "date-time",
+      "type": "string"
+    },
+    "dateCreated": {
+      "description": "The date the transaction was created",
+      "format": "date-time",
+      "type": "string"
+    },
+    "valueDate": {
+      "description": "The date when funds become available to the account owner (for credits) or are withdrawn (for debits). This date may be different from the transaction date.",
+      "format": "date-time",
+      "type": "string"
+    },
+    "id": {
+      "description": "The unique id of the transaction",
+      "type": "string"
+    },
+    "longDescription": {
+      "description": "The full text description of the transactions - often as it is represented on the users bank statement",
+      "type": "string"
+    },
+    "providerId": {
+      "description": "The id of the transaction the banking provider uses",
+      "type": "string"
+    },
+    "status": {
+      "description": "Whether the transaction has been posted (booked) or is still a pending transaction. During the transition from pending to posted the description will normally change.",
+      "enum": [
+        "posted",
+        "pending"
+      ],
+      "type": "string"
+    },
+    "transactionCode": {
+      "description": "The ISO transaction code",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Specifies the family within a domain.",
+          "type": "string"
+        },
+        "subCode": {
+          "description": "Specifies the sub-product family within a specific family.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "subCode"
+      ]
+    },
+    "proprietaryTransactionCode": {
+      "description": "Set of elements to fully identify a proprietary bank transaction code.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "Proprietary bank transaction code to identify the underlying transaction.",
+          "type": "string"
+        },
+        "issuer": {
+          "description": "Identification of the issuer of the proprietary bank transaction code.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code"
+      ]
+    },
+    "balance": {
+      "description": "The amount of the account post transaction in minor units of the currency, eg. pennies for GBP.",
+      "properties": {
+        "value": {
+          "description": "The amount of the transaction in minor units of the currency, eg. pennies for GBP, negative means money going out of an account, positive means money coming into an account.",
+          "type": "integer"
+        },
+        "majorUnits": {
+          "description": "The major units of the value, based on the values currency, eg. pounds for GBP.",
+          "type": "integer"
+        },
+        "minorUnits": {
+          "description": "The minor units of the value, based on the values currency, eg. pennies for GBP.",
+          "type": "integer"
+        },
+        "currency": {
+          "description": "The currency of the amount",
+          "type": "string"
+        }
+      }
+    },
+    "balanceType": {
+      "description": "Balance type, in a coded form. Options include: ClosingAvailable ClosingBooked ClosingCleared Expected ForwardAvailable Information InterimAvailable InterimBooked InterimCleared OpeningAvailable OpeningBooked OpeningCleared PreviouslyClosedBooked.",
+      "type": "string"
+    },
+    "statementReference": {
+      "description": "Unique reference for the statement. This reference may be optionally populated if available.",
+      "type": "string"
+    },
+    "merchantName": {
+      "description": "Name by which the merchant is known.",
+      "type": "string"
+    },
+    "merchantCategoryCode": {
+      "description": "Category code conform to ISO 18245, related to the type of services or goods the merchant provides for the transaction.",
+      "type": "string"
+    },
+    "cardInstrument": {
+      "description": "Set of elements to describe the card instrument used in the transaction.",
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the cardholder using the card instrument.",
+          "type": "string"
+        },
+        "pan": {
+          "description": "The PAN of the card used in the transaction. This is known by the account owner, and may be masked.",
+          "type": "string"
+        },
+        "cardSchemeName": {
+          "description": "Name of the card scheme.",
+          "type": "string",
+          "pattern": "^(AmericanExpress|Diners|Discover|MasterCard|VISA|.*)$"
+        },
+        "authorisationType": {
+          "description": "The card authorisation type.",
+          "type": "string",
+          "pattern": "^(ConsumerDevice|Contactless|None|PIN|.*)$"
+        }
+      }
+    },
+    "creditorAccount": {
+      "description": "Unambiguous identification of the account of the creditor, in the case of a debit transaction.",
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP's online channels.",
+          "type": "string"
+        },
+        "sortCode": {
+          "description": "The sort code of the creditor account",
+          "type": "string"
+        },
+        "accountNumber": {
+          "description": "The account number of the creditor account",
+          "type": "string"
+        },
+        "iban": {
+          "description": "The IBAN of the creditor account",
+          "type": "string"
+        },
+        "pan": {
+          "description": "The PAN of the creditor account",
+          "type": "string"
+        }
+      }
+    },
+    "creditorAgent": {
+      "description": "Financial institution servicing an account for the creditor.",
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name by which an agent is known and which is usually used to identify that agent.",
+          "type": "string"
+        },
+        "postalAddress": {
+          "description": "The postal address for the financial institution",
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "debtorAccount": {
+      "description": "Unambiguous identification of the account of the debtor, in the case of a credit transaction.",
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "The account name is the name or names of the account owner(s) represented at an account level, as displayed by the ASPSP's online channels.",
+          "type": "string"
+        },
+        "sortCode": {
+          "description": "The sort code of the debtor account",
+          "type": "string"
+        },
+        "accountNumber": {
+          "description": "The account number of the debtor account",
+          "type": "string"
+        },
+        "iban": {
+          "description": "The IBAN of the debtor account",
+          "type": "string"
+        },
+        "pan": {
+          "description": "The PAN of the debtor account",
+          "type": "string"
+        }
+      }
+    },
+    "debtorAgent": {
+      "description": "Financial institution servicing an account for the debtor.",
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name by which an agent is known and which is usually used to identify that agent.",
+          "type": "string"
+        },
+        "postalAddress": {
+          "description": "The postal address for the financial institution",
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "transactionReference": {
+      "description": "Unique reference for the transaction. This reference is optionally populated, and may as an example be the FPID in the Faster Payments context. This field is only available for open banking connections",
+      "type": "string"
+    },
+    "transactionInformation": {
+      "description": "Further details of the transaction. This is the transaction narrative, which is unstructured text. This field is only available for open banking connections",
+      "type": "string"
+    }
+  },
+  "required": [
+    "amount",
+    "date",
+    "dateModified",
+    "id",
+    "longDescription",
+    "status"
+  ]
+}

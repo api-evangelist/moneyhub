@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/moneyhub/main/json-schema/moneyhub-global-counterparty-v3-schema.json",
+  "title": "GlobalCounterpartyV3",
+  "x-generated": "2026-10-12",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/moneyhub-counterparties-api-openapi.yml#/components/schemas/GlobalCounterpartyV3",
+  "additionalProperties": false,
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique identifier for the counterparty.",
+      "format": "uuid"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the counterparty"
+    },
+    "parentId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The unique identifier for the counterparty parent"
+    },
+    "parentName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Name of the counterparty parent"
+    },
+    "fullCompanyName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Company name"
+    },
+    "logoUrl": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Logo Url of counterparty"
+    },
+    "website": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Website url of counterparty"
+    },
+    "merchantCategoryCode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": ""
+    },
+    "merchantCategoryDescription": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": ""
+    },
+    "registeredLocation": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Registered address of company"
+    },
+    "categoryId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Category used to group similar counterparties"
+    },
+    "analyticalCategory": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "DEPRECATED. Category used to group similar counterparties"
+    },
+    "transactionCategoryId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Most appropriate transaction category id for transactions to this counterparty"
+    },
+    "transactionCategory": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Most appropriate transaction category name for transactions to this counterparty"
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ]
+}
