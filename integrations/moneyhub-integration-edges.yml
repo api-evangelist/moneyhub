@@ -9,6 +9,7 @@ checked:
 - https://composio.dev/toolkits/moneyhub
 - https://monid.ai/tools/moneyhub
 - https://n8n.io/integrations/moneyhub/
+- https://registry.financialdataexchange.org/
 - https://www.openbanking.org.uk/regulated-providers/moneyhub/
 - https://zapier.com/apps/moneyhub/integrations
 summary: null
@@ -31,4 +32,28 @@ edges:
     api_families: null
     detected_by: sweep-standard-registers.py
     detected: '2026-10-12'
+- partner_name: FDX (Financial Data Exchange)
+  partner: fdx
+  type: contract
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://registry.financialdataexchange.org/
+  contract_reference:
+    register: FDX Registry
+    standard: FDX API
+    spec_file: null
+    register_api: https://registry.financialdataexchange.org/fdxregistryapi/organizations/search/listingTags
+    role: data-recipient
+    member_type: MEMBER
+    registered_name: Moneyhub Financial Technology
+    register_id: 421
+    registered_website: https://www.moneyhub.com/
+    country: United Kingdom
+    fdx_version: null
+    matched_by: domain:moneyhub.com
+    detected_by: sweep-fdx.py
+    detected: '2026-10-14'
+  detected_by: sweep-fdx.py
+  first_seen: '2026-10-14'
 templates: []
