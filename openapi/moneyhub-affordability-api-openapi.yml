@@ -401,6 +401,39 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    AffordabilityMetadata:
+      additionalProperties: false
+      type: object
+      properties:
+        createdAt:
+          description: The timestamp at which the report was generated
+          type: string
+        id:
+          description: The report id
+          type: string
+      example:
+        createdAt: '2022-01-01T00:00:00Z'
+        id: d372d09b-f50a-4114-9c83-687828fa8ac2
+      required:
+      - id
+    Links:
+      additionalProperties: false
+      properties:
+        next:
+          description: The url to retrieve the next page of results from
+          format: uri
+          type: string
+        prev:
+          description: The url to retrieve the previous page of results from
+          format: uri
+          type: string
+        self:
+          description: The url of the current resource(s)
+          format: uri
+          type: string
+      required:
+      - self
+      type: object
     AffordabilityPost:
       additionalProperties: false
       type: object
@@ -413,6 +446,58 @@ components:
           type: string
         email:
           description: The email address of the user to whom the affordability application applies
+          type: string
+      example:
+        externalUserId: LENDERNAME-123
+        name: Joe Bloggs
+        email: joe.blogss@example.com
+    Error:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+        message:
+          description: The error message
+          type: string
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+        id:
+          description: Id of the resource
+          type: string
+        userId:
+          description: UserId of the resource
+          type: string
+      required:
+      - code
+      type: object
+    AffordabilityConfidence:
+      additionalProperties: false
+      type: object
+      properties:
+        confidence:
+          description: 'The confidence level of an affordability report '
+          type: string
+          enum:
+          - high
+          - low
+      example:
+        confidence: high
+      required:
+      - confidence
+    AffordabilityIncomePost:
+      additionalProperties: false
+      type: object
+      properties:
+        externalUserId:
+          description: Your reference ID for the user or individual affordability income check. The same value could be assigned to all reports created as part of the same affordability income check's lifecycle, for example
+          type: string
+        name:
+          description: The full name of the user to whom the affordability income check applies
+          type: string
+        email:
+          description: The email address of the user to whom the affordability income check applies
           type: string
       example:
         externalUserId: LENDERNAME-123
@@ -2678,59 +2763,6 @@ components:
       required:
       - createdAt
       - id
-    AffordabilityConfidence:
-      additionalProperties: false
-      type: object
-      properties:
-        confidence:
-          description: 'The confidence level of an affordability report '
-          type: string
-          enum:
-          - high
-          - low
-      example:
-        confidence: high
-      required:
-      - confidence
-    Error:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-        message:
-          description: The error message
-          type: string
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-        id:
-          description: Id of the resource
-          type: string
-        userId:
-          description: UserId of the resource
-          type: string
-      required:
-      - code
-      type: object
-    Links:
-      additionalProperties: false
-      properties:
-        next:
-          description: The url to retrieve the next page of results from
-          format: uri
-          type: string
-        prev:
-          description: The url to retrieve the previous page of results from
-          format: uri
-          type: string
-        self:
-          description: The url of the current resource(s)
-          format: uri
-          type: string
-      required:
-      - self
-      type: object
     AffordabilityIncome:
       additionalProperties: false
       type: object
@@ -2888,38 +2920,6 @@ components:
         id: d372d09b-f50a-4114-9c83-687828fa8ac2
       required:
       - id
-    AffordabilityMetadata:
-      additionalProperties: false
-      type: object
-      properties:
-        createdAt:
-          description: The timestamp at which the report was generated
-          type: string
-        id:
-          description: The report id
-          type: string
-      example:
-        createdAt: '2022-01-01T00:00:00Z'
-        id: d372d09b-f50a-4114-9c83-687828fa8ac2
-      required:
-      - id
-    AffordabilityIncomePost:
-      additionalProperties: false
-      type: object
-      properties:
-        externalUserId:
-          description: Your reference ID for the user or individual affordability income check. The same value could be assigned to all reports created as part of the same affordability income check's lifecycle, for example
-          type: string
-        name:
-          description: The full name of the user to whom the affordability income check applies
-          type: string
-        email:
-          description: The email address of the user to whom the affordability income check applies
-          type: string
-      example:
-        externalUserId: LENDERNAME-123
-        name: Joe Bloggs
-        email: joe.blogss@example.com
   securitySchemes:
     Bearer:
       type: apiKey

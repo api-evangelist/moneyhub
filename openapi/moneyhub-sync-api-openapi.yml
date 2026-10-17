@@ -92,6 +92,31 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    InternalError:
+      additionalProperties: false
+      properties:
+        code:
+          description: The error code
+          type: string
+          enum:
+          - InternalServer
+          - ExternalProvider
+          example: ExternalProvider
+        message:
+          description: The error message
+          type: string
+          example: The server encountered an error and could not complete your request
+        correlationId:
+          description: Id that identifies the request and can be used to ask for more details related to the error
+          type: string
+          example: '1234567890'
+        statusCode:
+          description: When the error is generated on the Provider, this field will contain the HTTP status code returned by the Provider
+          type: integer
+          example: 500
+      required:
+      - code
+      type: object
     Error:
       additionalProperties: false
       properties:
@@ -128,31 +153,6 @@ components:
           type: boolean
           description: If set to true, the sync for data will happen in the background
           example: 'false'
-      type: object
-    InternalError:
-      additionalProperties: false
-      properties:
-        code:
-          description: The error code
-          type: string
-          enum:
-          - InternalServer
-          - ExternalProvider
-          example: ExternalProvider
-        message:
-          description: The error message
-          type: string
-          example: The server encountered an error and could not complete your request
-        correlationId:
-          description: Id that identifies the request and can be used to ask for more details related to the error
-          type: string
-          example: '1234567890'
-        statusCode:
-          description: When the error is generated on the Provider, this field will contain the HTTP status code returned by the Provider
-          type: integer
-          example: 500
-      required:
-      - code
       type: object
   securitySchemes:
     Bearer:
