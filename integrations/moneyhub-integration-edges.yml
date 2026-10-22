@@ -19,6 +19,7 @@ checked:
 - https://rubygems.org/api/v1
 - https://www.openbanking.org.uk/regulated-providers/moneyhub/
 - https://zapier.com/apps/moneyhub/integrations
+- https://openid.net/foundation/sponsoring-members/
 summary: null
 marketplace_apps: []
 edges:
@@ -39,30 +40,6 @@ edges:
     api_families: null
     detected_by: sweep-standard-registers.py
     detected: '2026-10-14'
-- partner_name: FDX (Financial Data Exchange)
-  partner: fdx
-  type: contract
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://registry.financialdataexchange.org/
-  contract_reference:
-    register: FDX Registry
-    standard: FDX API
-    spec_file: null
-    register_api: https://registry.financialdataexchange.org/fdxregistryapi/organizations/search/listingTags
-    role: data-recipient
-    member_type: MEMBER
-    registered_name: Moneyhub Financial Technology
-    register_id: 421
-    registered_website: https://www.moneyhub.com/
-    country: United Kingdom
-    fdx_version: null
-    matched_by: domain:moneyhub.com
-    detected_by: sweep-fdx.py
-    detected: '2026-10-14'
-  detected_by: sweep-fdx.py
-  first_seen: '2026-10-14'
 - partner_name: npm registry
   partner: npm
   partner_match: register
@@ -93,4 +70,54 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: FDX (Financial Data Exchange)
+  partner: fdx
+  type: contract
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://registry.financialdataexchange.org/
+  contract_reference:
+    register: FDX Registry
+    standard: FDX API
+    spec_file: null
+    register_api: https://registry.financialdataexchange.org/fdxregistryapi/organizations/search/listingTags
+    role: data-recipient
+    member_type: MEMBER
+    registered_name: Moneyhub Financial Technology
+    register_id: 421
+    registered_website: https://www.moneyhub.com/
+    country: United Kingdom
+    fdx_version: null
+    matched_by: domain:moneyhub.com
+    detected_by: sweep-fdx.py
+    detected: '2026-10-19'
+  detected_by: sweep-fdx.py
+  first_seen: '2026-10-19'
+- partner_name: OpenID Foundation
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://openid.net/foundation/sponsoring-members/
+  category: identity standards body membership
+  partner_tier: Corporate
+  contract_reference:
+    register: OpenID Foundation members (openid.net/foundation/sponsoring-members/)
+    standard: OpenID Foundation specifications (OpenID Connect, FAPI, CIBA, OpenID4VC, Shared Signals, AuthZEN)
+    spec_file: null
+    role: oidf-member
+    registered_name: moneyhub
+    register_id: https://www.moneyhub.com/
+    matched_domain: moneyhub.com
+    matched_by: domain
+    signal_note: 'participation only: corporate membership of the OpenID Foundation (level in partner_tier); the
+      logo links the member''s website (the link is the identity). Membership is not certification: OIDF certification
+      edges are written by sweep-identity.py and reused, not re-read'
+    detected_by: sweep-openid-certified-implementations.py
+    detected: '2026-10-22'
+  detected_by: sweep-openid-certified-implementations.py
+  first_seen: '2026-10-22'
 templates: []

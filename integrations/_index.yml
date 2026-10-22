@@ -23,32 +23,6 @@
     detected: '2026-10-14'
   status: not-a-workflow
   arazzo: null
-- slug: moneyhub-fdx-financial-data-exchange
-  label: FDX (Financial Data Exchange)
-  partner: fdx
-  partner_name: FDX (Financial Data Exchange)
-  type: contract
-  channel: standard-directory
-  evidence: https://registry.financialdataexchange.org/
-  source: edge
-  relationship: standard-participant
-  contract_reference:
-    register: FDX Registry
-    standard: FDX API
-    spec_file: null
-    register_api: https://registry.financialdataexchange.org/fdxregistryapi/organizations/search/listingTags
-    role: data-recipient
-    member_type: MEMBER
-    registered_name: Moneyhub Financial Technology
-    register_id: 421
-    registered_website: https://www.moneyhub.com/
-    country: United Kingdom
-    fdx_version: null
-    matched_by: domain:moneyhub.com
-    detected_by: sweep-fdx.py
-    detected: '2026-10-14'
-  status: not-a-workflow
-  arazzo: null
 - slug: moneyhub-npm-registry
   label: npm registry
   partner: npm
@@ -78,5 +52,56 @@
       24 months'
     detected_by: sweep-official-sdks.py
     detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
+- slug: moneyhub-fdx-financial-data-exchange
+  label: FDX (Financial Data Exchange)
+  partner: fdx
+  partner_name: FDX (Financial Data Exchange)
+  type: contract
+  channel: standard-directory
+  evidence: https://registry.financialdataexchange.org/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: FDX Registry
+    standard: FDX API
+    spec_file: null
+    register_api: https://registry.financialdataexchange.org/fdxregistryapi/organizations/search/listingTags
+    role: data-recipient
+    member_type: MEMBER
+    registered_name: Moneyhub Financial Technology
+    register_id: 421
+    registered_website: https://www.moneyhub.com/
+    country: United Kingdom
+    fdx_version: null
+    matched_by: domain:moneyhub.com
+    detected_by: sweep-fdx.py
+    detected: '2026-10-19'
+  status: not-a-workflow
+  arazzo: null
+- slug: moneyhub-openid-foundation
+  label: OpenID Foundation
+  partner_name: OpenID Foundation
+  category: identity standards body membership
+  type: register
+  channel: standard-directory
+  evidence: https://openid.net/foundation/sponsoring-members/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: OpenID Foundation members (openid.net/foundation/sponsoring-members/)
+    standard: OpenID Foundation specifications (OpenID Connect, FAPI, CIBA, OpenID4VC, Shared Signals, AuthZEN)
+    spec_file: null
+    role: oidf-member
+    registered_name: moneyhub
+    register_id: https://www.moneyhub.com/
+    matched_domain: moneyhub.com
+    matched_by: domain
+    signal_note: 'participation only: corporate membership of the OpenID Foundation (level in partner_tier); the
+      logo links the member''s website (the link is the identity). Membership is not certification: OIDF certification
+      edges are written by sweep-identity.py and reused, not re-read'
+    detected_by: sweep-openid-certified-implementations.py
+    detected: '2026-10-22'
   status: not-a-workflow
   arazzo: null
