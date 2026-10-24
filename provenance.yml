@@ -42,127 +42,175 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
+  hosts/moneyhub-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
+  integrations/_index.yml:
     method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+    evidence: carries an API Evangelist house phrase
+  integrations/moneyhub-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
+  json-ld/moneyhub-context.jsonld:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-account-patch-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-account-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-account-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-affordability-income-metadata-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-affordability-income-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-affordability-income-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-affordability-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-affordability-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-balance-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-balance-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-beneficiary-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-categorise-transactions-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-categorise-transactions-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-category-group-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-category-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-category-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-counterparty-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-global-counterparty-v3-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-holding-with-matches-and-history-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-holding-with-matches-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-holdings-valuation-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-links-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-notification-threshold-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-notification-threshold-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-project-patch-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-project-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-project-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-recurring-transaction-estimate-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-regular-transactions-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-rental-records-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-rental-records-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-savings-goals-patch-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-savings-goals-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-savings-goals-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-spending-analysis-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-spending-analysis-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-spending-goal-patch-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-spending-goal-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-spending-goal-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-standard-financial-statement-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-standard-financial-statements-metadata-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-standard-financial-statements-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-standing-order-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-statement-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-sync-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-tax-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-transaction-collection-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-transaction-patch-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-transaction-post-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-transaction-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-transaction-split-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/moneyhub-transaction-unenriched-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -246,9 +294,27 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/moneyhub-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
+  llms/moneyhub-llms-provenance.yml:
+    method: searched
+    evidence: 'derive-llms-provenance.py: harvested'
   llms/moneyhub-llms.txt:
     method: searched
     evidence: 'derive-llms-provenance.py: harvested'
@@ -257,8 +323,8 @@ artifacts:
     evidence: declared in the artifact
   openapi/_original/moneyhub-data-api-swagger.json:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: the same operations as https://api.moneyhub.co.uk/swagger.json (sha256 b59f6f07f01e, fetched
+      2026-10-04)
   openapi/moneyhub-accounts-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -320,14 +386,26 @@ artifacts:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
   overlays/moneyhub-data-api-overlay.yaml:
-    method: unknown
-    evidence: no authorship recorded
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
   packages/moneyhub-packages.yml:
     method: searched
     evidence: declared in the artifact
+  plans/moneyhub-plans-pricing.yml:
+    method: unknown
+    evidence: no authorship recorded
   postman/moneyhub-data-api-swagger.postman_collection.json:
     method: unknown
     evidence: no authorship recorded
+  rate-limits/moneyhub-rate-limits.yml:
+    method: searched
+    evidence: declared in the artifact
+  regulatory/moneyhub-regulatory-posture.yml:
+    method: unknown
+    evidence: no authorship recorded
+  rules/moneyhub-rules.yml:
+    method: generated
+    evidence: declared in the artifact
   sandbox/moneyhub-sandbox.yml:
     method: searched
     evidence: declared in the artifact
@@ -342,6 +420,21 @@ artifacts:
     evidence: declared in the artifact
   security/moneyhub-vulnerability-disclosure.yml:
     method: searched
+    evidence: declared in the artifact
+  skills/_index.yml:
+    method: generated
+    evidence: declared in the artifact
+  skills/moneyhub-annotate-transaction.md:
+    method: generated
+    evidence: declared in the artifact
+  skills/moneyhub-sync-and-read-transactions.md:
+    method: generated
+    evidence: declared in the artifact
+  vendors/moneyhub-vendors.yml:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/moneyhub-vocabulary.yml:
+    method: derived
     evidence: declared in the artifact
   well-known/moneyhub-openid-configuration.json:
     method: unknown
